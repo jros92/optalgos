@@ -26,13 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.*;
 
-import algorithms.DummyAlgorithm;
-import algorithms.INeighborhood;
-import algorithms.IOptimizationAlgorithm;
-import algorithms.LocalSearchAlgorithm;
-import algorithms.SimulatedAnnealingAlgorithm;
-import algorithms.Solver;
-import algorithms.TabooSearchAlgorithm;
+import algorithms.*;
 
 import core.*;
 
@@ -41,7 +35,7 @@ public class FormMain extends JFrame {
 	private JPanel contentPane;
 	private DialogAddInstance dialogAddInstance;
 	private DefaultListModel<Instance> instanceListModel;
-	private DefaultListModel<IOptimizationAlgorithm> algosListModel;
+	private DefaultListModel<Algorithms> algosListModel;
 	private DefaultListModel<INeighborhood> neighborhoodListModel;
 	JList<Instance> listCurrentInstances;
 	private FeasibleSolution feasibleSolution;
@@ -197,7 +191,7 @@ public class FormMain extends JFrame {
 		scrollPaneAlgorithms.setBounds(5, 223, (leftColWidth-10)/2, leftColHeight);
 		contentPane.add(scrollPaneAlgorithms);
 		
-		JList<IOptimizationAlgorithm> listAlgorithms = new JList<IOptimizationAlgorithm>();
+		JList<Algorithms> listAlgorithms = new JList<>();
 		scrollPaneAlgorithms.setViewportView(listAlgorithms);
 		listAlgorithms.setEnabled(false);
 		listAlgorithms.setFont(fontStandard);
@@ -231,11 +225,10 @@ public class FormMain extends JFrame {
 		listCurrentInstances.setModel(instanceListModel);
 		
 		// Fill Algorithm List
-		algosListModel = new DefaultListModel<IOptimizationAlgorithm>();
-		algosListModel.addElement(new DummyAlgorithm());
-		algosListModel.addElement(new LocalSearchAlgorithm(20));
-		algosListModel.addElement(new SimulatedAnnealingAlgorithm());
-		algosListModel.addElement(new TabooSearchAlgorithm());
+		algosListModel = new DefaultListModel<>();
+		algosListModel.addElement(Algorithms.LocalSearch);
+		algosListModel.addElement(Algorithms.SimulatedAnnealing);
+		algosListModel.addElement(Algorithms.TabooSearch);
 		listAlgorithms.setModel(algosListModel);
 		
 		// Fill Neighborhood list
@@ -375,15 +368,17 @@ public class FormMain extends JFrame {
 	
 	/**
 	 * Instantiate a solver with the chosen instance, algorithm and neighborhood
-	 * @param algorithm
+	 * @param algorithmChoice
 	 * @param neighborhood
 	 */
-	public void startAndShowSolver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood) {
+	public void startAndShowSolver(Algorithms algorithmChoice, INeighborhood neighborhood) {
 		if (listCurrentInstances.getSelectedValue() != null) {
 //			long maxIterations = 1000000L;
 			long maxIterations = 30;
 			int numberOfNeighbors = 10000;
-			
+
+			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
+
 			Solver solver = new Solver(algorithm, neighborhood, new ObjectiveFunction(), listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
 	
 			// Start the solver thread
