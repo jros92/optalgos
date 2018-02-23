@@ -3,9 +3,6 @@ package gui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -37,16 +34,14 @@ public class FormMain extends JFrame {
 	private DefaultListModel<Instance> instanceListModel;
 	private DefaultListModel<Algorithms> algosListModel;
 	private DefaultListModel<INeighborhood> neighborhoodListModel;
-	JList<Instance> listCurrentInstances;
+	private JList<Instance> listCurrentInstances;
 	private FeasibleSolution feasibleSolution;
 	private int dpi;
 	
-	JMenuBar menuBar;
-	JMenu menu, submenu;
-	JMenuItem menuItem;
-	JRadioButtonMenuItem rbMenuItem;
-	JCheckBoxMenuItem cbMenuItem;
-	
+	private JMenuBar menuBar;
+	private JMenu menu;
+	private JMenuItem menuItem;
+
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +53,8 @@ public class FormMain extends JFrame {
 	    } 
 	    catch (UnsupportedLookAndFeelException e) {
 	       // handle exception
-	    }
+			System.out.println("Error setting Look and Feel. Keeping default.");
+		}
 	    catch (ClassNotFoundException e) {
 	       // handle exception
 	    }
@@ -101,8 +97,9 @@ public class FormMain extends JFrame {
 		int fontSize = (int) Math.round(dpi / 7 + 0.5);
 		Font fontStandard = new Font("Tahoma", Font.PLAIN, fontSize-1);
 		Font fontLarger = new Font("Tahoma", Font.PLAIN, fontSize);
-		
-		System.out.println("Detected Display DPI: " + dpi);
+
+		System.out.println("Started GUI");
+		System.out.println("Detected display dpi: " + dpi);
 		
 		setTitle("Optimization Algorithms WS2017/18");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -303,7 +300,7 @@ public class FormMain extends JFrame {
 		/* Button to initialize an instance */
 		btnFillAndViewStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				showInitializedInstance(listCurrentInstances.getSelectedValue().clone());
+				showInitializedInstance(listCurrentInstances.getSelectedValue());
 			}
 		});
 		
