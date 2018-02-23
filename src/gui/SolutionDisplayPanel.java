@@ -103,7 +103,7 @@ public class SolutionDisplayPanel extends JPanel {
 		
 		// Find needed width (depending on Frame width)
 		Dimension dim = this.getParent().getParent().getSize();
-		dim.width -= 40; //TODO: Quick and dirty solution
+		dim.width -= 30; // TODO: Quick and dirty solution
 		int widthAvailable = dim.width;
 //		int widthAvailable = (int) this.getLayout().minimumLayoutSize(this).width;
 		
@@ -112,9 +112,7 @@ public class SolutionDisplayPanel extends JPanel {
 		int boxesPerRow = widthAvailable / (boxPanelSize + this.spacing);
 		if (boxesPerRow <= 0) boxesPerRow = 1;
 		
-		int neededRows = (int) Math.ceil(this.solution.getBoxCount() / boxesPerRow);
-//		int neededRows = 1 + (int) Math.ceil(this.solution.getBoxCount() * (boxPanelSize + this.spacing) / (int) dim.width); //TODO: I think there is still a bug here
-//		int neededRows = 1 + (int) Math.ceil(this.solution.getBoxCount() * (boxPanelSize + this.spacing) / this.getLayout().minimumLayoutSize(this).width); //TODO: I think there is still a bug here
+		int neededRows = (int) Math.ceil((float)this.solution.getBoxCount() / (float)boxesPerRow);
 		
 		this.neededHeight = neededRows * (boxPanelSize + this.spacing) + 2*this.spacing;
 		
