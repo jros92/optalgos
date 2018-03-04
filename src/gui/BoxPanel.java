@@ -84,15 +84,13 @@ public class BoxPanel extends JPanel {
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-//		System.out.println("Repainting...");
-		
+
 		/* Draw rectangles contained in box */
 		int i = 0;
 		for (Rectangle rect : box.getRectangles()) {
-//			System.out.println("Rectangle " + (i+1) + ": " + rect.toString());
-			
+
 			if (multiColored)
-				g.setColor(colors[i]); // Set color for rectangle filling
+				g.setColor(rect.getColor()); // Set color for rectangle filling
 			else
 				g.setColor(Color.orange); // Set color for rectangle filling
 			

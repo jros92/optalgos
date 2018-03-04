@@ -1,5 +1,9 @@
 package core;
 
+import gui.ColorGenerator;
+
+import java.awt.*;
+
 /**
  * Class to resemble rectangles and provide functions to create, move and rotate them
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
@@ -11,12 +15,15 @@ public class Rectangle {
 	private int height;
 	private int width;
 	private boolean rotated;
+	private final Color color;
+
 	
 	public Rectangle(Point pos, int width, int length) {
 		this.pos = pos;
 		this.width = width;
 		this.height = length;
 		this.rotated = false;
+		color = ColorGenerator.randomTransparentRGBColor();
 	}
 
 	public Rectangle(int width, int length) {
@@ -24,6 +31,7 @@ public class Rectangle {
 		this.width = width;
 		this.height = length;
 		this.rotated = false;
+		color = ColorGenerator.randomTransparentRGBColor();
 	}
 	
 	public Point getPos() {
@@ -49,7 +57,11 @@ public class Rectangle {
 	public boolean isRotated() {
 		return this.rotated;
 	}
-	
+
+	public Color getColor() {
+		return color;
+	}
+
 	public int getArea() {
 		return this.height * this.width;
 	}
