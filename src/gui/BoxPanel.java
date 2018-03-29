@@ -20,7 +20,7 @@ public class BoxPanel extends JPanel {
 	private Box box;
 	private int scaleFactor;
 	private boolean multiColored;
-	private Color[] colors;
+	//private Color[] colors;
 	
 	public BoxPanel(Box box, int scaleFactor, boolean multiColored) {
 		super();
@@ -28,7 +28,7 @@ public class BoxPanel extends JPanel {
 		this.scaleFactor = scaleFactor;
 		this.multiColored = multiColored;
 		this.setLayout(null);	// Use null layout for absolute positioning
-		colors = new Color[this.box.getRectangles().size()];
+		//colors = new Color[this.box.getRectangles().size()];
 		
 		this.setBackground(Color.white);
 
@@ -39,7 +39,7 @@ public class BoxPanel extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		
-		if (this.multiColored) setRandomColors();
+//		if (this.multiColored) setRandomColors();
 		
 //		addMouseListener(new MouseAdapter() {
 //            @Override
@@ -50,12 +50,12 @@ public class BoxPanel extends JPanel {
 			
 	}
 	
-	public void setRandomColors() {
-		int i = 0;
-		for (Rectangle rect : box.getRectangles()) {
-			colors[i++] = ColorGenerator.randomTransparentRGBColor(); // Set color for rectangle filling
-		}
-	}
+//	public void setRandomColors() {
+//		int i = 0;
+//		for (Rectangle rect : box.getRectangles()) {
+//			colors[i++] = ColorGenerator.randomTransparentRGBColor(); // Set color for rectangle filling
+//		}
+//	}
 
 //	public int getNRectangles() {
 //		return this.box.getRectangles().size();

@@ -17,7 +17,14 @@ public class Rectangle {
 	private boolean rotated;
 	private final Color color;
 
-	
+	public Rectangle(Point pos, int width, int length, Color color) {
+		this.pos = pos;
+		this.width = width;
+		this.height = length;
+		this.rotated = false;
+		this.color = color;
+	}
+
 	public Rectangle(Point pos, int width, int length) {
 		this.pos = pos;
 		this.width = width;
@@ -136,8 +143,9 @@ public class Rectangle {
 	
 	@Override
 	public Rectangle clone() {
-		Rectangle newRectangle = new Rectangle(this.width, this.height);
-		newRectangle.setPos(new Point(this.pos.getX(), this.pos.getY()));
+		Point pos = new Point(this.pos.getX(), this.pos.getY());
+		Rectangle newRectangle = new Rectangle(pos, this.width, this.height, this.color);
+		//newRectangle.setPos(new Point(this.pos.getX(), this.pos.getY()));
 		return newRectangle;
 	}
 	
