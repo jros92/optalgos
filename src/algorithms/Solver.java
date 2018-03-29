@@ -27,6 +27,9 @@ public class Solver implements Runnable {
 	
 	private long maxIterations;
 	private int numberOfNeighbors;
+
+	/* Sleep duration between iterations in milliseconds */
+	private int sleepDuration;
 	
 	/* TRUE if the algorithm execution is paused (e.g. by the user) */
 	private boolean pause = false;
@@ -53,7 +56,9 @@ public class Solver implements Runnable {
 		
 		this.maxIterations = maxIterations;
 		this.numberOfNeighbors = numberOfNeighbors;
-		
+
+		this.sleepDuration = 250;
+
 //		this.algorithm.setNeighborhood(neighborhood);
 	}
 	
@@ -74,7 +79,11 @@ public class Solver implements Runnable {
 	public void setViewer(FormSolutionViewer viewer) {
 		this.viewer = viewer;
 	}
-	
+
+	public void setSleepDuration(int sleepDuration) {
+		this.sleepDuration = sleepDuration;
+	}
+
 	public void solve() throws InterruptedException {
 		       
 		System.out.println("[SOLVER] Started solver for " + objFun + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods.");
@@ -93,8 +102,10 @@ public class Solver implements Runnable {
 
 		
 		
-		FeasibleSolution[] neighbors;		
+		FeasibleSolution[] neighbors;
+		FeasibleSolution neighbor;
 		double cost;
+		double costNeighbor;
 		double[] costs;
 		
 		long i = 0;
@@ -109,24 +120,28 @@ public class Solver implements Runnable {
 				System.out.println("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
 				
 				// Waiting helps debugging
-				System.out.println("[SOLVER] Waiting 500ms ...");
-				Thread.sleep(500);
-				
+				if (this.sleepDuration > 0) {
+					System.out.println("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
+					Thread.sleep(sleepDuration);
+				}
+
 				// Get neighbors
-				neighbors = this.neighborhood.getNeighbors(this.solution, this.numberOfNeighbors);
+				neighbor = this.neighborhood.getNeighbor(this.solution);
 				
 				// Update cost
 				cost = this.objFun.getValue(this.solution);
-				costs = this.objFun.getValuesForNeighbors(neighbors);
+				costNeighbor = this.objFun.getValue(neighbor);
+//				costs = this.objFun.getValuesForNeighbors(neighbors);
 				
 				System.out.println("[SOLVER] Current cost: " + cost);
 				
 				// Determine new solution using algorithm
-				result = this.algorithm.doIteration(cost, costs);
+//				result = this.algorithm.doIteration(cost, costs);
+				result = this.algorithm.doIteration(cost, costNeighbor);
 				
 				// Select new solution
 				if (result >= 0) {
-					this.solution = neighbors[result];
+					this.solution = neighbor;
 					System.out.println("[SOLVER] Found better solution, changing neighborhood.");
 					
 					/* If GUI is active, refresh image */
@@ -134,7 +149,7 @@ public class Solver implements Runnable {
 						updateGUI();
 					}
 				} else {
-					System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbors");
+					System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
 	//				System.out.println("No better solution found, sticking with current one.");
 	//				result = -2;
 	//				System.out.println("Terminating...");

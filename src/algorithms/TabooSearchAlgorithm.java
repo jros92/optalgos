@@ -28,6 +28,11 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	}
 
 	@Override
+	public int doIteration(double currentCost, double neighborCosts) {
+		return 0;
+	}
+
+	@Override
 	public boolean terminated() {
 		// TODO Auto-generated method stub
 		return true;

@@ -20,7 +20,13 @@ public class FeasibleSolution {
 		this.rectangles = new ArrayList<Rectangle>();
 		for(Rectangle r : instance.getRectangles())
 			this.rectangles.add(r.clone());
-		
+	}
+
+	public FeasibleSolution(Instance instance, ArrayList<Rectangle> rectangles) {
+		this.instance = instance;
+		this.boxLength = instance.getBoxLength();
+		this.boxes = new ArrayList<Box>();
+		this.rectangles = rectangles;
 	}
 	
 	public Instance getInstance() {

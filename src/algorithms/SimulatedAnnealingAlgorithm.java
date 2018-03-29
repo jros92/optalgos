@@ -73,6 +73,11 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 	}
 
 	@Override
+	public int doIteration(double currentCost, double neighborCosts) {
+		return 0;
+	}
+
+	@Override
 	public boolean terminated() {
 		//	TODO: termination as soon as “nothing significant has changed” for a while
 		

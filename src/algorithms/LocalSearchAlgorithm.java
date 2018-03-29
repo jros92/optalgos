@@ -55,6 +55,25 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 		return result;
 	}
 
+	@Override
+	public int doIteration(double currentCost, double neighborCosts) {
+		int result = -1;
+
+		if (neighborCosts < currentCost) {
+			currentCost = neighborCosts;
+			result = 0;
+		}
+
+
+		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
+		if (result == -1) this.unsuccessfulAttempts += 1;
+		else this.unsuccessfulAttempts = 0;
+
+		System.out.println("[ALGORITHM] # of unsuccessful iterations is now " + this.unsuccessfulAttempts);
+
+		return result;
+	}
+
 	/**
 	 * Should the algorithm keep iterating?
 	 * @return false if termination condition has been met.

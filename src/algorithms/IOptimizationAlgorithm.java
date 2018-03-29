@@ -8,7 +8,9 @@ package algorithms;
 public interface IOptimizationAlgorithm {
 	
 	public int doIteration(double currentCost, double[] neighborsCosts);
-	
+
+	public int doIteration(double currentCost, double neighborCosts);
+
 	public boolean terminated();
 	
 	public String toString();

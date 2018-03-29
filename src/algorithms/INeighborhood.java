@@ -14,7 +14,9 @@ public interface INeighborhood {
 	 * @param solution
 	 * @return
 	 */
-	public FeasibleSolution[] getNeighbors(FeasibleSolution solution, int numberOfNeighbors);
-	
+//	public FeasibleSolution[] getNeighbors(FeasibleSolution solution, int numberOfNeighbors);
+
+	public FeasibleSolution getNeighbor(FeasibleSolution solution);
+
 	public String toString();
 }

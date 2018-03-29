@@ -11,92 +11,77 @@ import algorithms.Neighborhood;
  *
  */
 public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood {
-	
-//	private IProblemInitializer problemInitializer;
-	
+
+
+	private int indexSmall, indexBig;
+
 	public NeighborhoodRuleBased() {
 		super("Rule-based");
-//		problemInitializer = new SimpleInitializer();
+		this.indexSmall = 1;	// start at 2nd rectangle, leave 1st in place (TODO: change this?)
 	}
 	
-	
-	
+
 	/**
-	 * Return a specified number of neighbors as an array
-	 * @param solution
-	 * @param numberOfNeighbors
+	 * Return a neighbor
+	 * @param oldSolution
 	 * @return
 	 */
 	@Override
-	public FeasibleSolution[] getNeighbors(FeasibleSolution solution, int numberOfNeighbors) {
+	public FeasibleSolution getNeighbor(FeasibleSolution oldSolution) {
 
-		ArrayList<Rectangle> oldRectangles = solution.getRectangles();
+		ArrayList<Rectangle> oldRectangles = oldSolution.getRectangles();
 		int nRectangles = oldRectangles.size();
-		int boxLength = solution.getBoxLength();
-		
-		if (nRectangles < numberOfNeighbors) numberOfNeighbors = nRectangles;
-		
+		int boxLength = oldSolution.getBoxLength();
 
-		FeasibleSolution[] solutions = new FeasibleSolution[numberOfNeighbors];
-		Random rand = new Random();
-		
-		for (int i = 0; (i < numberOfNeighbors) && (i < nRectangles); ++i) {
-//			int switchIndex = Math.round((float)rand.nextFloat() * (nRectangles - 1));
-			int switchIndex = i;
-			// Switch up rectangles (i) and (n-i)
-			Rectangle temp = oldRectangles.get(switchIndex);
-			oldRectangles.set(switchIndex, oldRectangles.get(nRectangles-1-switchIndex));
-			oldRectangles.set(nRectangles-1-switchIndex, temp);
-//			solutions[i] = problemInitializer.initialize(solution.getInstance());
-			
-			
-			
-			// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now.
-			/* Create and add first box */
-			solutions[i] = new FeasibleSolution(solution.getInstance());
-			Box currentBox = new Box(boxLength);
-			solutions[i].addBox(currentBox);
-			
-			Rectangle currentRectangle;
-			
-			// Fill boxes randomly (Create "bad" start state)
-			// Actually, this is already a pretty good solution
-			for (int j = 0; j < nRectangles; j++) {
-				//currentRectangle = oldRectangles.get(j);				
-				currentRectangle = solutions[i].getRectangles().get(j);
 
-				int	addedResult = currentBox.addRectangleAtFirstFreePosition(currentRectangle);
+		// Switch up rectangles (i) and (n-i)
+		Rectangle temp = oldRectangles.get(indexSmall);
+		oldRectangles.set(indexSmall, oldRectangles.get(nRectangles-1-indexSmall));
+		oldRectangles.set(nRectangles-1-indexSmall, temp);
 
-				if (addedResult <= 0) {
-					if (addedResult < 0) {
-						// current rectangle has not been placed, so process it again in next loop step 
-						--j;
-					}
-					
-					if (j < nRectangles - 1) {
-						// If this is not the last rectangle and it has successfully been placed within a box, dont open a new one
-						currentBox = new Box(boxLength);
-						solutions[i].addBox(currentBox);
-					}
+			
+		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now.
+		/* Create and add first box */
+		FeasibleSolution neighbor = new FeasibleSolution(oldSolution.getInstance(), oldRectangles);
+		Box currentBox = new Box(boxLength);
+		neighbor.addBox(currentBox);
+			
+		Rectangle currentRectangle;
+
+		String solutionListOfRectangles = "";
+
+		for (int j = 0; j < nRectangles; j++) {
+			//currentRectangle = oldRectangles.get(j);
+			currentRectangle = neighbor.getRectangles().get(j);
+
+			int	addedResult = currentBox.addRectangleAtFirstFreePosition(currentRectangle);
+
+			if (addedResult <= 0) {
+				if (addedResult < 0) {
+					// current rectangle has not been placed, so process it again in next loop step
+					--j;
 				}
-				
-				
-//				if ((currentBox.getMaxFreeDistance() < currentRectangle.getWidth()) && (currentBox.getMaxFreeDistance() < currentRectangle.getLength())) {
-//					// Create new box
-//					boxes.add(currentBox);
-//					currentBox = new Box(instance.getBoxLength());
-//					
-//					currentBox.addRectangleAtFirstFreePosition(currentRectangle);
-//					
-//				}
-//				
-				
+
+				if (j < nRectangles - 1) {
+					// If this is not the last rectangle and it has successfully been placed within a box, dont open a new one
+					currentBox = new Box(boxLength);
+					neighbor.addBox(currentBox);
+				}
+			}  else {
+				solutionListOfRectangles += currentRectangle.toString() + ", ";
 			}
+
 		}
-	
-		return solutions;
+
+		System.out.println("[NEIGHBORHOOD] Solution with (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles);
+
+		++this.indexSmall; // TODO: when all neighbors have been looked at, tell the algorithm that it has to terminate or sth...
+
+		return neighbor;
 	}
-	
+
+
+
 //	// Super simple and kinda stupid rule
 //	@Override
 //	public FeasibleSolution[] getNeighbors(FeasibleSolution solution, int numberOfNeighbors) {
