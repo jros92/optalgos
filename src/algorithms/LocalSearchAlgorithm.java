@@ -12,7 +12,7 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	private static String name = "Local Search";
 //	private INeighborhood neighborhood;
 	
-	public LocalSearchAlgorithm(int terminateAfterNAttempts) {
+	LocalSearchAlgorithm(int terminateAfterNAttempts) {
 		super(name);
 		this.terminateAfterNAttempts = terminateAfterNAttempts;
 		this.unsuccessfulAttempts = 0;
@@ -75,8 +75,8 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	}
 
 	/**
-	 * Should the algorithm keep iterating?
-	 * @return false if termination condition has been met.
+	 * Determines if the algorithm should keep iterating or terminate
+	 * @return true if termination condition has been met.
 	 */
 	public boolean terminated() {
 //		if (unsuccessfulAttempts >= terminateAfterNAttempts) return true;

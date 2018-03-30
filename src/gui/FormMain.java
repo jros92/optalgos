@@ -42,6 +42,13 @@ public class FormMain extends JFrame {
 	private JMenu menu;
 	private JMenuItem menuItem;
 
+
+	/* Parameters to be tuned */
+	long maxIterations = 100000L;
+	//			long maxIterations = 30;
+	int numberOfNeighbors = 10000;
+	int sleepDuration = 0;	// in ms
+
 	/**
 	 * Launch the application.
 	 */
@@ -370,15 +377,12 @@ public class FormMain extends JFrame {
 	 */
 	public void startAndShowSolver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
 		if (listCurrentInstances.getSelectedValue() != null) {
-			long maxIterations = 10000L;
-//			long maxIterations = 30;
-			int numberOfNeighbors = 10000;
 
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
 			Solver solver = new Solver(algorithm, neighborhood, new ObjectiveFunction(), listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
-			solver.setSleepDuration(0);
+			solver.setSleepDuration(sleepDuration);
 
 			// Start the solver thread
 			Thread solverThread = new Thread(solver);

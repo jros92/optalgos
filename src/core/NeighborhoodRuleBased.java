@@ -1,11 +1,9 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import algorithms.INeighborhood;
 import algorithms.Neighborhood;
-import org.w3c.dom.css.Rect;
 
 /**
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
@@ -70,12 +68,12 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 					neighbor.addBox(currentBox);
 				}
 			}  else {
-				solutionListOfRectangles += currentRectangle.toString() + ", ";
+//				solutionListOfRectangles += currentRectangle.toString() + ", ";	// used for debugging
 			}
 
 		}
 
-		System.out.println("[NEIGHBORHOOD] Returned solution with the following ordered set of (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles);
+//		System.out.println("[NEIGHBORHOOD] Returned solution with the following ordered set of (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles); // used for debugging
 		return neighbor;
 	}
 

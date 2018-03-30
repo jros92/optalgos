@@ -90,7 +90,9 @@ public class Solver implements Runnable {
 	public void solve() throws InterruptedException {
 		       
 		System.out.println("[SOLVER] Started solver for " + objFun + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods.");
-		
+
+		/* Start timing */
+		long startTimeNano = System.nanoTime();
 		
 		/* If GUI is active, refresh image */
 //		if (viewer != null) {
@@ -185,10 +187,16 @@ public class Solver implements Runnable {
 				}
 			}
 		}
-		
+
+		/* Stop timing */
+		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
+		long taskTimeMillis = taskTimeNano / 1000000;
+
 		System.out.println("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
 				+ "=============================================\n");
 		solution.printToConsole();
+
+		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 	}
 	
 	/**
