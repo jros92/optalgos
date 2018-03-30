@@ -44,7 +44,10 @@ public class FormSolutionViewer extends JFrame {
 	public FormSolutionViewer(FeasibleSolution solution, int x, int y, int dpi) {
 		this.solution = solution;
 
-		this.scaleFactor = (int) Math.round(dpi / 6);
+//		double scaleFactorInitialValueQuotient = 0.3181 * Math.sqrt(solution.getRectangles().size()) - 1.2896;
+		double scaleFactorInitialValueQuotient = 1;
+		this.scaleFactor = (int) Math.ceil(dpi / (6 * scaleFactorInitialValueQuotient));
+
 
 		this.multiColored = true;
 		

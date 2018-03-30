@@ -33,7 +33,7 @@ public class FormMain extends JFrame {
 	private DialogAddInstance dialogAddInstance;
 	private DefaultListModel<Instance> instanceListModel;
 	private DefaultListModel<Algorithms> algosListModel;
-	private DefaultListModel<INeighborhood> neighborhoodListModel;
+	private DefaultListModel<Neighborhoods> neighborhoodListModel;
 	private JList<Instance> listCurrentInstances;
 	private FeasibleSolution feasibleSolution;
 	private int dpi;
@@ -197,7 +197,7 @@ public class FormMain extends JFrame {
 		scrollPaneNeighborhoods.setBounds((leftColWidth-10)/2 + 10, 223, (leftColWidth-10)/2, leftColHeight);
 		contentPane.add(scrollPaneNeighborhoods);
 		
-		JList<INeighborhood> listNeighborhoods = new JList<INeighborhood>();
+		JList<Neighborhoods> listNeighborhoods = new JList<Neighborhoods>();
 		scrollPaneNeighborhoods.setViewportView(listNeighborhoods);
 		listNeighborhoods.setEnabled(false);
 		listNeighborhoods.setFont(fontStandard);
@@ -229,9 +229,9 @@ public class FormMain extends JFrame {
 		listAlgorithms.setModel(algosListModel);
 		
 		// Fill Neighborhood list
-		neighborhoodListModel = new DefaultListModel<INeighborhood>();
-//		neighborhoodListModel.addElement(new NeighborhoodGeometric());
-		neighborhoodListModel.addElement(new NeighborhoodRuleBased());
+		neighborhoodListModel = new DefaultListModel<Neighborhoods>();
+		neighborhoodListModel.addElement(Neighborhoods.Geometric);
+		neighborhoodListModel.addElement(Neighborhoods.RuleBased);
 		listNeighborhoods.setModel(neighborhoodListModel);
 		
 		
@@ -366,15 +366,16 @@ public class FormMain extends JFrame {
 	/**
 	 * Instantiate a solver with the chosen instance, algorithm and neighborhood
 	 * @param algorithmChoice
-	 * @param neighborhood
+	 * @param neighborhoodChoice
 	 */
-	public void startAndShowSolver(Algorithms algorithmChoice, INeighborhood neighborhood) {
+	public void startAndShowSolver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
 		if (listCurrentInstances.getSelectedValue() != null) {
 			long maxIterations = 10000L;
 //			long maxIterations = 30;
 			int numberOfNeighbors = 10000;
 
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
+			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
 			Solver solver = new Solver(algorithm, neighborhood, new ObjectiveFunction(), listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
 			solver.setSleepDuration(0);

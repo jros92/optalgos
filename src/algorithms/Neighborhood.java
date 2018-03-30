@@ -1,5 +1,9 @@
 package algorithms;
 
+import core.NeighborhoodGeometric;
+import core.NeighborhoodRuleBased;
+import core.Neighborhoods;
+
 public abstract class Neighborhood {
 
 	private final String name;
@@ -15,5 +19,22 @@ public abstract class Neighborhood {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	public static INeighborhood generateInstance(Neighborhoods choice) {
+		INeighborhood result;
+		switch (choice) {
+			case Geometric:
+				result = new NeighborhoodGeometric();
+				break;
+			case RuleBased:
+				result = new NeighborhoodRuleBased();
+				break;
+			default:
+				result = new NeighborhoodRuleBased();
+				break;
+		}
+
+		return result;
 	}
 }
