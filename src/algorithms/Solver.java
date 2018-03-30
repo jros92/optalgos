@@ -26,6 +26,7 @@ public class Solver implements Runnable {
 	private FormSolutionViewer viewer;
 	
 	private long maxIterations;
+	private double boundWorseNeighbor;
 	private int numberOfNeighbors;
 
 	/* Sleep duration between iterations in milliseconds */
@@ -58,6 +59,8 @@ public class Solver implements Runnable {
 		this.numberOfNeighbors = numberOfNeighbors;
 
 		this.sleepDuration = 250;
+
+		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
 
 //		this.algorithm.setNeighborhood(neighborhood);
 	}
@@ -127,33 +130,49 @@ public class Solver implements Runnable {
 
 				// Get neighbors
 				neighbor = this.neighborhood.getNeighbor(this.solution);
-				
-				// Update cost
-				cost = this.objFun.getValue(this.solution);
-				costNeighbor = this.objFun.getValue(neighbor);
-//				costs = this.objFun.getValuesForNeighbors(neighbors);
-				
-				System.out.println("[SOLVER] Current cost: " + cost);
-				
-				// Determine new solution using algorithm
-//				result = this.algorithm.doIteration(cost, costs);
-				result = this.algorithm.doIteration(cost, costNeighbor);
-				
-				// Select new solution
-				if (result >= 0) {
-					this.solution = neighbor;
-					System.out.println("[SOLVER] Found better solution, changing neighborhood.");
-					
-					/* If GUI is active, refresh image */
-					if (viewer != null) {
-						updateGUI();
+
+				if (neighbor != null) {
+
+					// Update cost
+					cost = this.objFun.getValue(this.solution);
+					costNeighbor = this.objFun.getValue(neighbor);
+					//				costs = this.objFun.getValuesForNeighbors(neighbors);
+
+					System.out.println("[SOLVER] Current cost: " + cost);
+
+					// Determine new solution using algorithm
+					//				result = this.algorithm.doIteration(cost, costs);
+					result = this.algorithm.doIteration(cost, costNeighbor);
+
+					// Select new solution
+					if (result >= 0) {
+						this.solution = neighbor;
+						System.out.println("[SOLVER] Found better solution, changing neighborhood.");
+
+						/* If GUI is active, refresh image */
+						if (viewer != null) {
+							updateGUI();
+						}
+					} else {
+						System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
+
+						if (costNeighbor <= cost + this.boundWorseNeighbor) {
+							// Store the best neighbor that is still acceptable,
+							// in case the searched neighborhood does not have a better solution
+							// TODO: implement
+						}
+
+
+						//				System.out.println("No better solution found, sticking with current one.");
+						//				result = -2;
+						//				System.out.println("Terminating...");
+						//				solution = solution;
+
+
 					}
 				} else {
-					System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
-	//				System.out.println("No better solution found, sticking with current one.");
-	//				result = -2;
-	//				System.out.println("Terminating...");
-	//				solution = solution;
+					// neighbor returned is null, that means neighborhood has been searched and no better solution has been found
+					// TODO: implement
 				}
 
 
@@ -167,8 +186,7 @@ public class Solver implements Runnable {
 			}
 		}
 		
-		System.out.println("[SOLVER] Terminated after " + i + " iterations."
-				+ "[SOLVER] Delivered solution below\n\n"
+		System.out.println("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
 				+ "=============================================\n");
 		solution.printToConsole();
 	}

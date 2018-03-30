@@ -9,7 +9,6 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 
 	private int terminateAfterNAttempts;
 	private int unsuccessfulAttempts;
-	
 	private static String name = "Local Search";
 //	private INeighborhood neighborhood;
 	
@@ -41,6 +40,7 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 		int numberOfNeighbors = neighborsCosts.length;
 		for (int i = 0; i < numberOfNeighbors; ++i) {
 			if (neighborsCosts[i] < currentCost) {
+				// If a better neighbor is found, tell the solver to make this the new solution
 				currentCost = neighborsCosts[i];
 				result = i;
 			}

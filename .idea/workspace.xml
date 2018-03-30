@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71254bae-9642-416b-b147-0b2203d937cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/TestNeighborhoodRuleBased.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/FeasibleSolution.java" afterPath="$PROJECT_DIR$/src/core/FeasibleSolution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java" afterPath="$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/Solver.java" afterPath="$PROJECT_DIR$/src/algorithms/Solver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" afterPath="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FormMain.java" afterPath="$PROJECT_DIR$/src/gui/FormMain.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,24 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TestNeighborhoodRuleBased.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/TestNeighborhoodRuleBased.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="246" column="57" lean-forward="false" selection-start-line="246" selection-start-column="57" selection-end-line="246" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#605#616#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestCases3x3.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/TestCases3x3.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="885">
-              <caret line="67" column="13" lean-forward="true" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+            <state relative-caret-position="575">
+              <caret line="36" column="48" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,8 +46,8 @@
       <file leaf-file-name="NeighborhoodRuleBased.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+            <state relative-caret-position="200">
+              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,8 +85,8 @@
       <file leaf-file-name="FormMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="248" column="65" lean-forward="true" selection-start-line="248" selection-start-column="65" selection-end-line="248" selection-end-column="65" />
+            <state relative-caret-position="423">
+              <caret line="377" column="0" lean-forward="true" selection-start-line="377" selection-start-column="0" selection-end-line="377" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -117,11 +105,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Solver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Solver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="50" column="8" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="52" selection-end-column="83" />
+            <state relative-caret-position="340">
+              <caret line="175" column="17" lean-forward="true" selection-start-line="175" selection-start-column="17" selection-end-line="175" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalSearchAlgorithm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-782">
+              <caret line="14" column="61" lean-forward="false" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -178,12 +176,9 @@
         <option value="$PROJECT_DIR$/src/core/Rectangle.java" />
         <option value="$PROJECT_DIR$/src/gui/BoxPanel.java" />
         <option value="$PROJECT_DIR$/src/algorithms/INeighborhood.java" />
-        <option value="$PROJECT_DIR$/src/algorithms/Solver.java" />
         <option value="$PROJECT_DIR$/src/algorithms/IOptimizationAlgorithm.java" />
-        <option value="$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased_kindaWorkingWithMultiple.java" />
         <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased_StartedSomething.java" />
-        <option value="$PROJECT_DIR$/src/gui/FormMain.java" />
         <option value="$PROJECT_DIR$/src/algorithms/DummyAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java" />
@@ -191,8 +186,11 @@
         <option value="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
         <option value="$PROJECT_DIR$/src/test/TestCases3x3.java" />
         <option value="$PROJECT_DIR$/src/core/FeasibleSolution.java" />
-        <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
         <option value="$PROJECT_DIR$/src/test/TestNeighborhoodRuleBased.java" />
+        <option value="$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java" />
+        <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
+        <option value="$PROJECT_DIR$/src/gui/FormMain.java" />
+        <option value="$PROJECT_DIR$/src/algorithms/Solver.java" />
       </list>
     </option>
   </component>
@@ -300,7 +298,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android JUnit.TestNeighborhoodRuleBased.testGetNeighbor">
+  <component name="RunManager" selected="Application.FormMain">
     <configuration name="All in optalgos" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="optalgos" />
@@ -458,9 +456,9 @@
     </list>
     <recent_temporary>
       <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Android JUnit.TestNeighborhoodRuleBased.testGetNeighbor" />
-        <item index="1" class="java.lang.String" itemvalue="Android JUnit.TestCases3x3.testCase6RectanglesLocalSearch" />
-        <item index="2" class="java.lang.String" itemvalue="Application.FormMain" />
+        <item index="0" class="java.lang.String" itemvalue="Application.FormMain" />
+        <item index="1" class="java.lang.String" itemvalue="Android JUnit.TestNeighborhoodRuleBased.testGetNeighbor" />
+        <item index="2" class="java.lang.String" itemvalue="Android JUnit.TestCases3x3.testCase6RectanglesLocalSearch" />
         <item index="3" class="java.lang.String" itemvalue="Android JUnit.All in optalgos" />
       </list>
     </recent_temporary>
@@ -483,7 +481,7 @@
       <workItem from="1520177953636" duration="2521000" />
       <workItem from="1522333411021" duration="8844000" />
       <workItem from="1522407329657" duration="631000" />
-      <workItem from="1522408087487" duration="14040000" />
+      <workItem from="1522408087487" duration="16110000" />
     </task>
     <task id="LOCAL-00001" summary="Rectangle colors truly fixed">
       <created>1522334324193</created>
@@ -506,16 +504,17 @@
       <option name="project" value="LOCAL" />
       <updated>1522415142759</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added test case for NBH R-B, fixed bugs, works now">
+      <created>1522432591873</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1522432591873</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 19h 38m 43s.xml">
-      <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
-    </history-entry>
-    <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 19h 39m 56s.xml">
-      <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
-    </history-entry>
     <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 19h 40m 20s.xml">
       <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
     </history-entry>
@@ -540,9 +539,15 @@
     <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 19h 55m 37s.xml">
       <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
     </history-entry>
+    <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 19h 56m 49s.xml">
+      <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
+    </history-entry>
+    <history-entry file="TestNeighborhoodRuleBased_testGetNeighbor - 2018.03.30 at 20h 23m 27s.xml">
+      <configuration name="TestNeighborhoodRuleBased.testGetNeighbor" configurationId="AndroidJUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26590000" />
+    <option name="totallyTimeSpent" value="28660000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -595,7 +600,8 @@
     <MESSAGE value="Rectangle colors truly fixed" />
     <MESSAGE value="More changes to get NBH RB working. Not done yet." />
     <MESSAGE value="Worked on Objective Function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Worked on Objective Function" />
+    <MESSAGE value="Added test case for NBH R-B, fixed bugs, works now" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added test case for NBH R-B, fixed bugs, works now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -680,8 +686,8 @@
         <state relative-caret-position="2680">
           <caret line="148" column="36" lean-forward="false" selection-start-line="148" selection-start-column="36" selection-end-line="148" selection-end-column="36" />
           <folding>
-            <element signature="e#2083#2084#0" expanded="true" />
-            <element signature="e#2124#2125#0" expanded="true" />
+            <element signature="e#2188#2189#0" expanded="true" />
+            <element signature="e#2229#2230#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -778,8 +784,8 @@
         <state relative-caret-position="2680">
           <caret line="148" column="36" lean-forward="true" selection-start-line="148" selection-start-column="36" selection-end-line="148" selection-end-column="36" />
           <folding>
-            <element signature="e#2083#2084#0" expanded="true" />
-            <element signature="e#2124#2125#0" expanded="true" />
+            <element signature="e#2188#2189#0" expanded="true" />
+            <element signature="e#2229#2230#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -924,14 +930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="55" column="5" lean-forward="false" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased_kindaWorkingWithMultiple.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1009,37 +1007,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="248" column="65" lean-forward="true" selection-start-line="248" selection-start-column="65" selection-end-line="248" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="50" column="8" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="52" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
           <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/TestCases3x3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="67" column="13" lean-forward="true" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1053,22 +1025,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
+    <entry file="file://$PROJECT_DIR$/src/test/TestNeighborhoodRuleBased.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+        <state relative-caret-position="400">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#605#616#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/TestCases3x3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="36" column="48" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-782">
+          <caret line="14" column="61" lean-forward="false" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/TestNeighborhoodRuleBased.java">
+    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="246" column="57" lean-forward="false" selection-start-line="246" selection-start-column="57" selection-end-line="246" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#605#616#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="200">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="377" column="0" lean-forward="true" selection-start-line="377" selection-start-column="0" selection-end-line="377" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="175" column="17" lean-forward="true" selection-start-line="175" selection-start-column="17" selection-end-line="175" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>

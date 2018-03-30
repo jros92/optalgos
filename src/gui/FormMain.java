@@ -370,14 +370,15 @@ public class FormMain extends JFrame {
 	 */
 	public void startAndShowSolver(Algorithms algorithmChoice, INeighborhood neighborhood) {
 		if (listCurrentInstances.getSelectedValue() != null) {
-//			long maxIterations = 1000000L;
-			long maxIterations = 30;
+			long maxIterations = 10000L;
+//			long maxIterations = 30;
 			int numberOfNeighbors = 10000;
 
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 
 			Solver solver = new Solver(algorithm, neighborhood, new ObjectiveFunction(), listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
-	
+			solver.setSleepDuration(0);
+
 			// Start the solver thread
 			Thread solverThread = new Thread(solver);
 			solverThread.start();

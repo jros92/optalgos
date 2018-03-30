@@ -39,7 +39,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		FeasibleSolution neighbor = new FeasibleSolution(oldSolution.getInstance(), oldRectangles);
 
 		// Switch up list of rectangles of neighbor
-		reorderRectangles(neighbor.getRectangles());
+		if (reorderRectangles(neighbor.getRectangles()) == false) return null;
 
 		/* Create solution (Boxes) */
 
@@ -80,7 +80,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 	}
 
 
-	public void reorderRectangles(ArrayList<Rectangle> neighborsRectangles) {
+	public boolean reorderRectangles(ArrayList<Rectangle> neighborsRectangles) {
 		int nRectangles = neighborsRectangles.size();
 
 		if (this.indexBig == -1) this.indexBig = nRectangles - 1;	// Initialize indexBig
@@ -89,8 +89,6 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 			++this.indexSmall;
 			this.indexBig = nRectangles - 1; // Reset indexBig
 		}
-
-
 
 		// Switch up rectangles
 		Rectangle temp = neighborsRectangles.get(this.indexSmall);
@@ -102,10 +100,12 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 			// terminate
 			// TODO: when all neighbors have been looked at, tell the algorithm that it has to terminate or sth...
 			System.out.println("[NEIGHBORHOOD] Entire neighborhood has been searched.");
+			return false;
 		} else {
-//			if (this.indexBig > this.indexSmall)
-				--this.indexBig;
+			--this.indexBig;
 		}
+
+		return true;
 	}
 
 //	// Super simple and kinda stupid rule
