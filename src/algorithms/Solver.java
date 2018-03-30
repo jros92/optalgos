@@ -11,7 +11,10 @@ import core.SimpleInitializer;
 import gui.FormSolutionViewer;
 
 /**
- * Controls the execution of the algorithm
+ * Controls and handles the execution of the algorithm
+ * Should be called as its own thread, example:
+ * Thread solverThread = new Thread(solver); solverThread.start();
+ *
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
@@ -93,20 +96,8 @@ public class Solver implements Runnable {
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
-		
-		/* If GUI is active, refresh image */
-//		if (viewer != null) {
-//
-////				viewer.solutionDisplayPanel.revalidate();
-////				viewer.solutionDisplayPanel.repaint();
-//			viewer.revalidate();
-////				viewer.repaint();
-//			viewer.repaintCustom();
-//		}
-//		algorithm.initialize(); // TODO: not necessary because already initialized, right?
 
-		
-		
+		/* Initializations */
 		FeasibleSolution[] neighbors;
 		FeasibleSolution neighbor;
 		double cost;
@@ -115,7 +106,8 @@ public class Solver implements Runnable {
 		
 		long i = 0;
 		int result = -1;
-		
+
+		/* Iteration */
 //		while (i < 1) {
 		while ((i < this.maxIterations) && (result >= -1)) {
 			if (this.pause) {
@@ -205,15 +197,6 @@ public class Solver implements Runnable {
 	public void updateGUI() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-//				viewer.solutionDisplayPanel.add(new JButton());
-//				viewer.solutionDisplayPanel.revalidate();
-//				viewer.revalidate();
-//				viewer.repaint();
-//				viewer.repaintCustom();
-				
-//				viewer.solutionDisplayPanel.revalidate();
-//				viewer.solutionDisplayPanel.repaint();
-				
 				viewer.updateSolution(Solver.this.solution);
 				viewer.validate();
 			}

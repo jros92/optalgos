@@ -49,7 +49,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 		String solutionListOfRectangles = "";
 
-		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now. (Check if still true first!)
+		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now. Create a function?
 		for (int j = 0; j < nRectangles; j++) {
 			//currentRectangle = oldRectangles.get(j);
 			currentRectangle = neighbor.getRectangles().get(j);
@@ -106,72 +106,4 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		return true;
 	}
 
-//	// Super simple and kinda stupid rule
-//	@Override
-//	public FeasibleSolution[] getNeighbors(FeasibleSolution solution, int numberOfNeighbors) {
-//		ArrayList<Rectangle> oldRectangles = solution.getInstance().getRectangles();
-//		int n = oldRectangles.size();
-//		
-//		if (n < numberOfNeighbors) numberOfNeighbors = n;
-//		
-//		FeasibleSolution[] solutions = new FeasibleSolution[numberOfNeighbors];
-//
-//		Random rand = new Random();
-//		
-//		for (int i = 0; (i < numberOfNeighbors) && (i < n); ++i) {
-//			// Switch up rectangles (i) and (n-i)
-//			Rectangle temp = oldRectangles.get(i);
-//			oldRectangles.set(i, oldRectangles.get(n-1-i));
-//			oldRectangles.set(n-1-i, temp);
-//			solutions[i] = problemInitializer.initialize(solution.getInstance());
-//		}
-//	
-//		return solutions;
-//	}
-	
-
-//	public FeasibleSolution getNeighbor(FeasibleSolution oldSolution, int index, float seed) {
-//		
-//		Rectangle currentRectangle;
-//			
-//		
-//		ArrayList<Box> boxes = oldSolution.getBoxes();
-//		
-//		
-//		for (int i = 0; i < oldSolution.getnRectangles(); i++) {
-//			currentRectangle = oldSolution.getRectangles().get(i);
-//			
-//			int	addedResult = currentBox.addRectangleAtFirstFreePosition(currentRectangle);
-//	
-//			if (addedResult <= 0) {
-//				if (addedResult < 0) {
-//					// current rectangle has not been placed, so process it again in next loop step 
-//					--i;
-//				}
-//				
-//				if (i < instance.getnRectangles() - 1) {
-//					// If this is not the last rectangle and it has successfully been placed withing a box, dont open a new one
-//					currentBox = new Box(instance.getBoxLength());
-//					initialSolution.addBox(currentBox);
-//				}
-//			}
-//			
-//			
-//	//		if ((currentBox.getMaxFreeDistance() < currentRectangle.getWidth()) && (currentBox.getMaxFreeDistance() < currentRectangle.getLength())) {
-//	//			// Create new box
-//	//			boxes.add(currentBox);
-//	//			currentBox = new Box(instance.getBoxLength());
-//	//			
-//	//			currentBox.addRectangleAtFirstFreePosition(currentRectangle);
-//	//			
-//	//		}
-//	//		
-//		
-//		}
-//		
-//		
-//		return initialSolution;
-//	
-//	}
-	
 }
