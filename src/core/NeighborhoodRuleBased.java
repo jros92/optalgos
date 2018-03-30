@@ -5,6 +5,7 @@ import java.util.Random;
 
 import algorithms.INeighborhood;
 import algorithms.Neighborhood;
+import org.w3c.dom.css.Rect;
 
 /**
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
@@ -17,7 +18,8 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 	public NeighborhoodRuleBased() {
 		super("Rule-based");
-		this.indexSmall = 1;	// start at 2nd rectangle, leave 1st in place (TODO: change this?)
+		this.indexSmall = 0;	// start at 1st rectangle
+		this.indexBig = -1;
 	}
 	
 
@@ -33,16 +35,15 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		int nRectangles = oldRectangles.size();
 		int boxLength = oldSolution.getBoxLength();
 
-
-		// Switch up rectangles (i) and (n-i)
-		Rectangle temp = oldRectangles.get(indexSmall);
-		oldRectangles.set(indexSmall, oldRectangles.get(nRectangles-1-indexSmall));
-		oldRectangles.set(nRectangles-1-indexSmall, temp);
-
-			
-		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now.
-		/* Create and add first box */
+		// Create neighbor as new solution
 		FeasibleSolution neighbor = new FeasibleSolution(oldSolution.getInstance(), oldRectangles);
+
+		// Switch up list of rectangles of neighbor
+		reorderRectangles(neighbor.getRectangles());
+
+		/* Create solution (Boxes) */
+
+		/* Create and add first box */
 		Box currentBox = new Box(boxLength);
 		neighbor.addBox(currentBox);
 			
@@ -50,6 +51,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 		String solutionListOfRectangles = "";
 
+		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now. (Check if still true first!)
 		for (int j = 0; j < nRectangles; j++) {
 			//currentRectangle = oldRectangles.get(j);
 			currentRectangle = neighbor.getRectangles().get(j);
@@ -73,14 +75,38 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 		}
 
-		System.out.println("[NEIGHBORHOOD] Solution with (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles);
-
-		++this.indexSmall; // TODO: when all neighbors have been looked at, tell the algorithm that it has to terminate or sth...
-
+		System.out.println("[NEIGHBORHOOD] Returned solution with the following ordered set of (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles);
 		return neighbor;
 	}
 
 
+	public void reorderRectangles(ArrayList<Rectangle> neighborsRectangles) {
+		int nRectangles = neighborsRectangles.size();
+
+		if (this.indexBig == -1) this.indexBig = nRectangles - 1;	// Initialize indexBig
+
+		if (this.indexBig <= this.indexSmall) {
+			++this.indexSmall;
+			this.indexBig = nRectangles - 1; // Reset indexBig
+		}
+
+
+
+		// Switch up rectangles
+		Rectangle temp = neighborsRectangles.get(this.indexSmall);
+		neighborsRectangles.set(this.indexSmall, neighborsRectangles.get(this.indexBig));
+		neighborsRectangles.set(this.indexBig, temp);
+
+		/* Increment/Reset indices and check termination condition */
+		if (this.indexSmall >= (nRectangles - 1)) {
+			// terminate
+			// TODO: when all neighbors have been looked at, tell the algorithm that it has to terminate or sth...
+			System.out.println("[NEIGHBORHOOD] Entire neighborhood has been searched.");
+		} else {
+//			if (this.indexBig > this.indexSmall)
+				--this.indexBig;
+		}
+	}
 
 //	// Super simple and kinda stupid rule
 //	@Override

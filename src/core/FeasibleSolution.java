@@ -26,7 +26,9 @@ public class FeasibleSolution {
 		this.instance = instance;
 		this.boxLength = instance.getBoxLength();
 		this.boxes = new ArrayList<Box>();
-		this.rectangles = rectangles;
+		this.rectangles =  new ArrayList<Rectangle>();
+		for(Rectangle r : rectangles)
+			this.rectangles.add(r.clone());
 	}
 	
 	public Instance getInstance() {
