@@ -83,19 +83,14 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 	public boolean reorderRectangles(ArrayList<Rectangle> neighborsRectangles) {
 		int nRectangles = neighborsRectangles.size();
 
-		if (this.indexBig == -1) this.indexBig = nRectangles - 1;	// Initialize indexBig
+		if (this.indexBig == -1) this.indexBig = nRectangles;	// Initialize indexBig
 
-		if (this.indexBig <= this.indexSmall) {
+		if (this.indexBig <= this.indexSmall + 1) {
 			++this.indexSmall;
-			this.indexBig = nRectangles - 1; // Reset indexBig
+			this.indexBig = nRectangles; // Reset indexBig
 		}
 
-		// Switch up rectangles
-		Rectangle temp = neighborsRectangles.get(this.indexSmall);
-		neighborsRectangles.set(this.indexSmall, neighborsRectangles.get(this.indexBig));
-		neighborsRectangles.set(this.indexBig, temp);
-
-		/* Increment/Reset indices and check termination condition */
+				/* Increment/Reset indices and check termination condition */
 		if (this.indexSmall >= (nRectangles - 1)) {
 			// terminate
 			// TODO: when all neighbors have been looked at, tell the algorithm that it has to terminate or sth...
@@ -104,6 +99,11 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		} else {
 			--this.indexBig;
 		}
+
+		// Switch up rectangles
+		Rectangle temp = neighborsRectangles.get(this.indexSmall);
+		neighborsRectangles.set(this.indexSmall, neighborsRectangles.get(this.indexBig));
+		neighborsRectangles.set(this.indexBig, temp);
 
 		return true;
 	}

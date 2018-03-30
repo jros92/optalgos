@@ -79,7 +79,7 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	 * @return false if termination condition has been met.
 	 */
 	public boolean terminated() {
-		if (unsuccessfulAttempts >= terminateAfterNAttempts) return true;
+//		if (unsuccessfulAttempts >= terminateAfterNAttempts) return true;
 		
 		return false;
 	}
