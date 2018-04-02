@@ -13,11 +13,14 @@ import java.lang.Math;
 public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizationAlgorithm {
 
 	private CoolingSchedule coolingSchedule;
-	
+
+	private int currentIteration;
+
 	public SimulatedAnnealingAlgorithm() {
 		super("Simulated Annealing");
 //		temperature = 1000;
 		coolingSchedule = new CoolingSchedule();
+		this.currentIteration = 0;
 	}
 	
 //	@Override
@@ -74,13 +77,49 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 
 	@Override
 	public int doIteration(double currentCost, double neighborCosts) {
-		return 0;
+		int result = -1;
+
+		System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[currentIteration]);
+//		System.out.print("[ALGORITHM] Decisions: ");
+
+		for (int i = 0; i < coolingSchedule.sequenceLength[currentIteration]; ++i) {
+				/* ITERATION within cooling window k with n iterations */
+			if (neighborCosts< currentCost) {
+				currentCost = neighborCosts;
+				result = 0;
+			} else {
+				// Make probabilistic yes/no decision whether to take this solution that is worse
+
+				float bias = (float) Math.exp((currentCost - neighborCosts) / coolingSchedule.temperatures[currentIteration]);
+				boolean takeWorseSolution = getRandomBiasedBoolean(bias);
+
+				if (takeWorseSolution) {
+					currentCost = neighborCosts;
+					result = 0;
+//					System.out.print("YES ");
+				} else {
+//					System.out.print("NO ");
+				}
+
+			}
+		}
+
+		++this.currentIteration;
+
+		return result;
 	}
 
 	@Override
 	public boolean terminated() {
+
+
+		if (currentIteration >= this.coolingSchedule.coolingScheduleLength - 1) {
+			System.out.println("[ALGORITHM] Reached end of Cooling Schedule, terminating.");
+			return true;
+		}
+
 		//	TODO: termination as soon as “nothing significant has changed” for a while
-		
+
 		return false;
 	}
 
@@ -100,7 +139,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 }
 
 class CoolingSchedule {
-	int coolingScheduleLength = 20;
+	int coolingScheduleLength = 1000;
 	
 	double c = 10; // TODO: Choose well, dependent on problem
 	

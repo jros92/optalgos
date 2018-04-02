@@ -116,7 +116,7 @@ public class SolutionDisplayPanel extends JPanel {
 		
 		this.neededHeight = neededRows * (boxPanelSize + this.spacing) + 2*this.spacing;
 		
-		System.out.println("boxpanelsize = " + boxPanelSize + ", widthAvailable = " + widthAvailable + ", BoxesPerRow: " + boxesPerRow + ", needed Rows = " + neededRows);
+//		System.out.println("boxpanelsize = " + boxPanelSize + ", widthAvailable = " + widthAvailable + ", BoxesPerRow: " + boxesPerRow + ", needed Rows = " + neededRows);
 		
 		Dimension result = new Dimension(widthAvailable, this.neededHeight);
 		
