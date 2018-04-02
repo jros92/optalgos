@@ -22,6 +22,28 @@ public class FeasibleSolution {
 			this.rectangles.add(r.clone());
 	}
 
+	public FeasibleSolution(Instance instance, boolean emptySolution) {
+		if (emptySolution) {
+			this.instance = instance;
+			this.boxLength = instance.getBoxLength();
+			this.boxes = new ArrayList<Box>();
+			this.rectangles = new ArrayList<Rectangle>();
+		} else {
+			this.instance = instance;
+			this.boxLength = instance.getBoxLength();
+			this.boxes = new ArrayList<Box>();
+			this.rectangles = new ArrayList<Rectangle>();
+			for(Rectangle r : instance.getRectangles())
+				this.rectangles.add(r.clone());
+		}
+	}
+
+	/**
+	 * Create a solution of the same instance, but with a different permutation of rectangles
+	 * To be used ONLY by the rule-based neighborhood
+	 * @param instance
+	 * @param rectangles the new permutation of rectangles
+	 */
 	public FeasibleSolution(Instance instance, ArrayList<Rectangle> rectangles) {
 		this.instance = instance;
 		this.boxLength = instance.getBoxLength();
@@ -30,7 +52,7 @@ public class FeasibleSolution {
 		for(Rectangle r : rectangles)
 			this.rectangles.add(r.clone());
 	}
-	
+
 	public Instance getInstance() {
 		return this.instance;
 	}
@@ -116,5 +138,21 @@ public class FeasibleSolution {
 	public void writeToLog() {
 		System.out.println(printDetailedSolution());
 	}
-	
+
+	/**
+	 * Clone the solution, in order to apply geometric changes for the geometric neighborhood
+	 * @return
+	 */
+	public FeasibleSolution clone() {
+		FeasibleSolution result = new FeasibleSolution(this.instance, true);
+
+		for (Box b : this.boxes) {
+			Box newBox = b.clone();
+			result.boxes.add(newBox);
+			for (Rectangle r : newBox.getRectangles())
+				result.rectangles.add(r);
+		}
+
+		return result;
+	}
 }

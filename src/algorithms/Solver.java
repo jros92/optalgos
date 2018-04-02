@@ -47,10 +47,12 @@ public class Solver implements Runnable {
 	 * @param maxIterations
 	 * @param numberOfNeighbors
 	 */
-	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood, IObjectiveFunction objFun, Instance instance, long maxIterations, int numberOfNeighbors) {
+	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood, Instance instance, long maxIterations, int numberOfNeighbors) {
 		this.algorithm = algorithm;
 		this.neighborhood = neighborhood;
-		this.objFun = objFun;
+
+
+		this.objFun = neighborhood.getPreferredObjectiveFunction();
 		
 		/* Initialize a "bad" solution */
 		IProblemInitializer problemInitializer = new SimpleInitializer();

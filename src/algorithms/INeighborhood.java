@@ -18,5 +18,7 @@ public interface INeighborhood {
 
 	public FeasibleSolution getNeighbor(FeasibleSolution solution);
 
+	public IObjectiveFunction getPreferredObjectiveFunction();
+
 	public String toString();
 }

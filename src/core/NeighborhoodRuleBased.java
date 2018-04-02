@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 
 import algorithms.INeighborhood;
+import algorithms.IObjectiveFunction;
 import algorithms.Neighborhood;
 
 /**
@@ -19,7 +20,11 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		this.indexSmall = 0;	// start at 1st rectangle
 		this.indexBig = -1;
 	}
-	
+
+	@Override
+	public IObjectiveFunction getPreferredObjectiveFunction() {
+		return new ObjectiveFunction();
+	}
 
 	/**
 	 * Return a neighbor

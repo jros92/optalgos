@@ -134,12 +134,7 @@ public class Rectangle {
 		this.width = tmp;
 		rotated = true;
 	}
-	
-//	public void draw(Graphics page, Color color)
-//	{
-//	    page.setColor(color);
-//	    page.drawRect(pos.getX(), pos.getY(), width, height);
-//	}
+
 	
 	@Override
 	public Rectangle clone() {

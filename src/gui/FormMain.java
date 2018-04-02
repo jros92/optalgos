@@ -381,7 +381,7 @@ public class FormMain extends JFrame {
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
-			Solver solver = new Solver(algorithm, neighborhood, new ObjectiveFunction(), listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
+			Solver solver = new Solver(algorithm, neighborhood, listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
 			solver.setSleepDuration(sleepDuration);
 
 			// Start the solver thread

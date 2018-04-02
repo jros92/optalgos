@@ -254,5 +254,46 @@ public class Box {
 			return false;
 		}
 	}
+
+	/**
+	 * Add a rectangle to the box at the lower right corner. Only works if rectangle does not overlap.
+	 * Need to remove rectangle from old box if returns true.
+	 * @param rectangle
+	 * @return true if successful, false if not because there was not enough space at lower right
+	 */
+	public boolean addRectangleAtLowerRight(Rectangle rectangle) {
+		/* Calculate new position of rectangle */
+		Point pos = new Point(this.length - rectangle.getWidth(), this.length - rectangle.getHeight());
+
+		/* Check if rectangle would intersect with any other rectangles */
+		Rectangle rectangleAtNewPosition = new Rectangle(pos, rectangle.getWidth(), rectangle.getHeight());
+		if (intersectsOtherRectangles(rectangleAtNewPosition)) {
+			// Intersection found, return false
+			return false;
+		} else {
+
+			/* Add Rectangle at Position */
+			rectangle.setPos(pos);
+			this.rectangles.add(rectangle);
+
+			/* Update Free Positions */
+			this.freePositions.remove(pos);
+
+			return true;
+		}
+	}
+
+	public Box clone() {
+		Box result = new Box(this.length);
+		result.freePositions.remove(0);
+
+		for (Rectangle r : this.rectangles)
+			result.rectangles.add(r.clone());
+
+		for (Point p : this.freePositions)
+			result.freePositions.add(p);
+
+		return result;
+	}
 		
 }

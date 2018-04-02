@@ -36,7 +36,7 @@ public class TestCases3x3 {
 
         IOptimizationAlgorithm algorithm = Algorithm.generateInstance(Algorithms.LocalSearch);
 
-        Solver solver = new Solver(algorithm, new NeighborhoodRuleBased(), new ObjectiveFunction(), instance, 30, 50);
+        Solver solver = new Solver(algorithm, new NeighborhoodRuleBased(), instance, 30, 50);
         solver.setSleepDuration(0);
 
         // Start the solver thread
