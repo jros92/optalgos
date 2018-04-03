@@ -46,7 +46,7 @@ public class FormMain extends JFrame {
 	private DefaultListModel<Solver> solverListModel;
 
 	/* Parameters to be tuned */
-	long maxIterations = 1000L;
+	long maxIterations = 10000L;
 	//			long maxIterations = 30;
 	int numberOfNeighbors = 10000;
 	int sleepDuration = 0;	// in ms

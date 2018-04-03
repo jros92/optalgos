@@ -9,7 +9,9 @@ import algorithms.Neighborhood;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Geometric Neighborhood for the 'rectangle fitting' problem
@@ -46,13 +48,18 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 		FeasibleSolution neighbor = oldSolution.clone();
 
 
-
 		// Get the box to empty
-		Box boxToEmpty = neighbor.findLeastFilledBox(ignoredBoxes);
+//		Box boxToEmpty = neighbor.findLeastFilledBox(ignoredBoxes);
+		Box boxToEmpty = null;
+		List<Box> filteredBoxes = neighbor.getBoxes().stream().filter(box -> !ignoredBoxes.contains(box))
+				.collect(Collectors.toList());
+		boxToEmpty = filteredBoxes.get((int)(Math.random() * filteredBoxes.size()));
+//				.findAny().get();
 
 		System.out.println("Box to empty: " + boxToEmpty.getId());
 
-		Rectangle rectangle = boxToEmpty.getRectangles().get(indexRectangle);
+//		Rectangle rectangle = boxToEmpty.getRectangles().get(indexRectangle);
+		Rectangle rectangle = boxToEmpty.getRectangles().get(0);
 		System.out.println("Rectangle to move: [" + indexRectangle + "], " + rectangle.toString());
 		indexRectangle++;
 		if (indexRectangle >= boxToEmpty.getRectangles().size()) {
