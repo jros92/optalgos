@@ -134,8 +134,6 @@ public class Solver implements Runnable {
 					costNeighbor = this.objFun.getValue(neighbor);
 					//				costs = this.objFun.getValuesForNeighbors(neighbors);
 
-					System.out.println("[SOLVER] Current cost: " + cost);
-
 					// Determine new solution using algorithm
 					//				result = this.algorithm.doIteration(cost, costs);
 					result = this.algorithm.doIteration(cost, costNeighbor);
@@ -143,7 +141,7 @@ public class Solver implements Runnable {
 					// Select new solution
 					if (result >= 0) {
 						this.solution = neighbor;
-						System.out.println("[SOLVER] Found better solution, changing neighborhood.");
+						System.out.println("[SOLVER] Found better solution, changing neighborhood. New solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + costNeighbor);
 
 						/* If GUI is active, refresh image */
 						if (viewer != null) {

@@ -32,8 +32,4 @@ public class ObjectiveFunctionGeometric implements IObjectiveFunction {
         return result;
     }
 
-    @Override
-    public double[] getValuesForNeighbors(FeasibleSolution[] solutions) {
-        return new double[0];
-    }
 }

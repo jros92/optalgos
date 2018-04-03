@@ -134,7 +134,8 @@ public class Box {
 	
 	/**
 	 * Check if rectangle would intersect with any other rectangles
-	 * @return
+	 * @param rect The rectangle to check
+	 * @return true if intersection was found
 	 */
 	private boolean intersectsOtherRectangles(Rectangle rect) {
 		for (Rectangle otherRect : this.getRectangles()) {
@@ -143,9 +144,24 @@ public class Box {
 		}
 		return false;
 	}
+
+	/**
+	 * Check if rectangle would intersect with any other rectangles, with one exclusion
+	 * @param rect The rectangle to check
+	 * @param excludedRect The rectangle to exclude from the test (for translation, e.g.)
+	 * @return true if intersection was found
+	 */
+	private boolean intersectsOtherRectangles(Rectangle rect, Rectangle excludedRect) {
+		for (Rectangle otherRect : this.getRectangles()) {
+			if (rect == otherRect) continue;	// Do not have to check this for same rectangle
+			if (otherRect == excludedRect) continue;
+			if (rect.intersects(otherRect)) return true;
+		}
+		return false;
+	}
 	
 	public void removeRectangle(Rectangle rectangle) {
-		rectangle.setPos(-1, -1);
+//		rectangle.setPos(-1, -1); // CANNOT DO THIS!!!
 		this.rectangles.remove(rectangle);
 	}
 	
@@ -283,6 +299,57 @@ public class Box {
 		}
 	}
 
+	/**
+	 * Try to apply a translation of one length unit to the specified rectangle in the specified direction.
+	 * Translation only gets applied if no intersection between rectangles will be created.
+	 * @param r The rectangle to translate
+	 * @param dir the direction of the translation
+	 * @return true if translation was applied, false if not
+	 */
+	public boolean tryTranslate(Rectangle r, TranslationDirections dir) {
+
+		Rectangle rectangleAtNewPosition = r.clone();
+
+		translate(rectangleAtNewPosition, dir);
+
+		if (intersectsOtherRectangles(rectangleAtNewPosition, r)) {
+			// Intersection found, return false
+			return false;
+		} else {
+			translate(r, dir);
+			return true;
+		}
+	}
+
+	/**
+	 * Apply a translation of one length unit to the specified rectangle in the specified direction.
+	 * Does not check for intersections!
+	 * @param r The rectangle to translate
+	 * @param dir The direction of the translation
+	 */
+	private void translate(Rectangle r, TranslationDirections dir) {
+		switch (dir) {
+			case Up:
+				r.moveUp();
+				break;
+			case Right:
+				r.moveRight();
+				break;
+			case Down:
+				r.moveDown();
+				break;
+			case Left:
+				r.moveLeft();
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * Clone an entire box and all of the contained rectangles. Retain the positions of the rectangles as well.
+	 * @return
+	 */
 	public Box clone() {
 		Box result = new Box(this.length);
 		result.freePositions.remove(0);

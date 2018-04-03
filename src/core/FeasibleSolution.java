@@ -140,8 +140,9 @@ public class FeasibleSolution {
 	}
 
 	/**
-	 * Clone the solution, in order to apply geometric changes for the geometric neighborhood
-	 * @return
+	 * Clone the solution, particularly all the boxes with containing rectangles at the correct positions,
+	 * in order to apply geometric changes for the geometric neighborhood
+	 * @return A copy of the solution
 	 */
 	public FeasibleSolution clone() {
 		FeasibleSolution result = new FeasibleSolution(this.instance, true);
