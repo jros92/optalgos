@@ -32,6 +32,8 @@ public class Solver implements Runnable {
 	private double boundWorseNeighbor;
 	private int numberOfNeighbors;
 
+	private double currentCost;
+
 	/* Sleep duration between iterations in milliseconds */
 	private int sleepDuration;
 	
@@ -58,7 +60,9 @@ public class Solver implements Runnable {
 		FeasibleSolution initialSolution = problemInitializer.initialize(instance);
 		
 		this.solution = initialSolution;	
-		
+
+		this.currentCost = this.objFun.getValue(this.solution);
+
 		this.maxIterations = maxIterations;
 		this.numberOfNeighbors = numberOfNeighbors;
 
@@ -101,7 +105,6 @@ public class Solver implements Runnable {
 		/* Initializations */
 		FeasibleSolution[] neighbors;
 		FeasibleSolution neighbor;
-		double cost;
 		double costNeighbor;
 		double[] costs;
 		
@@ -109,7 +112,6 @@ public class Solver implements Runnable {
 		int result = -1;
 
 		/* Iteration */
-//		while (i < 1) {
 		while ((i < this.maxIterations) && (result >= -1)) {
 			if (this.pause) {
 				System.out.println("[SOLVER] Execution paused");
@@ -126,21 +128,25 @@ public class Solver implements Runnable {
 				// Get neighbors
 				neighbor = this.neighborhood.getNeighbor(this.solution);
 
+				/* If there are still new neighbors within neighborhood */
 				if (neighbor != null) {
 
-					// Update cost
-					cost = this.objFun.getValue(this.solution);
+					/* Update costs */
+//					cost = this.objFun.getValue(this.solution); // TODO: Unnötige Arbeit
 					costNeighbor = this.objFun.getValue(neighbor);
-					//				costs = this.objFun.getValuesForNeighbors(neighbors);
+					//	costs = this.objFun.getValuesForNeighbors(neighbors);
 
-					// Determine new solution using algorithm
-					//				result = this.algorithm.doIteration(cost, costs);
-					result = this.algorithm.doIteration(cost, costNeighbor);
+					/* Determine new solution using algorithm */
+					//	result = this.algorithm.doIteration(cost, costs);
+					result = this.algorithm.doIteration(this.currentCost, costNeighbor);
 
 					// Select new solution
 					if (result >= 0) {
-						this.solution = neighbor;
-						System.out.println("[SOLVER] Found better solution, changing neighborhood. New solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + costNeighbor);
+						this.solution = neighbor;			// Update solution
+						this.currentCost = costNeighbor;	// Update cost
+
+						System.out.println("[SOLVER] Found better solution, changing neighborhood. New solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
+
 
 						/* If GUI is active, refresh image */
 						if (viewer != null) {
@@ -149,7 +155,7 @@ public class Solver implements Runnable {
 					} else {
 						System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
 
-						if (costNeighbor <= cost + this.boundWorseNeighbor) {
+						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
 							// Store the best neighbor that is still acceptable,
 							// in case the searched neighborhood does not have a better solution
 							// TODO: implement
@@ -164,7 +170,8 @@ public class Solver implements Runnable {
 
 					}
 				} else {
-					// neighbor returned is null, that means neighborhood has been searched and no better solution has been found
+					// neighbor returned is null, that means the neighborhood has been searched
+					// and no better solution has been found
 					// TODO: implement
 				}
 

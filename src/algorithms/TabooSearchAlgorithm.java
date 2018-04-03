@@ -3,14 +3,22 @@
  */
 package algorithms;
 
+import core.Rectangle;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+
 /**
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
 public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgorithm {
 
+	private LinkedList tabuList;
+
 	public TabooSearchAlgorithm() {
 		super("Taboo Search");
+		tabuList = new LinkedList();
 	}
 
 //	@Override
@@ -23,7 +31,11 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 
 	@Override
 	public int doIteration(double currentCost, double[] neighborsCosts) {
-		// TODO Auto-generated method stub
+
+		// Find index of best neighbor to return to solver
+		double max = Arrays.stream(neighborsCosts).max().getAsDouble();
+//		int maxInd = Arrays.stream(array).max().i
+
 		return 0;
 	}
 
