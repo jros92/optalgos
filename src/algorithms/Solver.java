@@ -34,6 +34,8 @@ public class Solver implements Runnable {
 
 	private double currentCost;
 
+	private long lastGuiUpdate = 0;
+
 	/* Sleep duration between iterations in milliseconds */
 	private int sleepDuration;
 	
@@ -150,7 +152,7 @@ public class Solver implements Runnable {
 
 						/* If GUI is active, refresh image */
 						if (viewer != null) {
-							updateGUI();
+							changesToDisplay();
 						}
 					} else {
 						System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
@@ -195,8 +197,24 @@ public class Solver implements Runnable {
 		solution.printToConsole();
 
 		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
+
+		if (viewer != null) {
+			updateGUI();
+		}
 	}
-	
+
+	/**
+	 * updates the GUI if conditions are met
+	 */
+	private void changesToDisplay() {
+		long currentTime = System.currentTimeMillis();
+		if (this.lastGuiUpdate + 1000 < currentTime) {
+			updateGUI();
+			System.out.println("GUI update");
+			this.lastGuiUpdate = currentTime;
+		}
+	}
+
 	/**
 	 * Update the solution in the GUI, using the Event Dispatch Thread
 	 */

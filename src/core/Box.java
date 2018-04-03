@@ -13,11 +13,13 @@ import java.util.ArrayList;
 public class Box {
 	
 	private int length;
+	private int id;
 	private ArrayList<Rectangle> rectangles;
 	private ArrayList<Point> freePositions;
 	
-	public Box(int length) {
+	public Box(int length, int id) {
 		this.length = length;
+		this.id = id;
 		this.rectangles = new ArrayList<Rectangle>();
 		this.freePositions = new ArrayList<Point>();
 		this.freePositions.add(new Point(0, 0));
@@ -26,7 +28,11 @@ public class Box {
 	public int getLength() {
 		return this.length;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
 	public ArrayList<Rectangle> getRectangles() {
 		return this.rectangles;
 	}
@@ -159,10 +165,16 @@ public class Box {
 		}
 		return false;
 	}
-	
-	public void removeRectangle(Rectangle rectangle) {
+
+	/**
+	 * Remove rectangle from this box. Caller needs remove the box if return value is true.
+	 * @param rectangle
+	 * @return true if empty after removal, false otherwise
+	 */
+	public boolean removeRectangle(Rectangle rectangle) {
 //		rectangle.setPos(-1, -1); // CANNOT DO THIS!!!
 		this.rectangles.remove(rectangle);
+		return (this.getRectangles().size() == 0);
 	}
 	
 	public ArrayList<Point> getFreePositions() {
@@ -351,7 +363,7 @@ public class Box {
 	 * @return
 	 */
 	public Box clone() {
-		Box result = new Box(this.length);
+		Box result = new Box(this.length, this.id);
 		result.freePositions.remove(0);
 
 		for (Rectangle r : this.rectangles)
@@ -362,5 +374,7 @@ public class Box {
 
 		return result;
 	}
-		
+
+
+
 }

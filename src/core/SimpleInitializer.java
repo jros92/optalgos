@@ -14,9 +14,11 @@ public class SimpleInitializer implements IProblemInitializer {
 		Rectangle currentRectangle;
 
 		/* Create and add first box */
-		Box currentBox = new Box(instance.getBoxLength());
+		Box currentBox = new Box(instance.getBoxLength(), 0);
 		initialSolution.addBox(currentBox);
-		
+
+		int boxIndex = 1;
+
 		// Fill boxes randomly (Create "bad" start state)
 		// Actually, this is already a pretty good solution
 		for (int i = 0; i < initialSolution.getRectangles().size(); i++) {
@@ -32,8 +34,9 @@ public class SimpleInitializer implements IProblemInitializer {
 				
 				if (i < initialSolution.getRectangles().size() - 1) {
 					// If this is not the last rectangle and it has successfully been placed withing a box, dont open a new one
-					currentBox = new Box(initialSolution.getBoxLength());
+					currentBox = new Box(initialSolution.getBoxLength(), boxIndex);
 					initialSolution.addBox(currentBox);
+					boxIndex++;
 				}
 			}
 			

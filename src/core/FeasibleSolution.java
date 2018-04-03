@@ -1,6 +1,9 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Optional;
 
 public class FeasibleSolution {
 	
@@ -104,7 +107,22 @@ public class FeasibleSolution {
 		result /= ((double)this.boxes.size() * (double)this.boxLength * (double)this.boxLength);
 		return result;
 	}
-	
+
+
+	/**
+	 * Find Box with smallest packing percentage in solution
+	 * @ignoredBoxes boxes to ignore (from neighborhood)
+	 * @return box with minimal packing percentage
+	 */
+	public Box findLeastFilledBox(LinkedList<Box> ignoredBoxes) {
+		return this.boxes
+				.parallelStream()
+				.filter(box -> !ignoredBoxes.contains(box))
+				.min(Comparator.comparing(Box::getPackingPercentage))
+				.get();
+
+	}
+
 	
 	/**
 	 * 

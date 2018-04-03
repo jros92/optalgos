@@ -133,16 +133,13 @@ public class SolutionDisplayPanel extends JPanel {
 		this.setLayout(layout);
 		
 		/* Place the boxes */
-		int boxNo = 0;
 		for (Box box : solution.getBoxes()) {
 			BoxPanel boxPanel = new BoxPanel(box, scaleFactor, this.multiColored);
 			// Display no. of rectangles contained in tooltip
-			boxPanel.setToolTipText(String.format("Box " + boxNo + " contains " + box.getRectangles().size() + " rectangles and uses %.2f%% of space.", box.getPackingPercentage()*100));
+			boxPanel.setToolTipText(String.format("Box " + box.getId() + " contains " + box.getRectangles().size() + " rectangles and uses %.2f%% of space.", box.getPackingPercentage()*100));
 			this.add(boxPanel);
 	//		solutionDisplayPanel.setSize(this.getWidth(), 500); 
 			boxPanel.setVisible(true);
-			
-			boxNo++;
 		}
 		
 //		this.revalidate();

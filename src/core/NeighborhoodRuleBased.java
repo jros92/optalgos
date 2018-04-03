@@ -47,7 +47,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		/* Create solution (Boxes) */
 
 		/* Create and add first box */
-		Box currentBox = new Box(boxLength);
+		Box currentBox = new Box(boxLength, 0);
 		neighbor.addBox(currentBox);
 			
 		Rectangle currentRectangle;
@@ -69,7 +69,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 				if (j < nRectangles - 1) {
 					// If this is not the last rectangle and it has successfully been placed within a box, dont open a new one
-					currentBox = new Box(boxLength);
+					currentBox = new Box(boxLength, j+1);
 					neighbor.addBox(currentBox);
 				}
 			}  else {
