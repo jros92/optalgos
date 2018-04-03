@@ -42,6 +42,8 @@ public class FormMain extends JFrame {
 	private JMenu menu;
 	private JMenuItem menuItem;
 
+	private JList<Solver> listSolvers;
+	private DefaultListModel<Solver> solverListModel;
 
 	/* Parameters to be tuned */
 	long maxIterations = 100000L;
@@ -219,7 +221,27 @@ public class FormMain extends JFrame {
 		rightPanel.add(btnGo);
 		
 		dialogAddInstance = new DialogAddInstance(this);
-		
+
+
+		/* Enable to maintain list of open solvers */
+		JLabel lblSolvers = new JLabel("Solvers / Solutions");
+		lblSolvers.setFont(fontLarger);
+		lblSolvers.setBounds(5, 330, 165, 24);
+		contentPane.add(lblSolvers);
+
+		JScrollPane scrollPaneSolvers = new JScrollPane();
+		scrollPaneSolvers.setBounds(5, 350, leftColWidth, 150);
+		contentPane.add(scrollPaneSolvers);
+
+		listSolvers = new JList<>();
+		solverListModel = new DefaultListModel<>();
+		listSolvers.setModel(solverListModel);
+
+		scrollPaneSolvers.setViewportView(listSolvers);
+		listSolvers.setEnabled(true);
+		listSolvers.setFont(fontStandard);
+
+
 		/* Initialization Done */
 		
 		/* Fill models */
@@ -240,7 +262,9 @@ public class FormMain extends JFrame {
 		neighborhoodListModel.addElement(Neighborhoods.Geometric);
 		neighborhoodListModel.addElement(Neighborhoods.RuleBased);
 		listNeighborhoods.setModel(neighborhoodListModel);
-		
+
+
+
 		
 		/* Add Action Listeners */
 		
@@ -383,6 +407,9 @@ public class FormMain extends JFrame {
 
 			Solver solver = new Solver(algorithm, neighborhood, listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
 			solver.setSleepDuration(sleepDuration);
+
+			// add solver to list of solvers
+			solverListModel.addElement(solver);
 
 			// Start the solver thread
 			Thread solverThread = new Thread(solver);

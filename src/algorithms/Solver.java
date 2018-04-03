@@ -39,10 +39,9 @@ public class Solver implements Runnable {
 	private boolean pause = false;
 	
 	/**
-	 * Instantiate a new solver for a given instance, algorithm, neighborhood and objective function
+	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
 	 * @param algorithm
 	 * @param neighborhood
-	 * @param objFun
 	 * @param instance
 	 * @param maxIterations
 	 * @param numberOfNeighbors
@@ -94,7 +93,7 @@ public class Solver implements Runnable {
 
 	public void solve() throws InterruptedException {
 		       
-		System.out.println("[SOLVER] Started solver for " + objFun + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods.");
+		System.out.println("[SOLVER] Started " + this.toString() + ".");
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
@@ -203,5 +202,7 @@ public class Solver implements Runnable {
 		});
 	}
 
-
+	public String toString() {
+		return "Solver for " + this.solution.getInstance().toString() + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods";
+	}
 }

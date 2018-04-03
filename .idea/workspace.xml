@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71254bae-9642-416b-b147-0b2203d937cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/core/TranslationDirections.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/IObjectiveFunction.java" afterPath="$PROJECT_DIR$/src/algorithms/IObjectiveFunction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/Solver.java" afterPath="$PROJECT_DIR$/src/algorithms/Solver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/Box.java" afterPath="$PROJECT_DIR$/src/core/Box.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/FeasibleSolution.java" afterPath="$PROJECT_DIR$/src/core/FeasibleSolution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" afterPath="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/ObjectiveFunctionGeometric.java" afterPath="$PROJECT_DIR$/src/core/ObjectiveFunctionGeometric.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FormMain.java" afterPath="$PROJECT_DIR$/src/gui/FormMain.java" />
     </list>
@@ -40,8 +35,8 @@
       <file leaf-file-name="FormMain.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1771">
-              <caret line="385" column="0" lean-forward="true" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
+            <state relative-caret-position="1000">
+              <caret line="75" column="8" lean-forward="true" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -64,8 +59,8 @@
       <file leaf-file-name="Solver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+            <state relative-caret-position="-680">
+              <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -84,8 +79,8 @@
       <file leaf-file-name="NeighborhoodGeometric.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodGeometric.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="715">
-              <caret line="64" column="34" lean-forward="true" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+            <state relative-caret-position="375">
+              <caret line="30" column="56" lean-forward="true" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#844#860#0" expanded="false" />
@@ -191,13 +186,13 @@
         <option value="$PROJECT_DIR$/src/core/Rectangle.java" />
         <option value="$PROJECT_DIR$/src/core/TranslationDirections.java" />
         <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
-        <option value="$PROJECT_DIR$/src/core/ObjectiveFunctionGeometric.java" />
         <option value="$PROJECT_DIR$/src/algorithms/IObjectiveFunction.java" />
         <option value="$PROJECT_DIR$/src/core/FeasibleSolution.java" />
         <option value="$PROJECT_DIR$/src/core/Box.java" />
-        <option value="$PROJECT_DIR$/src/algorithms/Solver.java" />
         <option value="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
+        <option value="$PROJECT_DIR$/src/algorithms/Solver.java" />
         <option value="$PROJECT_DIR$/src/gui/FormMain.java" />
+        <option value="$PROJECT_DIR$/src/core/ObjectiveFunctionGeometric.java" />
       </list>
     </option>
   </component>
@@ -518,7 +513,7 @@
       <workItem from="1522450484802" duration="602000" />
       <workItem from="1522451101055" duration="1593000" />
       <workItem from="1522683200795" duration="9836000" />
-      <workItem from="1522746111034" duration="5582000" />
+      <workItem from="1522746111034" duration="6894000" />
     </task>
     <task id="LOCAL-00001" summary="Rectangle colors truly fixed">
       <created>1522334324193</created>
@@ -597,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522698466196</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Continued Geometric Neighborhood and supporting functions">
+      <created>1522752057584</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1522752057584</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -633,7 +635,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52564000" />
+    <option name="totallyTimeSpent" value="53876000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -656,7 +658,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292978" sideWeight="0.5015625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.4984375" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292978" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -695,7 +697,8 @@
     <MESSAGE value="Cleaned up some old commented code" />
     <MESSAGE value="Simulated Annealing delivering a solution, but not that good and pretty slow" />
     <MESSAGE value="Started Geometric Neighborhood and supporting functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started Geometric Neighborhood and supporting functions" />
+    <MESSAGE value="Continued Geometric Neighborhood and supporting functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Continued Geometric Neighborhood and supporting functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1099,6 +1102,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-680">
+          <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunctionGeometric.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -1107,18 +1118,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodGeometric.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="64" column="34" lean-forward="true" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+        <state relative-caret-position="375">
+          <caret line="30" column="56" lean-forward="true" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#844#860#0" expanded="false" />
@@ -1128,8 +1131,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1771">
-          <caret line="385" column="0" lean-forward="true" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
+        <state relative-caret-position="1000">
+          <caret line="75" column="8" lean-forward="true" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="8" />
           <folding />
         </state>
       </provider>
