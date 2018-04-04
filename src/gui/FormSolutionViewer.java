@@ -112,6 +112,19 @@ public class FormSolutionViewer extends JFrame {
 		menu.getAccessibleContext().setAccessibleDescription("Control displaying options");
 		menuBar.add(menu);
 
+		// Button to print solution to console
+//
+		menuItem = new JMenuItem("Print solution to console");
+		menuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				FormSolutionViewer.this.solution.printToConsole();
+			}
+		});
+		menuItem.setMnemonic(KeyEvent.VK_P);
+//		menuItem.setFont(fontStandard);
+
+		menu.add(menuItem);
+
 		// Group of radio buttons for changing the color scheme
 		menu.addSeparator();
 		menu.add(new JMenuItem("Colors"));

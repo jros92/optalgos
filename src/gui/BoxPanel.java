@@ -20,7 +20,8 @@ public class BoxPanel extends JPanel {
 	private Box box;
 	private int scaleFactor;
 	private boolean multiColored;
-	//private Color[] colors;
+
+	private Color colorMonochrome = new Color(190,190,190);
 	
 	public BoxPanel(Box box, int scaleFactor, boolean multiColored) {
 		super();
@@ -92,7 +93,7 @@ public class BoxPanel extends JPanel {
 			if (multiColored)
 				g.setColor(rect.getColor()); // Set color for rectangle filling
 			else
-				g.setColor(Color.orange); // Set color for rectangle filling
+				g.setColor(colorMonochrome); // Set color for rectangle filling
 			
 			
 			g.fillRect(rect.getPos().getX() * this.scaleFactor, rect.getPos().getY() * this.scaleFactor, 

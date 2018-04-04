@@ -9,7 +9,8 @@ import gui.FormSolutionViewer;
  * Controls and handles the execution of the algorithm
  * Should be called as its own thread, example:
  * Thread solverThread = new Thread(solver); solverThread.start();
- *
+ * One solver controls one algorithm at a time, so a new Solver object
+ * has to be created for each algorithm to be started.
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
@@ -24,12 +25,15 @@ public class Solver implements Runnable {
 	private FormSolutionViewer viewer;
 	
 	private long maxIterations;
+	private int timeLimit = 10; 	// in seconds; set <= 0 if no time criterion for termination is desired
+
+
 	private double boundWorseNeighbor;
 	private int numberOfNeighbors;
 
 	private double currentCost;
 
-	private int guiUpdateFrequency = 500; // in milliseconds
+	private int guiUpdateFrequency = 100; // in milliseconds
 	private long lastGuiUpdate = 0;
 
 	/* Sleep duration between iterations in milliseconds */
@@ -37,7 +41,9 @@ public class Solver implements Runnable {
 	
 	/* TRUE if the algorithm execution is paused (e.g. by the user) */
 	private boolean pause = false;
-	
+
+	private int cntGuiUpdates = 0;	// TODO: Remove after debugging
+
 	/**
 	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
 	 * @param algorithm
@@ -49,16 +55,12 @@ public class Solver implements Runnable {
 	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood, Instance instance, long maxIterations, int numberOfNeighbors) {
 		this.algorithm = algorithm;
 		this.neighborhood = neighborhood;
-
-
 		this.objFun = neighborhood.getPreferredObjectiveFunction();
 		
 		/* Initialize a "bad" solution */
 		IProblemInitializer problemInitializer = new SimpleInitializer();
 		FeasibleSolution initialSolution = problemInitializer.initialize(instance);
-		
-		this.solution = initialSolution;	
-
+		this.solution = initialSolution;
 		this.currentCost = this.objFun.getValue(this.solution);
 
 		this.maxIterations = maxIterations;
@@ -71,8 +73,6 @@ public class Solver implements Runnable {
 		this.sleepDuration = 0; // Default value: 0 ms
 
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
-
-//		this.algorithm.setNeighborhood(neighborhood);
 	}
 	
 	@Override
@@ -91,6 +91,10 @@ public class Solver implements Runnable {
 	
 	public void setViewer(FormSolutionViewer viewer) {
 		this.viewer = viewer;
+	}
+
+	public void setGuiUpdateFrequency(int guiUpdateFrequency) {
+		this.guiUpdateFrequency = guiUpdateFrequency;
 	}
 
 	public void setSleepDuration(int sleepDuration) {
@@ -135,7 +139,8 @@ public class Solver implements Runnable {
 				neighborsCosts = new double[this.numberOfNeighbors];
 				neighborsFeatures = new Feature[this.numberOfNeighbors];
 				int neighborIndex = 0;
-				while ( (neighborIndex < this.numberOfNeighbors) && (neighbors[neighborIndex] = this.neighborhood.getNeighbor(this.solution)) != null ) {
+				while ( (neighborIndex < this.numberOfNeighbors) &&
+						(neighbors[neighborIndex] = this.neighborhood.getNeighbor(this.solution)) != null ) {
 					neighborsSolutions[neighborIndex] = neighbors[neighborIndex].solution;
 					neighborsCosts[neighborIndex] = this.objFun.getValue(neighborsSolutions[neighborIndex]);	// Update costs
 					neighborsFeatures[neighborIndex] = neighbors[neighborIndex].feature;
@@ -148,14 +153,7 @@ public class Solver implements Runnable {
 				/* If there are still new neighbors within neighborhood */
 				if (neighborIndex > 0) {
 
-					/* Update costs */
-//					costNeighbor = this.objFun.getValue(neighbor);
-//					for (int k = 0; k < this.numberOfNeighbors; ++k) {
-//						neighborsCosts[k] = this.objFun.getValue(neighbors[k]);
-//					}
-
 					/* Determine new solution using algorithm */
-					//	result = this.algorithm.doIteration(cost, costs);
 					result = this.algorithm.doIteration(this.currentCost, neighborsCosts, neighborsFeatures);
 
 					// Select new solution
@@ -200,6 +198,12 @@ public class Solver implements Runnable {
 					System.out.println("[SOLVER] Algorithm termination condition reached. Terminating...");
 					break;
 				}
+
+				/* Check the time limit */
+				if ( (this.timeLimit > 0) && ( (System.nanoTime( ) - startTimeNano) / 1000000000 > this.timeLimit) ) {
+					System.out.println("[SOLVER] Time limit reached. Terminating...");
+					break;
+				}
 			}
 		}
 
@@ -214,6 +218,8 @@ public class Solver implements Runnable {
 				"[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
 
 		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
+
+		System.out.println("No. of Gui Updates: " + cntGuiUpdates);
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {
@@ -245,9 +251,11 @@ public class Solver implements Runnable {
 				viewer.validate();
 			}
 		});
+
+		cntGuiUpdates++;
 	}
 
 	public String toString() {
-		return "Solver for " + this.solution.getInstance().toString() + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods";
+		return "Solver for " + this.solution.getInstance().toString() + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods [timeLimit = " + this.timeLimit + "s]";
 	}
 }
