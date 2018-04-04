@@ -274,7 +274,7 @@ public class FormMain extends JFrame {
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (listCurrentInstances.getSelectedIndex() > -1) {
 					btnRemoveInstance.setEnabled(true);
-					btnViewInstance.setEnabled(true);
+					btnViewInstance.setEnabled(listCurrentInstances.getSelectedValue().getGeneratorType() == 2);
 					btnFillAndViewStart.setEnabled(true);
 					listAlgorithms.setEnabled(true);
 					listNeighborhoods.setEnabled(true);
