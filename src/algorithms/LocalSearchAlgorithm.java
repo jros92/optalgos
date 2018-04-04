@@ -22,30 +22,29 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 //	public void setNeighborhood(INeighborhood neighborhood) {
 //		this.neighborhood = neighborhood;
 //	}
-	
+
+	/**
+	 * Perform an iteration of the algorithm
+	 *
+	 * @param currentCost    cost of current solution
+	 * @param neighborsCosts costs of the neighbors
+	 * @param features       The features that were modified for the neighbors
+	 * @return the index of the new solution: -1 if sticking to current solution, 0..n if choosing one of the neighbors
+	 */
 	@Override
-	public int doIteration(double currentCost, double[] neighborsCosts) {
-//		if (neighborhood == null) {
-//			System.out.println("Neighborhood not set. Exiting...");
-//			return -1;
+	public int doIteration(double currentCost, double[] neighborsCosts, Feature[] features) {
+
+		int result = -1;
+//		int numberOfNeighbors = neighborsCosts.length;
+//		for (int i = 0; i < numberOfNeighbors; ++i) {
+
+			if (neighborsCosts[0] < currentCost) {
+				// If a better neighbor is found, tell the solver to make this the new solution
+				result = 0;
+			}
+
 //		}
 		
-//		System.out.println("Iteration of " + LocalSearchAlgorithm.name + " Algorithm.");
-		
-		
-		/* ITERATION STEP */
-		
-//		neighborhood.getNeighbors(solution, 100);
-		int result = -1;
-		int numberOfNeighbors = neighborsCosts.length;
-		for (int i = 0; i < numberOfNeighbors; ++i) {
-			if (neighborsCosts[i] < currentCost) {
-				// If a better neighbor is found, tell the solver to make this the new solution
-				currentCost = neighborsCosts[i];
-				result = i;
-			}
-		}
-		
 		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
 		if (result == -1) this.unsuccessfulAttempts += 1;
 		else this.unsuccessfulAttempts = 0;
@@ -55,24 +54,24 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 		return result;
 	}
 
-	@Override
-	public int doIteration(double currentCost, double neighborCosts) {
-		int result = -1;
+//	public int doIteration(double currentCost, double neighborCosts) {
+//		int result = -1;
+//
+//		if (neighborCosts < currentCost) {
+//			currentCost = neighborCosts;
+//			result = 0;
+//		}
+//
+//
+//		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
+//		if (result == -1) this.unsuccessfulAttempts += 1;
+//		else this.unsuccessfulAttempts = 0;
+//
+//		System.out.println("[ALGORITHM] # of unsuccessful iterations is now " + this.unsuccessfulAttempts);
+//
+//		return result;
+//	}
 
-		if (neighborCosts < currentCost) {
-			currentCost = neighborCosts;
-			result = 0;
-		}
-
-
-		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
-		if (result == -1) this.unsuccessfulAttempts += 1;
-		else this.unsuccessfulAttempts = 0;
-
-		System.out.println("[ALGORITHM] # of unsuccessful iterations is now " + this.unsuccessfulAttempts);
-
-		return result;
-	}
 
 	/**
 	 * Determines if the algorithm should keep iterating or terminate
@@ -81,6 +80,12 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	public boolean terminated() {
 //		if (unsuccessfulAttempts >= terminateAfterNAttempts) return true;
 		
+		return false;
+	}
+
+
+	@Override
+	public boolean needMultipleNeighbors() {
 		return false;
 	}
 

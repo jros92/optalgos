@@ -5,6 +5,7 @@ package core;
 
 import algorithms.INeighborhood;
 import algorithms.IObjectiveFunction;
+import algorithms.Neighbor;
 import algorithms.Neighborhood;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  * Geometric Neighborhood for the 'rectangle fitting' problem
+ * Features are singular rectangles
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
@@ -36,7 +38,7 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 	}
 
     @Override
-    public FeasibleSolution getNeighbor(FeasibleSolution oldSolution) {
+    public Neighbor getNeighbor(FeasibleSolution oldSolution) {
 		if (!oldSolution.equals(previousOldSolution)) {
 			// Algorithm chose previous neighbor, so reset all the instance fields
 			previousOldSolution = oldSolution;
@@ -56,11 +58,11 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 		boxToEmpty = filteredBoxes.get((int)(Math.random() * filteredBoxes.size()));
 //				.findAny().get();
 
-		System.out.println("Box to empty: " + boxToEmpty.getId());
+//		System.out.println("Box to empty: " + boxToEmpty.getId());
 
 //		Rectangle rectangle = boxToEmpty.getRectangles().get(indexRectangle);
 		Rectangle rectangle = boxToEmpty.getRectangles().get(0);
-		System.out.println("Rectangle to move: [" + indexRectangle + "], " + rectangle.toString());
+//		System.out.println("Rectangle to move: [" + indexRectangle + "], " + rectangle.toString());
 		indexRectangle++;
 		if (indexRectangle >= boxToEmpty.getRectangles().size()) {
 			indexRectangle = 0;
@@ -77,7 +79,9 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 			if (b.addRectangleAtFirstFreePosition(rectangle) >= 0) {
 				if (boxToEmpty.removeRectangle(rectangle)) neighbor.removeBox(boxToEmpty);
 				break;
-			} else System.out.println("Rectangle did not fit in box " + b.getId() + ". Moving on to next box.");
+			}
+//			else
+//				System.out.println("Rectangle did not fit in box " + b.getId() + ". Moving on to next box.");
 
 			// If rectangle could not be placed in any box, ignore this box in the future and look at a different box
 			if (i >= boxes.size() - 1) ignoredBoxes.add(boxToEmpty);
@@ -132,8 +136,10 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 //			// TODO: Check for bugs!!!!
 //		}
 
+		/* Assemble neighbor with solution and modified feature (the moved rectangle) */
+		Neighbor result = new Neighbor(neighbor, rectangle);
 
-		return neighbor;
+		return result;
     }
 
 

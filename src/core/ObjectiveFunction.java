@@ -16,14 +16,14 @@ public class ObjectiveFunction implements IObjectiveFunction {
 			weightedCumulativePackingPercentage += (double)box.getRectangles().size() * (double)box.getOccupiedArea();
 		}
 
-		System.out.println("[OBJFUN] weightedCumulativePackingPercentage = " + weightedCumulativePackingPercentage);
+//		System.out.println("[OBJFUN] weightedCumulativePackingPercentage = " + weightedCumulativePackingPercentage);
 
 		double[] weights = new double[] {0.9f, 0.1f};
 //		double[] weights = new double[2];
 //		weights[1] = 1f / (1f + weightedCumulativePackingPercentage / (double)boxCount);
 //		weights[0] = 1f - weights[1];
 
-		System.out.println("[OBJFUN] Weights = [" + weights[0] + ", " + weights[1] + "]");
+//		System.out.println("[OBJFUN] Weights = [" + weights[0] + ", " + weights[1] + "]");
 
 		double result;
 		result = (double)boxCount * (double)weights[0];

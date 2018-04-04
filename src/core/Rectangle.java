@@ -1,16 +1,19 @@
 package core;
 
+import algorithms.Feature;
 import gui.ColorGenerator;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Class to resemble rectangles and provide functions to create, move and rotate them
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
-public class Rectangle {
-	
+public class Rectangle extends Feature {
+
+	// TODO: id and equals method needed for Feature functionality
+
 	private Point pos;
 	private int height;
 	private int width;

@@ -59,7 +59,7 @@ public class TestNeighborhoodRuleBased {
 
         NeighborhoodRuleBased neighborhood = new NeighborhoodRuleBased();
 
-        FeasibleSolution neighbor = neighborhood.getNeighbor(initialSolution);  // neighbor 1
+        FeasibleSolution neighbor = neighborhood.getNeighbor(initialSolution).solution;  // neighbor 1
 //        System.out.println("Neighbor 1 below\n======================");
 //        neighbor.printToConsole();
 //        System.out.println("======================\nNeighbor 1 above\n");
@@ -80,7 +80,7 @@ public class TestNeighborhoodRuleBased {
 
         assertTrue("Rule-Based Neighborhood did not return correct neighbor no. 1.", correctNeighborsReturned);
 
-        neighbor = neighborhood.getNeighbor(initialSolution);   // neighbor 2
+        neighbor = neighborhood.getNeighbor(initialSolution).solution;   // neighbor 2
 //        System.out.println("Neighbor 2 below\n======================");
 //        neighbor.printToConsole();
 //        System.out.println("======================\nNeighbor 2 above\n");
@@ -101,7 +101,7 @@ public class TestNeighborhoodRuleBased {
 
         assertTrue("Rule-Based Neighborhood did not return correct neighbor no. 2.", correctNeighborsReturned);
 
-        neighbor = neighborhood.getNeighbor(initialSolution); // neighbor 3
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // neighbor 3
 //        System.out.println("Neighbor 3 below\n======================");
 //        neighbor.printToConsole();
 //        System.out.println("======================\nNeighbor 3 above\n");
@@ -143,7 +143,7 @@ public class TestNeighborhoodRuleBased {
         );
         assertTrue("Rule-Based Neighborhood did not return correct neighbor no. 4.", correctNeighborsReturned);
 
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 5
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 5
         correctNeighborsReturned &= (
                 (neighbor.getRectangles().get(0).getWidth() == 2) &&
                 (neighbor.getRectangles().get(0).getHeight() == 2) &&
@@ -201,8 +201,8 @@ public class TestNeighborhoodRuleBased {
                 (listOfRectangles.get(5).getHeight() == 2)
         );
         assertTrue("Rule-Based Neighborhood did not return correct neighbor no. 7.", correctNeighborsReturned);
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 8
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 9
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 8
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 9
 
 
         listOfRectangles = new ArrayList<>();
@@ -226,10 +226,10 @@ public class TestNeighborhoodRuleBased {
         );
         assertTrue("Rule-Based Neighborhood did not return correct neighbor no. 10.", correctNeighborsReturned);
 
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 11
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 12
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 13
-        neighbor = neighborhood.getNeighbor(initialSolution); // Neighbor 14
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 11
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 12
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 13
+        neighbor = neighborhood.getNeighbor(initialSolution).solution; // Neighbor 14
 
         listOfRectangles = new ArrayList<>();
         for (Rectangle r : initialSolution.getRectangles())

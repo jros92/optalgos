@@ -2,12 +2,7 @@ package algorithms;
 
 import java.awt.EventQueue;
 
-import javax.swing.JButton;
-
-import core.FeasibleSolution;
-import core.IProblemInitializer;
-import core.Instance;
-import core.SimpleInitializer;
+import core.*;
 import gui.FormSolutionViewer;
 
 /**
@@ -34,6 +29,7 @@ public class Solver implements Runnable {
 
 	private double currentCost;
 
+	private int guiUpdateFrequency = 500; // in milliseconds
 	private long lastGuiUpdate = 0;
 
 	/* Sleep duration between iterations in milliseconds */
@@ -66,9 +62,13 @@ public class Solver implements Runnable {
 		this.currentCost = this.objFun.getValue(this.solution);
 
 		this.maxIterations = maxIterations;
-		this.numberOfNeighbors = numberOfNeighbors;
 
-		this.sleepDuration = 250;
+		if (algorithm.needMultipleNeighbors())
+			this.numberOfNeighbors = numberOfNeighbors;
+		else
+			this.numberOfNeighbors = 1;
+
+		this.sleepDuration = 0; // Default value: 0 ms
 
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
 
@@ -105,10 +105,12 @@ public class Solver implements Runnable {
 		long startTimeNano = System.nanoTime();
 
 		/* Initializations */
-		FeasibleSolution[] neighbors;
+		Neighbor[] neighbors;
+		FeasibleSolution[] neighborsSolutions;
+		Feature[] neighborsFeatures;
 		FeasibleSolution neighbor;
 		double costNeighbor;
-		double[] costs;
+		double[] neighborsCosts;
 		
 		long i = 0;
 		int result = -1;
@@ -127,41 +129,54 @@ public class Solver implements Runnable {
 					Thread.sleep(sleepDuration);
 				}
 
-				// Get neighbors
-				neighbor = this.neighborhood.getNeighbor(this.solution);
+				// Retrieve new neighbors
+				neighbors = new Neighbor[this.numberOfNeighbors];
+				neighborsSolutions = new FeasibleSolution[this.numberOfNeighbors];
+				neighborsCosts = new double[this.numberOfNeighbors];
+				neighborsFeatures = new Feature[this.numberOfNeighbors];
+				int neighborIndex = 0;
+				while ( (neighborIndex < this.numberOfNeighbors) && (neighbors[neighborIndex] = this.neighborhood.getNeighbor(this.solution)) != null ) {
+					neighborsSolutions[neighborIndex] = neighbors[neighborIndex].solution;
+					neighborsCosts[neighborIndex] = this.objFun.getValue(neighborsSolutions[neighborIndex]);	// Update costs
+					neighborsFeatures[neighborIndex] = neighbors[neighborIndex].feature;
+					neighborIndex++;
+				}
+
+//				// Get neighbors
+//				neighbor = this.neighborhood.getNeighbor(this.solution);
 
 				/* If there are still new neighbors within neighborhood */
-				if (neighbor != null) {
+				if (neighborIndex > 0) {
 
 					/* Update costs */
-//					cost = this.objFun.getValue(this.solution); // TODO: Unnötige Arbeit
-					costNeighbor = this.objFun.getValue(neighbor);
-					//	costs = this.objFun.getValuesForNeighbors(neighbors);
+//					costNeighbor = this.objFun.getValue(neighbor);
+//					for (int k = 0; k < this.numberOfNeighbors; ++k) {
+//						neighborsCosts[k] = this.objFun.getValue(neighbors[k]);
+//					}
 
 					/* Determine new solution using algorithm */
 					//	result = this.algorithm.doIteration(cost, costs);
-					result = this.algorithm.doIteration(this.currentCost, costNeighbor);
+					result = this.algorithm.doIteration(this.currentCost, neighborsCosts, neighborsFeatures);
 
 					// Select new solution
 					if (result >= 0) {
-						this.solution = neighbor;			// Update solution
-						this.currentCost = costNeighbor;	// Update cost
+						this.solution = neighborsSolutions[result];			// Update solution
+						this.currentCost = neighborsCosts[result];	// Update cost
 
-						System.out.println("[SOLVER] Found better solution, changing neighborhood. New solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
+						System.out.println("[SOLVER] Chose new solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
 
-
-						/* If GUI is active, refresh image */
+						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
-							changesToDisplay();
+							requestGuiUpdate();
 						}
 					} else {
-						System.out.println("[SOLVER] No better solution in neighborhood, iterating with new neighbor");
+						System.out.println("[SOLVER] Algorithm rejected all the neighbors, iterating with new neighbors from neighborhood");
 
-						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
-							// Store the best neighbor that is still acceptable,
-							// in case the searched neighborhood does not have a better solution
-							// TODO: implement
-						}
+//						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
+//							// Store the best neighbor that is still acceptable,
+//							// in case the searched neighborhood does not have a better solution
+//							// TODO: implement
+//						}
 
 
 						//				System.out.println("No better solution found, sticking with current one.");
@@ -194,21 +209,26 @@ public class Solver implements Runnable {
 
 		System.out.println("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
 				+ "=============================================\n");
-		solution.printToConsole();
+		this.solution.printToConsole();
+		System.out.println("=============================================\n\n"+
+				"[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
 
 		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 
+		/* Force GUI update to display final solution */
 		if (viewer != null) {
 			updateGUI();
 		}
 	}
 
 	/**
-	 * updates the GUI if conditions are met
+	 * Request and update of the GUI.
+	 * Function determines if the GUI will be updated depending on certain conditions
 	 */
-	private void changesToDisplay() {
+	private void requestGuiUpdate() {
+		// TODO: More options to control
 		long currentTime = System.currentTimeMillis();
-		if (this.lastGuiUpdate + 1000 < currentTime) {
+		if (this.lastGuiUpdate + this.guiUpdateFrequency < currentTime) {
 			updateGUI();
 			System.out.println("GUI update");
 			this.lastGuiUpdate = currentTime;
@@ -216,7 +236,7 @@ public class Solver implements Runnable {
 	}
 
 	/**
-	 * Update the solution in the GUI, using the Event Dispatch Thread
+	 * Update the GUI to display the current solution, using the Event Dispatch Thread
 	 */
 	public void updateGUI() {
 		EventQueue.invokeLater(new Runnable() {
