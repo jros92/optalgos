@@ -55,7 +55,7 @@ public class FormSolutionViewer extends JFrame {
 		this.multiColored = true;
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(x, y, 800, 600);
+		setBounds(x, y, 1600, 600);
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
 		
 		this.setBackground(new Color(250, 250, 250));
@@ -150,7 +150,8 @@ public class FormSolutionViewer extends JFrame {
 
 		// Group of radio buttons for changing the color scheme
 		menu.addSeparator();
-		menu.add(new JMenuItem("Color Scheme"));
+		JMenu submenuColors = new JMenu("Color Scheme");
+//		menu.add(new JMenuItem("Color Scheme"));
 		ButtonGroup groupColors = new ButtonGroup();
 		rbMenuItem = new JRadioButtonMenuItem("Mono-colored");
 		rbMenuItem.setSelected(!this.multiColored);
@@ -166,7 +167,7 @@ public class FormSolutionViewer extends JFrame {
             }
         });
 		groupColors.add(rbMenuItem);
-		menu.add(rbMenuItem);
+		submenuColors.add(rbMenuItem);
 
 		rbMenuItem = new JRadioButtonMenuItem("Multi-colored");
 		rbMenuItem.setSelected(this.multiColored);
@@ -182,11 +183,12 @@ public class FormSolutionViewer extends JFrame {
             }
         });
 		groupColors.add(rbMenuItem);
-		menu.add(rbMenuItem);
+		submenuColors.add(rbMenuItem);
+		menu.add(submenuColors);
 		
 		// Zoom slider 
-		menu.addSeparator();
-		menu.add(new JMenuItem("Zoom"));
+//		menu.addSeparator();
+//		menu.add(new JMenuItem("Zoom"));
 		JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
         ChangeListener cl = e -> {
             JSlider sliderValue = (JSlider) e.getSource();
@@ -196,7 +198,9 @@ public class FormSolutionViewer extends JFrame {
         	FormSolutionViewer.this.validate();
         };
         slider.addChangeListener(cl);
-        menu.add(slider);
+//		menu.add(slider);
+		menuBar.add(new JMenuItem("Zoom: "));
+        menuBar.add(slider);
 
 		this.setJMenuBar(menuBar);
 	}
