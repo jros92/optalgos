@@ -420,6 +420,9 @@ public class FormMain extends JFrame {
 			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), (this.getX() + this.getWidth()), this.getY(), this.dpi);
 			solver.setViewer(solutionViewer);
 			solutionViewer.setVisible(true);
+			// Enable display option for Sim. Annealing and Taboo Search, disable for Local Search
+			if (algorithmChoice == Algorithms.LocalSearch) solutionViewer.setCheckBoxShowWorseSolutions(false);
+			else solutionViewer.setCheckBoxShowWorseSolutions(true);
 		} else {
 			System.out.println("Please create and choose and instance first.");
 		}

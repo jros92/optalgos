@@ -22,7 +22,9 @@ public class FormSolutionViewer extends JFrame {
 
 	public SolutionDisplayPanel solutionDisplayPanel;
 	private FeasibleSolution solution;
-	
+
+	private boolean updateWithWorseSolution;
+
 	private boolean multiColored;
 	
 	int scaleFactor = 40;
@@ -32,6 +34,7 @@ public class FormSolutionViewer extends JFrame {
 	JMenuItem menuItem;
 	JRadioButtonMenuItem rbMenuItem;
 	JCheckBoxMenuItem cbMenuItem;
+	JCheckBoxMenuItem cbMenuItemShowWorseSolutions;
 	JScrollPane scrollPane;
 	
 	/**
@@ -57,7 +60,7 @@ public class FormSolutionViewer extends JFrame {
 		
 		this.setBackground(new Color(250, 250, 250));
 		
-		
+
 		solutionDisplayPanel = new SolutionDisplayPanel(this.solution, this.scaleFactor, this.multiColored);		
 		solutionDisplayPanel.updateBoxPanels();
 		
@@ -73,11 +76,16 @@ public class FormSolutionViewer extends JFrame {
 		
 		/* MENU BAR */
 		createMenuBar();
-		
+		this.cbMenuItemShowWorseSolutions.setEnabled(false);
+		this.cbMenuItemShowWorseSolutions.setSelected(false);
+		this.updateWithWorseSolution = false;
 	}
 
 
-	public void updateSolution(FeasibleSolution solution) {
+	public void updateSolution(FeasibleSolution solution, boolean betterSolution) {
+
+		if (!betterSolution & !updateWithWorseSolution) return;
+
 		this.solution = solution;
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
 		
@@ -113,7 +121,6 @@ public class FormSolutionViewer extends JFrame {
 		menuBar.add(menu);
 
 		// Button to print solution to console
-//
 		menuItem = new JMenuItem("Print solution to console");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,13 +128,29 @@ public class FormSolutionViewer extends JFrame {
 			}
 		});
 		menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
 //		menuItem.setFont(fontStandard);
-
 		menu.add(menuItem);
+
+		// Option to select if solutions that are worse will be shown
+		// for Simulated Annealing and Taboo Search
+		menu.addSeparator();
+		cbMenuItemShowWorseSolutions = new JCheckBoxMenuItem("Show only better solutions");
+		cbMenuItemShowWorseSolutions.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				FormSolutionViewer.this.updateWithWorseSolution =
+						FormSolutionViewer.this.cbMenuItemShowWorseSolutions.isSelected();
+				System.out.println("updateWithWorseSolution = " + FormSolutionViewer.this.cbMenuItemShowWorseSolutions.isSelected());
+			}
+		});
+		cbMenuItemShowWorseSolutions.setMnemonic(KeyEvent.VK_B);
+		cbMenuItemShowWorseSolutions.setToolTipText("Only for Simulated Annealing and Taboo Search");
+//		menuItem.setFont(fontStandard);
+		menu.add(cbMenuItemShowWorseSolutions);
 
 		// Group of radio buttons for changing the color scheme
 		menu.addSeparator();
-		menu.add(new JMenuItem("Colors"));
+		menu.add(new JMenuItem("Color Scheme"));
 		ButtonGroup groupColors = new ButtonGroup();
 		rbMenuItem = new JRadioButtonMenuItem("Mono-colored");
 		rbMenuItem.setSelected(!this.multiColored);
@@ -178,4 +201,10 @@ public class FormSolutionViewer extends JFrame {
 		this.setJMenuBar(menuBar);
 	}
 
+
+	public void setCheckBoxShowWorseSolutions(boolean value) {
+		this.cbMenuItemShowWorseSolutions.setEnabled(value);
+		this.cbMenuItemShowWorseSolutions.setSelected(value);
+		this.updateWithWorseSolution = value;
+	}
 }

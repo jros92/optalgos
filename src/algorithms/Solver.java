@@ -161,14 +161,16 @@ public class Solver implements Runnable {
 
 					// Select new solution
 					if (result >= 0) {
-						this.solution = neighborsSolutions[result];			// Update solution
+						boolean betterSolution = this.currentCost > neighborsCosts[result];
+
+						this.solution = neighborsSolutions[result];	// Update solution
 						this.currentCost = neighborsCosts[result];	// Update cost
 
 						System.out.println("[SOLVER] Chose new solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
 
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
-							requestGuiUpdate();
+							requestGuiUpdate(betterSolution);
 						}
 					} else {
 						System.out.println("[SOLVER] Algorithm rejected all the neighbors, iterating with new neighbors from neighborhood");
@@ -228,7 +230,7 @@ public class Solver implements Runnable {
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {
-			updateGUI();
+			updateGUI(true);
 		}
 	}
 
@@ -236,11 +238,11 @@ public class Solver implements Runnable {
 	 * Request and update of the GUI.
 	 * Function determines if the GUI will be updated depending on certain conditions
 	 */
-	private void requestGuiUpdate() {
+	private void requestGuiUpdate(boolean betterSolution) {
 		// TODO: More options to control
 		long currentTime = System.currentTimeMillis();
 		if (this.lastGuiUpdate + this.guiUpdateFrequency < currentTime) {
-			updateGUI();
+			updateGUI(betterSolution);
 			System.out.println("GUI update");
 			this.lastGuiUpdate = currentTime;
 		}
@@ -249,10 +251,10 @@ public class Solver implements Runnable {
 	/**
 	 * Update the GUI to display the current solution, using the Event Dispatch Thread
 	 */
-	public void updateGUI() {
+	public void updateGUI(boolean betterSolution) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				viewer.updateSolution(Solver.this.solution);
+				viewer.updateSolution(Solver.this.solution, betterSolution);
 				viewer.validate();
 			}
 		});
