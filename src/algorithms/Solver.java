@@ -107,6 +107,7 @@ public class Solver implements Runnable {
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
+        long iterationStartTimeNano;
 
 		/* Initializations */
 		Neighbor[] neighbors;
@@ -126,7 +127,9 @@ public class Solver implements Runnable {
 				Thread.sleep(100);
 			} else {
 				System.out.println("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
-				
+
+                iterationStartTimeNano = System.nanoTime();
+
 				// Waiting helps debugging
 				if (this.sleepDuration > 0) {
 					System.out.println("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
@@ -173,7 +176,7 @@ public class Solver implements Runnable {
 //						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
 //							// Store the best neighbor that is still acceptable,
 //							// in case the searched neighborhood does not have a better solution
-//							// TODO: implement
+//							// TODO: implement? Probably not good, algorithm should handle this anyway
 //						}
 
 
@@ -187,7 +190,7 @@ public class Solver implements Runnable {
 				} else {
 					// neighbor returned is null, that means the neighborhood has been searched
 					// and no better solution has been found
-					// TODO: implement
+					// TODO: implement - Probably means that searched area of the neighborhood has to be adjusted
 				}
 
 
@@ -204,6 +207,8 @@ public class Solver implements Runnable {
 					System.out.println("[SOLVER] Time limit reached. Terminating...");
 					break;
 				}
+
+                System.out.println("[SOLVER] Iteration took " + (System.nanoTime() - iterationStartTimeNano) + "ns.");
 			}
 		}
 
