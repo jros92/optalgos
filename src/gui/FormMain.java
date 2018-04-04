@@ -100,7 +100,7 @@ public class FormMain extends JFrame {
 		if (dpi < 40) dpi = 40;
 		this.dpi = dpi;
 		
-		float mainFormHeightFactor = 4.2f;
+		float mainFormHeightFactor = 6f;
 		int leftColWidth = (int)Math.round(dpi*3.8);
 		int leftColHeight = (int)Math.round(dpi*1.1);
 		
@@ -137,7 +137,7 @@ public class FormMain extends JFrame {
 		
 		/* Fill upper area */
 		
-		JLabel lblCurrentInstances = new JLabel("1. Instance");
+		JLabel lblCurrentInstances = new JLabel("1. Instances");
 		lblCurrentInstances.setFont(fontLarger);
 		lblCurrentInstances.setBounds(5, 5, 424, 24);
 		contentPane.add(lblCurrentInstances);
@@ -179,12 +179,12 @@ public class FormMain extends JFrame {
 
 		/* Algorithm Area */
 		
-		JLabel lblAlgorithms = new JLabel("2. Algorithm");
+		JLabel lblAlgorithms = new JLabel("2. Algorithms");
 		lblAlgorithms.setFont(fontLarger);
 		lblAlgorithms.setBounds(5, 194, 165, 24);
 		contentPane.add(lblAlgorithms);
 		
-		JLabel lblNeighborhood = new JLabel("3. Neighborhood");
+		JLabel lblNeighborhood = new JLabel("3. Neighborhoods");
 		lblNeighborhood.setFont(fontLarger);
 		lblNeighborhood.setBounds(175, 194, 165, 24);
 		contentPane.add(lblNeighborhood);
@@ -224,7 +224,7 @@ public class FormMain extends JFrame {
 		dialogAddInstance = new DialogAddInstance(this);
 
 
-		/* Enable to maintain list of open solvers */
+		/* List of open solvers */
 		JLabel lblSolvers = new JLabel("Solvers / Solutions");
 		lblSolvers.setFont(fontLarger);
 		lblSolvers.setBounds(5, 330, 165, 24);
@@ -244,7 +244,8 @@ public class FormMain extends JFrame {
 
 
 		/* Initialization Done */
-		
+
+
 		/* Fill models */
 		
 		// Fill Instance List
@@ -326,9 +327,7 @@ public class FormMain extends JFrame {
 				showUnitializedInstance();
 			}
 		});
-		
 
-		
 		/* Button to initialize an instance */
 		btnFillAndViewStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -368,7 +367,8 @@ public class FormMain extends JFrame {
 		});
 		
 		
-		/* MENU BAR */
+		/* Add a MENU BAR */
+
 		//Create the menu bar.
 		menuBar = new JMenuBar();
 		menuBar.setFont(fontStandard);
@@ -424,7 +424,7 @@ public class FormMain extends JFrame {
 			if (algorithmChoice == Algorithms.LocalSearch) solutionViewer.setCheckBoxShowWorseSolutions(false);
 			else solutionViewer.setCheckBoxShowWorseSolutions(true);
 		} else {
-			System.out.println("Please create and choose and instance first.");
+			System.out.println("Please create and choose an instance first.");
 		}
 	}
 	

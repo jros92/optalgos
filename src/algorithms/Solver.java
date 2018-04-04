@@ -21,7 +21,8 @@ public class Solver implements Runnable {
 	private IObjectiveFunction objFun;
 	
 	private FeasibleSolution solution;
-	
+	private FeasibleSolution initialSolution;
+
 	private FormSolutionViewer viewer;
 	
 	private long maxIterations;
@@ -59,8 +60,8 @@ public class Solver implements Runnable {
 		
 		/* Initialize a "bad" solution */
 		IProblemInitializer problemInitializer = new SimpleInitializer();
-		FeasibleSolution initialSolution = problemInitializer.initialize(instance);
-		this.solution = initialSolution;
+		this.initialSolution = problemInitializer.initialize(instance);
+		this.solution = this.initialSolution.clone();
 		this.currentCost = this.objFun.getValue(this.solution);
 
 		this.maxIterations = maxIterations;
@@ -219,14 +220,22 @@ public class Solver implements Runnable {
 		long taskTimeMillis = taskTimeNano / 1000000;
 
 		System.out.println("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
-				+ "=============================================\n");
+						 + "========================================================================\n");
 		this.solution.printToConsole();
-		System.out.println("=============================================\n\n"+
+		System.out.println("========================================================================\n\n"+
 				"[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
+
+		System.out.println("No. of Gui Updates: " + cntGuiUpdates); // TODO: Disable after debugging
+
+		System.out.println("\nReduced box count by "
+				+ (this.initialSolution.getBoxCount() - this.solution.getBoxCount())
+				+ " | the initial solution used "
+				+ this.initialSolution.getBoxCount()
+				+ " boxes. Nice!");
 
 		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 
-		System.out.println("No. of Gui Updates: " + cntGuiUpdates);
+
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {

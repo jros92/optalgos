@@ -29,7 +29,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 	 * Perform an iteration of the Simulated Annealing algorithm
 	 * @param currentCost cost of current solution
 	 * @param neighborsCosts costs of the neighbors
-	 * @param features Not needed. The features that were modified for the neighbors
+	 * @param features Not needed for this algorithm. The features that were modified for the neighbors
 	 * @return the index of the new solution: -1 if sticking to current solution, 0..n if choosing one of the neighbors
 	 */
 	@Override
@@ -46,7 +46,11 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 			/* Iteration over cooling windows */
 			System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[k]);
 			System.out.print("[ALGORITHM] Decisions: ");
-			for (currentIterationAtTemperature = 0; currentIterationAtTemperature < coolingSchedule.sequenceLength[k]; ++currentIterationAtTemperature) {
+
+			for (currentIterationAtTemperature = 0;
+				 currentIterationAtTemperature < coolingSchedule.sequenceLength[k];
+				 ++currentIterationAtTemperature) {
+
 				/* ITERATION within cooling window k with n iterations */
 				if (neighborsCosts[0] < currentCost) {
 					currentCost = neighborsCosts[k];
@@ -67,6 +71,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 					
 				}
 			}
+
 			System.out.println();
 		}
 		
@@ -115,6 +120,9 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 
 }
 
+/**
+ * A cooling schedule consisting of pairs of temperatures and sequence lengths
+ */
 class CoolingSchedule {
 	int coolingScheduleLength = 10;
 	
