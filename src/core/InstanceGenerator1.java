@@ -20,7 +20,7 @@ public class InstanceGenerator1 implements IInstanceGenerator {
 			int w = rand.nextInt(lMax - lMin + 1) + lMin;
 			
 			// Create rectangle with length and width, without position
-			Rectangle rect = new Rectangle(l, w);
+			Rectangle rect = new Rectangle(l, w, i);
 			
 			// Add generated rectangle to list of rectangles
 			rectangles.add(rect);

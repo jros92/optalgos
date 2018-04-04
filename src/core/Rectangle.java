@@ -17,29 +17,42 @@ public class Rectangle extends Feature {
 	private Point pos;
 	private int height;
 	private int width;
+	private int id;
 	private boolean rotated;
 	private final Color color;
 
-	public Rectangle(Point pos, int width, int length, Color color) {
+	/**
+	 * Constructor for cloning
+	 * @param pos
+	 * @param width
+	 * @param length
+	 * @param id
+	 * @param rotated
+	 * @param color
+	 */
+	public Rectangle(Point pos, int width, int length, int id, boolean rotated, Color color) {
 		this.pos = pos;
 		this.width = width;
 		this.height = length;
-		this.rotated = false;
+		this.id = id;
+		this.rotated = rotated;
 		this.color = color;
 	}
 
-	public Rectangle(Point pos, int width, int length) {
+	public Rectangle(Point pos, int width, int length, int id) {
 		this.pos = pos;
 		this.width = width;
 		this.height = length;
+		this.id = id;
 		this.rotated = false;
 		color = ColorGenerator.randomTransparentRGBColor();
 	}
 
-	public Rectangle(int width, int length) {
+	public Rectangle(int width, int length, int id) {
 		this.pos = new Point(-1, -1);
 		this.width = width;
 		this.height = length;
+		this.id = id;
 		this.rotated = false;
 		color = ColorGenerator.randomTransparentRGBColor();
 	}
@@ -63,7 +76,9 @@ public class Rectangle extends Feature {
 	public int getWidth() {
 		return this.width;
 	}
-	
+
+	public int getId() { return this.id; };
+
 	public boolean isRotated() {
 		return this.rotated;
 	}
@@ -142,14 +157,34 @@ public class Rectangle extends Feature {
 	@Override
 	public Rectangle clone() {
 		Point pos = new Point(this.pos.getX(), this.pos.getY());
-		Rectangle newRectangle = new Rectangle(pos, this.width, this.height, this.color);
+		Rectangle newRectangle = new Rectangle(pos, this.width, this.height, this.id, this.rotated, this.color);
 		//newRectangle.setPos(new Point(this.pos.getX(), this.pos.getY()));
 		return newRectangle;
 	}
 	
 	@Override
 	public String toString() {
-		return "Rectangle <pos = (" + pos.getX() + ", " + pos.getY() + "), W = " + width + ", L = " + height + ">";
+		return "Rectangle <id: " + this.id + " pos = (" + pos.getX() + ", " + pos.getY() + "), W = " + width + ", L = " + height + ">";
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Rectangle rectangle = (Rectangle) o;
+
+//		if (height != rectangle.height) return false;
+//		if (width != rectangle.width) return false;
+		return id == rectangle.id;
+	}
+
+//	@Override
+//	public int hashCode() {
+//		int result = height;
+//		result = 31 * result + width;
+//		result = 31 * result + id;
+//		return result;
+//	}
 	
 }

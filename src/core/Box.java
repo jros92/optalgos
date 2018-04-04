@@ -90,7 +90,7 @@ public class Box {
 				}
 				
 				/* Check if rectangle would intersect with any other rectangles */
-				Rectangle rectangleAtNewPosition = new Rectangle(pos, rectangle.getWidth(), rectangle.getHeight());
+				Rectangle rectangleAtNewPosition = new Rectangle(pos, rectangle.getWidth(), rectangle.getHeight(), rectangle.getId());
 				if (intersectsOtherRectangles(rectangleAtNewPosition)) continue;	// Intersection found, skip this position
 
 			
@@ -294,7 +294,7 @@ public class Box {
 		Point pos = new Point(this.length - rectangle.getWidth(), this.length - rectangle.getHeight());
 
 		/* Check if rectangle would intersect with any other rectangles */
-		Rectangle rectangleAtNewPosition = new Rectangle(pos, rectangle.getWidth(), rectangle.getHeight());
+		Rectangle rectangleAtNewPosition = new Rectangle(pos, rectangle.getWidth(), rectangle.getHeight(), rectangle.getId());
 		if (intersectsOtherRectangles(rectangleAtNewPosition)) {
 			// Intersection found, return false
 			return false;

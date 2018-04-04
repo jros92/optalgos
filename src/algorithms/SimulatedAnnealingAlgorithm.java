@@ -15,13 +15,12 @@ import java.lang.Math;
 public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizationAlgorithm {
 
 	private CoolingSchedule coolingSchedule;
-
 	private int currentIteration, currentIterationAtTemperature;
+
 
 	public SimulatedAnnealingAlgorithm() {
 		super("Simulated Annealing");
-//		temperature = 1000;
-		coolingSchedule = new CoolingSchedule();
+		this.coolingSchedule = new CoolingSchedule();
 		this.currentIteration = 0;
 		this.currentIterationAtTemperature = 0;
 	}
@@ -35,6 +34,8 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 	 */
 	@Override
 	public int doIteration(double currentCost, double[] neighborsCosts, Feature[] features) {
+
+		this.currentIteration++;
 
 //		neighborhood.getNeighbors(solution, 100);
 		int result = -1;
@@ -78,39 +79,16 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 		return result;
 	}
 
-//	@Override
-//	public int doIteration(double currentCost, double neighborCosts) {
-//		int result = -1;
-//
-//		System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[currentIteration]);
-////		System.out.print("[ALGORITHM] Decisions: ");
-//
-//		for (int i = 0; i < coolingSchedule.sequenceLength[currentIteration]; ++i) {
-//				/* ITERATION within cooling window k with n iterations */
-//			if (neighborCosts< currentCost) {
-//				currentCost = neighborCosts;
-//				result = 0;
-//			} else {
-//				// Make probabilistic yes/no decision whether to take this solution that is worse
-//
-//				float bias = (float) Math.exp((currentCost - neighborCosts) / coolingSchedule.temperatures[currentIteration]);
-//				boolean takeWorseSolution = getRandomBiasedBoolean(bias);
-//
-//				if (takeWorseSolution) {
-//					currentCost = neighborCosts;
-//					result = 0;
-////					System.out.print("YES ");
-//				} else {
-////					System.out.print("NO ");
-//				}
-//
-//			}
-//		}
-//
-//		++this.currentIteration;
-//
-//		return result;
-//	}
+
+	/**
+	 * Generates a biased random boolean value
+	 * @param bias if 0, always returns FALSE, if 1 always returns TRUE
+	 * @return
+	 */
+	public boolean getRandomBiasedBoolean(float bias) {
+		Random rand = new Random();
+		return rand.nextFloat() < bias;
+	}
 
 	/**
 	 * Determines if the algorithm should keep iterating or terminate
@@ -132,26 +110,13 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 
 	@Override
 	public boolean needMultipleNeighbors() {
-		return true;
+		return false;
 	}
-
-
-	/**
-	 * Generates a biased random boolean value
-	 * @param bias if 0, always returns FALSE, if 1 always returns TRUE
-	 * @return
-	 */
-	public boolean getRandomBiasedBoolean(float bias) {
-		Random rand = new Random();
-		return rand.nextFloat() < bias;
-	}
-
-	
 
 }
 
 class CoolingSchedule {
-	int coolingScheduleLength = 1000;
+	int coolingScheduleLength = 10;
 	
 	double c = 100; // TODO: Choose well, dependent on problem
 	

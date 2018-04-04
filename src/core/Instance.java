@@ -20,7 +20,7 @@ public class Instance {
 	 * 
 	 * @param nRectangles Number of rectangles
 	 * @param boxLength Fixed box length
-	 * @param genType Generator type used (1 or 2)
+	 * @param generatorType Generator type used (1 or 2)
 	 * @param rectangles The set of rectangles for this instance
 	 */
 	public Instance(int nRectangles, int boxLength, int generatorType, ArrayList<Rectangle> rectangles) {

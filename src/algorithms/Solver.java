@@ -200,7 +200,7 @@ public class Solver implements Runnable {
 				}
 
 				/* Check the time limit */
-				if ( (this.timeLimit > 0) && ( (System.nanoTime( ) - startTimeNano) / 1000000000 > this.timeLimit) ) {
+				if ( (this.timeLimit > 0) && ( (System.nanoTime( ) - startTimeNano) / 1000000000 >= this.timeLimit) ) {
 					System.out.println("[SOLVER] Time limit reached. Terminating...");
 					break;
 				}

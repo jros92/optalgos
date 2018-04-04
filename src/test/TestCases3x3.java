@@ -25,12 +25,12 @@ public class TestCases3x3 {
 
         ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
 
-        rectangles.add(new Rectangle(2, 2));
-        rectangles.add(new Rectangle(2, 2));
-        rectangles.add(new Rectangle(1, 1));
-        rectangles.add(new Rectangle(2, 1));
-        rectangles.add(new Rectangle(1, 3));     // This rectangle should be the second in the list (index 1)
-        rectangles.add(new Rectangle(1, 2));
+        rectangles.add(new Rectangle(2, 2, 0));
+        rectangles.add(new Rectangle(2, 2, 1));
+        rectangles.add(new Rectangle(1, 1, 2));
+        rectangles.add(new Rectangle(2, 1, 3));
+        rectangles.add(new Rectangle(1, 3, 4));     // This rectangle should be the second in the list (index 1)
+        rectangles.add(new Rectangle(1, 2, 5));
 
         Instance instance = new Instance(6, 3, 0, rectangles);
 

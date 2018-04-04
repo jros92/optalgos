@@ -24,7 +24,7 @@ public class InstanceCanvas extends Canvas {
 		int spacing = scaleFactor / 20;	// spacing between rectangles
 		if (spacing < 2) spacing = 2; // ensure minimum spacing of 1 px
 		
-		Rectangle oldRect = new Rectangle(new Point(0, 0), 0, 0);
+		Rectangle oldRect = new Rectangle(new Point(0, 0), 0, 0, -1);
 		int rowMaxHeight = 0;
 		int i = 1;
 		

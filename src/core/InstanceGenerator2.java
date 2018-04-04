@@ -23,7 +23,7 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 //		int lSquare = lBox * 2;
 		int lSquare = lBox;
 //		System.out.println("A_square = " + lSquare * lSquare);
-		Rectangle square = new Rectangle(new Point(0, 0), lSquare, lSquare);
+		Rectangle square = new Rectangle(new Point(0, 0), lSquare, lSquare, 0);
 		rectangles.add(square);
 		
 		if (n > square.getArea()) {
@@ -88,8 +88,8 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 				Point pos2 = new Point(pos2x + width1, pos2y);
 
 				// Generate two new rectangles
-				rect1 = new Rectangle(rect.getPos(), width1, rect.getHeight());
-				rect2 = new Rectangle(pos2, width2, rect.getHeight());
+				rect1 = new Rectangle(rect.getPos(), width1, rect.getHeight(), rect.getId());
+				rect2 = new Rectangle(pos2, width2, rect.getHeight(), rect.getId() + 1);
 			} else {
 				// Split at vertical edge
 				
@@ -102,8 +102,8 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 				Point pos2 = new Point(pos2x, pos2y + length1);
 				
 				// Generate two new rectangles
-				rect1 = new Rectangle(rect.getPos(), rect.getWidth(), length1);
-				rect2 = new Rectangle(pos2, rect.getWidth(), length2);
+				rect1 = new Rectangle(rect.getPos(), rect.getWidth(), length1, rect.getId());
+				rect2 = new Rectangle(pos2, rect.getWidth(), length2, rect.getId() + 1);
 			}
 			
 			
