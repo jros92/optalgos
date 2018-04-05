@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 
 import core.*;
 import gui.FormSolutionViewer;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
 
 /**
  * Controls and handles the execution of the algorithm
@@ -26,7 +30,7 @@ public class Solver implements Runnable {
 	private FormSolutionViewer viewer;
 	
 	private long maxIterations;
-	private int timeLimit = 10; 	// in seconds; set <= 0 if no time criterion for termination is desired
+	private int timeLimit = 2; 	// in seconds; set <= 0 if no time criterion for termination is desired
 
 
 	private double boundWorseNeighbor;
@@ -44,6 +48,10 @@ public class Solver implements Runnable {
 	private boolean pause = false;
 
 	private int cntGuiUpdates = 0;	// TODO: Remove after debugging
+
+	// Logger
+	static final Logger logger = LogManager.getLogger(Solver.class.getName());
+
 
 	/**
 	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
@@ -74,6 +82,9 @@ public class Solver implements Runnable {
 		this.sleepDuration = 0; // Default value: 0 ms
 
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
+
+		// Configure Logging Level
+		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
 	}
 	
 	@Override
@@ -236,6 +247,9 @@ public class Solver implements Runnable {
 		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 
 
+		logger.error("Did it again! ERROR");
+		logger.info("Did it again! INFO");
+		logger.debug("Did it again! DEBUG");
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {

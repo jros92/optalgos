@@ -30,7 +30,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 	}
 
 	/**
-	 * Return a neighbor
+	 * Find and return a neighbor
 	 * @param oldSolution
 	 * @return one neighbor out of the current neighborhood, null if there are no more neighbors
 	 */
