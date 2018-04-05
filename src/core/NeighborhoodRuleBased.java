@@ -32,59 +32,23 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 	/**
 	 * Return a neighbor
 	 * @param oldSolution
-	 * @return
+	 * @return one neighbor out of the current neighborhood, null if there are no more neighbors
 	 */
 	@Override
 	public Neighbor getNeighbor(FeasibleSolution oldSolution) {
 
 		ArrayList<Rectangle> oldRectangles = oldSolution.getRectangles();
-		int nRectangles = oldRectangles.size();
-		int boxLength = oldSolution.getBoxLength();
 
 		// Create neighbor as new solution
+		// This function clones the rectangles but deletes all the boxes
 		FeasibleSolution neighboredSolution = new FeasibleSolution(oldSolution.getInstance(), oldRectangles);
 
-		RectanglePair swappedRectangles;
-
 		// Switch up list of rectangles of neighbor
+		RectanglePair swappedRectangles;
 		if ((swappedRectangles = reorderRectangles(neighboredSolution.getRectangles())) == null) return null;
 
-		/* Create solution (Boxes) */
-
-		/* Create and add first box */
-		Box currentBox = new Box(boxLength, 0);
-		neighboredSolution.addBox(currentBox);
-
-		int boxIndex = 1;
-
-		Rectangle currentRectangle;
-
-		String solutionListOfRectangles = "";
-
-		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now. Create a function?
-		for (int j = 0; j < nRectangles; j++) {
-			//currentRectangle = oldRectangles.get(j);
-			currentRectangle = neighboredSolution.getRectangles().get(j);
-
-			int	addedResult = currentBox.addRectangleAtFirstFreePosition(currentRectangle);
-
-			if (addedResult <= 0) {
-				if (addedResult < 0) {
-					// current rectangle has not been placed, so process it again in next loop step
-					--j;
-				}
-
-				if (j < nRectangles - 1) {
-					// If this is not the last rectangle and it has successfully been placed within a box, dont open a new one
-					currentBox = new Box(boxLength, boxIndex);
-					neighboredSolution.addBox(currentBox);
-					boxIndex++;
-				}
-			}  else {
-//				solutionListOfRectangles += currentRectangle.toString() + ", ";	// used for debugging
-			}
-
-		}
+		/* Create solution (boxes) from reordered permutation of rectangles */
+		createSolutionBasedOnRule(neighboredSolution);
 
 //		System.out.println("[NEIGHBORHOOD] Returned solution with the following ordered set of (" + neighbor.getRectangles().size() + ") Rectangles: " + solutionListOfRectangles); // used for debugging
 		Neighbor neighbor = new Neighbor(neighboredSolution, swappedRectangles);
@@ -125,6 +89,51 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 		neighborsRectangles.set(this.indexBig, temp);
 
 		return new RectanglePair(neighborsRectangles.get(indexSmall), neighborsRectangles.get(indexBig));
+	}
+
+	/**
+	 *
+	 * @param neighboredSolution
+	 */
+	private void createSolutionBasedOnRule(FeasibleSolution neighboredSolution) {
+
+		int boxLength = neighboredSolution.getBoxLength();
+		int nRectangles = neighboredSolution.getRectangles().size();
+
+		/* Create and add first box */
+		Box currentBox = new Box(boxLength, 0);
+		neighboredSolution.addBox(currentBox);
+
+		int boxIndex = 1;
+
+		Rectangle currentRectangle;
+
+		String solutionListOfRectangles = "";
+
+		// TODO: THE FOLLOWING CODE TAKEN FROM SIMPLE_INITIALIZER. Duplicate code right now. Create a function?
+		for (int j = 0; j < nRectangles; j++) {
+			//currentRectangle = oldRectangles.get(j);
+			currentRectangle = neighboredSolution.getRectangles().get(j);
+
+			int	addedResult = currentBox.addRectangleAtFirstFreePosition(currentRectangle);
+
+			if (addedResult <= 0) {
+				if (addedResult < 0) {
+					// current rectangle has not been placed, so process it again in next loop step
+					--j;
+				}
+
+				if (j < nRectangles - 1) {
+					// If this is not the last rectangle and it has successfully been placed within a box, dont open a new one
+					currentBox = new Box(boxLength, boxIndex);
+					neighboredSolution.addBox(currentBox);
+					boxIndex++;
+				}
+			}  else {
+//				solutionListOfRectangles += currentRectangle.toString() + ", ";	// used for debugging
+			}
+
+		}
 	}
 
 }
