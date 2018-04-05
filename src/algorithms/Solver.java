@@ -84,7 +84,9 @@ public class Solver implements Runnable {
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
 
 		// Configure Logging Level
+		/* Levels to choose from: OFF, ERROR, INFO, DEBUG */
 		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
+		logger.info("Logging Level is: " + logger.getLevel());
 	}
 	
 	@Override
@@ -115,7 +117,7 @@ public class Solver implements Runnable {
 
 	public void solve() throws InterruptedException {
 		       
-		System.out.println("[SOLVER] Started " + this.toString() + ".");
+		logger.info("[SOLVER] Started " + this.toString() + ".");
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
@@ -135,16 +137,16 @@ public class Solver implements Runnable {
 		/* Iteration */
 		while ((i < this.maxIterations) && (result >= -1)) {
 			if (this.pause) {
-				System.out.println("[SOLVER] Execution paused");
+				logger.info("[SOLVER] Execution paused");
 				Thread.sleep(100);
 			} else {
-				System.out.println("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
+				logger.debug("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
 
                 iterationStartTimeNano = System.nanoTime();
 
 				// Waiting helps debugging
 				if (this.sleepDuration > 0) {
-					System.out.println("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
+					logger.info("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
 					Thread.sleep(sleepDuration);
 				}
 
@@ -178,14 +180,14 @@ public class Solver implements Runnable {
 						this.solution = neighborsSolutions[result];	// Update solution
 						this.currentCost = neighborsCosts[result];	// Update cost
 
-						System.out.println("[SOLVER] Chose new solution @ " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
+						logger.info("[SOLVER] Chose new solution @ iteration " + (i+1) + " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
 
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
 							requestGuiUpdate(betterSolution);
 						}
 					} else {
-						System.out.println("[SOLVER] Algorithm rejected all the neighbors, iterating with new neighbors from neighborhood");
+						logger.debug("[SOLVER] Algorithm rejected all the neighbors, iterating with new neighbors from neighborhood");
 
 //						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
 //							// Store the best neighbor that is still acceptable,
@@ -212,17 +214,17 @@ public class Solver implements Runnable {
 				
 				/* Check the algorithm specific termination condition */
 				if (algorithm.terminated()) {
-					System.out.println("[SOLVER] Algorithm termination condition reached. Terminating...");
+					logger.info("[SOLVER] Algorithm termination condition reached. Terminating...");
 					break;
 				}
 
 				/* Check the time limit */
 				if ( (this.timeLimit > 0) && ( (System.nanoTime( ) - startTimeNano) / 1000000000 >= this.timeLimit) ) {
-					System.out.println("[SOLVER] Time limit reached. Terminating...");
+					logger.info("[SOLVER] Time limit reached. Terminating...");
 					break;
 				}
 
-                System.out.println("[SOLVER] Iteration took " + (System.nanoTime() - iterationStartTimeNano) + "ns.");
+                logger.debug("[SOLVER] Iteration took " + (System.nanoTime() - iterationStartTimeNano) + "ns.");
 			}
 		}
 
@@ -230,26 +232,21 @@ public class Solver implements Runnable {
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
 		long taskTimeMillis = taskTimeNano / 1000000;
 
-		System.out.println("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
+		logger.info("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
 						 + "========================================================================\n");
-		this.solution.printToConsole();
-		System.out.println("========================================================================\n\n"+
-				"[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
+		logger.info(this.solution.printDetailedSolution()
+				+ "========================================================================\n\n"
+				+ "[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
 
-		System.out.println("No. of Gui Updates: " + cntGuiUpdates); // TODO: Disable after debugging
+		logger.info("No. of Gui Updates: " + cntGuiUpdates); // TODO: Disable after debugging
 
-		System.out.println("\nReduced box count by "
+		logger.info("\nReduced box count by "
 				+ (this.initialSolution.getBoxCount() - this.solution.getBoxCount())
 				+ " | the initial solution used "
 				+ this.initialSolution.getBoxCount()
 				+ " boxes. Nice!");
 
-		System.out.println("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
-
-
-		logger.error("Did it again! ERROR");
-		logger.info("Did it again! INFO");
-		logger.debug("Did it again! DEBUG");
+		logger.info("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {
@@ -266,7 +263,7 @@ public class Solver implements Runnable {
 		long currentTime = System.currentTimeMillis();
 		if (this.lastGuiUpdate + this.guiUpdateFrequency < currentTime) {
 			updateGUI(betterSolution);
-			System.out.println("GUI update");
+			logger.info("GUI update");
 			this.lastGuiUpdate = currentTime;
 		}
 	}
