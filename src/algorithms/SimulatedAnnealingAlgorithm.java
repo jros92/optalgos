@@ -25,6 +25,14 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 		this.currentIterationAtTemperature = 0;
 	}
 
+    /**
+     * Get the textual representation of the cooling schedule
+     * @return String
+     */
+	public String getCoolingScheduleTextual() {
+        return this.coolingSchedule.toString();
+    }
+
 	/**
 	 * Perform an iteration of the Simulated Annealing algorithm
 	 * @param currentCost cost of current solution
@@ -39,14 +47,13 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 
 		if (currentTemperatureWindow < coolingSchedule.coolingScheduleLength) {
 			/* Iteration over cooling windows */
-			System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[currentTemperatureWindow]);
-			System.out.print("[ALGORITHM] Decisions: ");
+//			System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[currentTemperatureWindow]);
+//			System.out.print("[ALGORITHM] Decisions: ");
 
 			if (currentIterationAtTemperature < coolingSchedule.sequenceLength[currentTemperatureWindow]) {
 
 				/* ITERATION within cooling window k with n iterations */
 				if (neighborsCosts[0] < currentCost) {
-//					currentCost = neighborsCosts[0];
 					result = 0;
 				} else {
 
@@ -55,11 +62,10 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 					
 					if (getRandomBiasedBoolean(bias)) {
 						// Switch to neighbor even though it is worse than the current solution
-//						currentCost = neighborsCosts[0];
 						result = 0;
-						System.out.print("YES ");
+//						System.out.print("YES ");
 					} else {
-						System.out.print("NO ");
+//						System.out.print("NO ");
 					}
 					
 				}
@@ -129,21 +135,30 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
  * A cooling schedule consisting of pairs of temperatures and sequence lengths
  */
 class CoolingSchedule {
-	int coolingScheduleLength = 10;
-	
-	double c = 100; // TODO: Choose well, dependent on problem
+	int coolingScheduleLength = 100;
+
+	double desiredStartingTemperature = 200f;        // TODO: Choose well, dependent on problem
+	double c = desiredStartingTemperature / 1.4427f;
 	
 	double[] temperatures = new double[coolingScheduleLength];
 	int[] sequenceLength = new int[coolingScheduleLength];
-	
+	int totalIterations = 0;
+
 	CoolingSchedule() {
-		System.out.println("\nCooling Schedule for Simulated Annealing: ");
 		for (int i = 0; i < coolingScheduleLength; ++i) {
-			temperatures[i] = c/Math.log(i+1);
-			sequenceLength[i] = (coolingScheduleLength - i) * 100;	// TODO: Choose well
-			System.out.println("Cooling iteration " + i + ": T = " + temperatures[i] + ", n = " + sequenceLength[i] + ".");
+			temperatures[i] = c / Math.log(i+2);    // from lecture slides
+			sequenceLength[i] = (coolingScheduleLength - (i)) * 20 + 50;	// TODO: Choose well
+            totalIterations += sequenceLength[i];
 		}
-		
-		
+	}
+
+    @Override
+    public String toString() {
+        String result = "Cooling Schedule for Simulated Annealing: \n";
+        result += "Total iterations in schedule: " + totalIterations + "\n";
+        for (int i = 0; i < coolingScheduleLength; ++i) {
+            result += "Cooling iteration " + i + ": T = " + temperatures[i] + ", n = " + sequenceLength[i] + ".\n";
+        }
+        return result;
 	}
 }

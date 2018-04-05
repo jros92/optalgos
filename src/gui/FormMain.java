@@ -56,6 +56,10 @@ public class FormMain extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws InterruptedException {
+		// TODO: Remove this after debug
+		SimulatedAnnealingAlgorithm simAnnTest = (SimulatedAnnealingAlgorithm)Algorithm.generateInstance(Algorithms.SimulatedAnnealing);
+		System.out.println(simAnnTest.getCoolingScheduleTextual());
+
 		try {
             // Set System L&F
 	        UIManager.setLookAndFeel(
