@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -190,6 +190,7 @@ public class FormSolutionViewer extends JFrame {
 //		menu.addSeparator();
 //		menu.add(new JMenuItem("Zoom"));
 		JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
+		slider.setMaximumSize(new Dimension(600, (int) slider.getMaximumSize().getHeight()));
         ChangeListener cl = e -> {
             JSlider sliderValue = (JSlider) e.getSource();
             System.out.println("Zoom value adjusted to " + sliderValue.getValue());
@@ -202,6 +203,8 @@ public class FormSolutionViewer extends JFrame {
 		menuBar.add(new JMenuItem("Zoom: "));
         menuBar.add(slider);
 
+        menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
+
 		this.setJMenuBar(menuBar);
 	}
 
@@ -210,5 +213,12 @@ public class FormSolutionViewer extends JFrame {
 		this.cbMenuItemShowWorseSolutions.setEnabled(value);
 		this.cbMenuItemShowWorseSolutions.setSelected(value);
 		this.updateWithWorseSolution = value;
+	}
+
+	class MenuZoomSlider extends JSlider {
+		MenuZoomSlider(int orientation, int minValue, int maxValue, int value) {
+			super(orientation, minValue, maxValue, value);
+		}
+
 	}
 }
