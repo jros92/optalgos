@@ -5,7 +5,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java" afterPath="$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java" afterPath="$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" afterPath="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,24 +63,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimulatedAnnealingAlgorithm.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SimulatedAnnealingAlgorithm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
+            <state relative-caret-position="1640">
               <caret line="103" column="33" lean-forward="true" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TabooSearchAlgorithm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1692">
-              <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="19" selection-end-line="100" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -96,7 +83,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FormSolutionViewer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FormSolutionViewer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/FormSolutionViewer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="223">
@@ -535,7 +522,7 @@
       <workItem from="1522830549809" duration="20480000" />
       <workItem from="1522864553272" duration="6830000" />
       <workItem from="1522878253225" duration="2261000" />
-      <workItem from="1522919003452" duration="3348000" />
+      <workItem from="1522919003452" duration="3391000" />
     </task>
     <task id="LOCAL-00001" summary="Rectangle colors truly fixed">
       <created>1522334324193</created>
@@ -705,7 +692,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522880834713</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Zoom slider improved">
+      <created>1522922887801</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1522922887801</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -741,7 +735,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108874000" />
+    <option name="totallyTimeSpent" value="108917000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -826,7 +820,8 @@
     <MESSAGE value="Enum toString overriden" />
     <MESSAGE value="Smaller cosmetic improvements" />
     <MESSAGE value="Small cosmetic improvement: Slider in menu bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small cosmetic improvement: Slider in menu bar" />
+    <MESSAGE value="Zoom slider improved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zoom slider improved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1156,16 +1151,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1692">
-          <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="19" selection-end-line="100" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/algorithms/Neighbor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -1185,14 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="103" column="33" lean-forward="true" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
@@ -1208,6 +1185,24 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1640">
+          <caret line="103" column="33" lean-forward="true" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>

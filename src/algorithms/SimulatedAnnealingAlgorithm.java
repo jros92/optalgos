@@ -15,13 +15,13 @@ import java.lang.Math;
 public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizationAlgorithm {
 
 	private CoolingSchedule coolingSchedule;
-	private int currentIteration, currentIterationAtTemperature;
+	private int currentTemperatureWindow, currentIterationAtTemperature;
 
 
 	public SimulatedAnnealingAlgorithm() {
 		super("Simulated Annealing");
 		this.coolingSchedule = new CoolingSchedule();
-		this.currentIteration = 0;
+		this.currentTemperatureWindow = 0;
 		this.currentIterationAtTemperature = 0;
 	}
 
@@ -35,34 +35,27 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 	@Override
 	public int doIteration(double currentCost, double[] neighborsCosts, Feature[] features) {
 
-		this.currentIteration++;
-
-//		neighborhood.getNeighbors(solution, 100);
 		int result = -1;
-		int numberOfNeighbors = neighborsCosts.length;
-//		for (int i = 0; i < numberOfNeighbors; ++i) {
-		
-		for (int k = 0; k < coolingSchedule.coolingScheduleLength - 1; ++k) {
+
+		if (currentTemperatureWindow < coolingSchedule.coolingScheduleLength) {
 			/* Iteration over cooling windows */
-			System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[k]);
+			System.out.println("[ALGORITHM] Current T = " + coolingSchedule.temperatures[currentTemperatureWindow]);
 			System.out.print("[ALGORITHM] Decisions: ");
 
-			for (currentIterationAtTemperature = 0;
-				 currentIterationAtTemperature < coolingSchedule.sequenceLength[k];
-				 ++currentIterationAtTemperature) {
+			if (currentIterationAtTemperature < coolingSchedule.sequenceLength[currentTemperatureWindow]) {
 
 				/* ITERATION within cooling window k with n iterations */
 				if (neighborsCosts[0] < currentCost) {
-					currentCost = neighborsCosts[k];
+//					currentCost = neighborsCosts[0];
 					result = 0;
 				} else {
 
 					// Make probabilistic yes/no decision whether to take this solution that is worse
-					float bias = (float) Math.exp((currentCost - neighborsCosts[0]) / coolingSchedule.temperatures[k]);
-					boolean takeWorseSolution = getRandomBiasedBoolean(bias);
+					float bias = (float) Math.exp((currentCost - neighborsCosts[0]) / coolingSchedule.temperatures[currentTemperatureWindow]);
 					
-					if (takeWorseSolution) {
-						currentCost = neighborsCosts[0];
+					if (getRandomBiasedBoolean(bias)) {
+						// Switch to neighbor even though it is worse than the current solution
+//						currentCost = neighborsCosts[0];
 						result = 0;
 						System.out.print("YES ");
 					} else {
@@ -70,9 +63,17 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 					}
 					
 				}
+
+				++currentIterationAtTemperature;
+
+				if (currentIterationAtTemperature >= coolingSchedule.sequenceLength[currentTemperatureWindow]) {
+					this.currentTemperatureWindow++;
+					currentIterationAtTemperature = 0;
+				}
 			}
 
 			System.out.println();
+
 		}
 		
 		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
@@ -103,7 +104,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 	public boolean terminated() {
 
 
-		if (currentIteration >= this.coolingSchedule.coolingScheduleLength - 1) {
+		if (currentTemperatureWindow >= this.coolingSchedule.coolingScheduleLength - 1) {
 			System.out.println("[ALGORITHM] Reached end of Cooling Schedule, terminating.");
 			return true;
 		}
@@ -113,6 +114,10 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 		return false;
 	}
 
+	/**
+	 * Simulated Annealing looks at one neighbor at a time
+	 * @return false
+	 */
 	@Override
 	public boolean needMultipleNeighbors() {
 		return false;
