@@ -237,7 +237,7 @@ public class FormMain extends JFrame {
 		contentPane.add(lblSolvers);
 
 		JScrollPane scrollPaneSolvers = new JScrollPane();
-		scrollPaneSolvers.setBounds(5, 223+leftColHeight+30, leftColWidth, 140);
+		scrollPaneSolvers.setBounds(5, 223+leftColHeight+30, leftColWidth, this.getHeight() - (223+leftColHeight+30+100));
 		contentPane.add(scrollPaneSolvers);
 
 		listSolvers = new JList<>();
