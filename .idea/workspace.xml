@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71254bae-9642-416b-b147-0b2203d937cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/ObjectiveFunction.java" afterPath="$PROJECT_DIR$/src/core/ObjectiveFunction.java" />
     </list>
@@ -30,24 +31,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Solver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Solver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="32" column="4" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+            <state relative-caret-position="142">
+              <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ObjectiveFunction.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -521,7 +512,7 @@
       <workItem from="1522919003452" duration="10345000" />
       <workItem from="1522937103063" duration="9654000" />
       <workItem from="1522961808672" duration="1774000" />
-      <workItem from="1523004123888" duration="10766000" />
+      <workItem from="1523004123888" duration="10850000" />
     </task>
     <task id="LOCAL-00001" summary="Rectangle colors truly fixed">
       <created>1522334324193</created>
@@ -733,7 +724,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523015536164</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Appendix: Objective Function somehow did not get commited in last commit&#10;3) Same Objective Function but with positive cost values">
+      <created>1523015582833</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1523015582833</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -769,7 +767,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138065000" />
+    <option name="totallyTimeSpent" value="138149000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -782,6 +780,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289166" sideWeight="0.4984375" order="6" side_tool="false" content_ui="tabs" />
@@ -796,7 +795,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289166" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22297297" sideWeight="0.49578822" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22297297" sideWeight="0.49578822" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289166" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17806041" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -829,7 +828,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed bug in Neighborhood Rule-Based. Local Search terminates with good solution.&#10;&#10;Next thing to look into: store &quot;best&quot; worse neighbor, choose that one in case no better solution is found within neighborhood." />
     <MESSAGE value="New Neighborhood instance for each solver." />
     <MESSAGE value="Added wall clock time measurement to solver" />
     <MESSAGE value="Cleaned up some old commented code" />
@@ -854,7 +852,8 @@
     <MESSAGE value="Added log4j2 library" />
     <MESSAGE value="Configured log4j2 and have solver logging instead of printing." />
     <MESSAGE value="Huge progress: Logger + Solver Bug Fix + ObjectiveFunction positive&#10; &#10;1) Logger now completely set up with performance logging.&#10;2) Fixed Null Pointer Exception for small neighborhoods due to small problem sizes on Tabu Search&#10;3) Same Objective Function but with positive cost values" />
-    <option name="LAST_COMMIT_MESSAGE" value="Huge progress: Logger + Solver Bug Fix + ObjectiveFunction positive&#10; &#10;1) Logger now completely set up with performance logging.&#10;2) Fixed Null Pointer Exception for small neighborhoods due to small problem sizes on Tabu Search&#10;3) Same Objective Function but with positive cost values" />
+    <MESSAGE value="Appendix: Objective Function somehow did not get commited in last commit&#10;3) Same Objective Function but with positive cost values" />
+    <option name="LAST_COMMIT_MESSAGE" value="Appendix: Objective Function somehow did not get commited in last commit&#10;3) Same Objective Function but with positive cost values" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1130,21 +1129,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
+    <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="32" column="4" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="380">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
+    <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="142">
+          <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
