@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <!-- Define custom levels before using them for filtering below. -->
+    <!--<CustomLevels>
+        <CustomLevel name="PERF" intLevel="2000" />
+    </CustomLevels>-->
+
     <Properties>
-        <Property name="filename">logs/test3.log</Property>
+        <Property name="filepath">logs</Property>
+        <Property name="logfilename">.log</Property>
+        <Property name="performancefilename">performance.csv</Property>
     </Properties>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="logfile" fileName="${filename}" append="true">
+        <File name="logfile" fileName="${filepath}/${sys:logfileTimeStamp}_${sys:logfilePrefix}_${logfilename}" append="true">
             <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw"/>-->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="performancelogfile" fileName="${filepath}/${sys:logfileTimeStamp}_${sys:logfilePrefix}_${performancefilename}" append="true">
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw"/>-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS}	%msg%n"/>
         </File>
     </Appenders>
     <Loggers>
         <!--<Logger name="org.apache.log4j.xml" level="INFO">
            <AppenderRef ref="logfile"/>
        </Logger>-->
-
-        <!--<Root level="error">
-            <AppenderRef ref="console"/>
-        </Root>
-
-        <Root level="DEBUG">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="logfile"/>
-        </Root>-->
+        <Logger name="loggerPerf">
+            <AppenderRef ref="performancelogfile"/>
+        </Logger>
 
         <Root level="INFO">
             <AppenderRef ref="console"/>
             <AppenderRef ref="logfile"/>
+            <!--<AppenderRef ref="performancelogfile" level="PERF"/>-->
         </Root>
     </Loggers>
  </Configuration>

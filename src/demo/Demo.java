@@ -89,10 +89,10 @@ public class Demo {
 			
 			
 			/* The algorithms should be called here, along with the visualization in the small demos */
-//			Solver solver = new Solver(new LocalSearchAlgorithm(), new NeighborhoodRuleBased(), new ObjectiveFunction(), instance);
+//			Solver solver = new Solver(new LocalSearchAlgorithm(), new NeighborhoodRuleBased(), new ObjectiveFunctionNegative(), instance);
 //			solver.solve(maxIterations, numberOfNeighbors);
 			
-//			Solver solver = new Solver(new SimulatedAnnealingAlgorithm(), new NeighborhoodGeometric(), new ObjectiveFunction(), instance);
+//			Solver solver = new Solver(new SimulatedAnnealingAlgorithm(), new NeighborhoodGeometric(), new ObjectiveFunctionNegative(), instance);
 //			solver.solve(maxIterations, numberOfNeighbors);
 			
 			

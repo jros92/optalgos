@@ -1,6 +1,8 @@
 package algorithms;
 
 import java.awt.EventQueue;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import core.*;
 import gui.FormSolutionViewer;
@@ -30,7 +32,7 @@ public class Solver implements Runnable {
 	private FormSolutionViewer viewer;
 	
 	private long maxIterations;
-	private int timeLimit = 2; 	// in seconds; set <= 0 if no time criterion for termination is desired
+	private int timeLimit = 10; 	// in seconds; set <= 0 if no time criterion for termination is desired
 
 
 	private double boundWorseNeighbor;
@@ -49,9 +51,9 @@ public class Solver implements Runnable {
 
 	private int cntGuiUpdates = 0;	// TODO: Remove after debugging
 
-	// Logger
+	// Loggers
 	static final Logger logger = LogManager.getLogger(Solver.class.getName());
-
+	static final Logger loggerPerf = LogManager.getLogger("loggerPerf");
 
 	/**
 	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
@@ -84,9 +86,20 @@ public class Solver implements Runnable {
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
 
 		// Configure Logging Level
-		/* Levels to choose from: OFF, ERROR, INFO, DEBUG */
+		/* Levels to choose from: OFF, ERROR, WARN, INFO, DEBUG */
 		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
+
+		/* Set up loggers */
 		logger.info("Logging Level is: " + logger.getLevel());
+
+		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+		System.setProperty("logfileTimeStamp", logfileTimeStamp);
+		String logfilePrefix = (this.algorithm + "_on_" + this.neighborhood).replaceAll("\\s+","");
+		System.setProperty("logfilePrefix", logfilePrefix);
+		org.apache.logging.log4j.core.LoggerContext ctx =
+				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
 	}
 	
 	@Override
@@ -96,6 +109,7 @@ public class Solver implements Runnable {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.fatal(e.getStackTrace().toString());
 		}
 	}
 	
@@ -118,6 +132,7 @@ public class Solver implements Runnable {
 	public void solve() throws InterruptedException {
 		       
 		logger.info("[SOLVER] Started " + this.toString() + ".");
+		loggerPerf.info("iteration" + "\t" + "box count" + "\t" + "cost");
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
@@ -144,11 +159,13 @@ public class Solver implements Runnable {
 
                 iterationStartTimeNano = System.nanoTime();
 
-				// Waiting helps debugging
-				if (this.sleepDuration > 0) {
-					logger.info("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
-					Thread.sleep(sleepDuration);
-				}
+				// Sleep between iterations if desired
+//				if (this.sleepDuration > 0) {
+//					logger.info("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
+//					Thread.sleep(sleepDuration);
+//				}
+
+				boolean neighborhoodDepleted = false;
 
 				// Retrieve new neighbors
 				neighbors = new Neighbor[this.numberOfNeighbors];
@@ -156,12 +173,25 @@ public class Solver implements Runnable {
 				neighborsCosts = new double[this.numberOfNeighbors];
 				neighborsFeatures = new Feature[this.numberOfNeighbors];
 				int neighborIndex = 0;
-				while ( (neighborIndex < this.numberOfNeighbors) &&
-						(neighbors[neighborIndex] = this.neighborhood.getNeighbor(this.solution)) != null ) {
+
+				// TODO: can neighborhood be depleted? Is there a way to still go on?
+				while (neighborIndex < this.numberOfNeighbors) {
+
+					if ((neighbors[neighborIndex] = this.neighborhood.getNeighbor(this.solution)) == null ) {
+						neighborhoodDepleted = true;
+						break;
+					}
+
 					neighborsSolutions[neighborIndex] = neighbors[neighborIndex].solution;
 					neighborsCosts[neighborIndex] = this.objFun.getValue(neighborsSolutions[neighborIndex]);	// Update costs
 					neighborsFeatures[neighborIndex] = neighbors[neighborIndex].feature;
 					neighborIndex++;
+				}
+
+				/* If Neighborhood is depleted, terminate */
+				if (neighborhoodDepleted) {
+					logger.info("[SOLVER] Neighborhood depleted. Terminating...");
+					break;
 				}
 
 //				// Get neighbors
@@ -181,7 +211,8 @@ public class Solver implements Runnable {
 						this.currentCost = neighborsCosts[result];	// Update cost
 
 						logger.info("[SOLVER] Chose new solution @ iteration " + (i+1) + " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
-
+//						logger.log(Level.getLevel("PERF"), (i+1) + "\t" + this.solution.getBoxCount() + "\t" + this.currentCost);
+						loggerPerf.info((i+1) + "\t" + this.solution.getBoxCount() + "\t" + this.currentCost);
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
 							requestGuiUpdate(betterSolution);

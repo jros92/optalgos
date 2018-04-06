@@ -6,7 +6,6 @@ import algorithms.IOptimizationAlgorithm;
 import algorithms.Solver;
 import core.Instance;
 import core.NeighborhoodRuleBased;
-import core.ObjectiveFunction;
 import core.Rectangle;
 import core.Box;
 import gui.FormSolutionViewer;

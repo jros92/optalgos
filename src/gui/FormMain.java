@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -126,7 +125,7 @@ public class FormMain extends JFrame {
 		/* Right and Left Panels */
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBounds(leftColWidth + 20, 30, (int)Math.round(dpi*1.3), (int)Math.round(dpi*(mainFormHeightFactor*0.9)));
-		GridLayout buttonPanelLayout = new GridLayout(6, 1);
+		GridLayout buttonPanelLayout = new GridLayout(8, 1);
 		buttonPanelLayout.setVgap((int)Math.round(dpi/20));
 		rightPanel.setLayout(buttonPanelLayout);
 		contentPane.add(rightPanel);
@@ -246,6 +245,20 @@ public class FormMain extends JFrame {
 		listSolvers.setEnabled(true);
 		listSolvers.setFont(fontStandard);
 
+		/* Buttons for Solvers / Solutions */
+		JButton btnShowSolution = new JButton("Show Solution");
+		rightPanel.add(btnShowSolution);
+		btnShowSolution.setEnabled(false);
+		btnShowSolution.setMargin(new Insets(0, 5, 0, 5));
+		btnShowSolution.setFont(fontStandard);
+
+		JButton btnRemoveSolver = new JButton("Delete Solution");
+		rightPanel.add(btnRemoveSolver);
+		btnRemoveSolver.setEnabled(false);
+		btnRemoveSolver.setMargin(new Insets(0, 5, 0, 5));
+		btnRemoveSolver.setFont(fontStandard);
+
+
 
 		/* Initialization Done */
 
@@ -328,7 +341,7 @@ public class FormMain extends JFrame {
 		/* Button to view a generated instance */
 		btnViewInstance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				showUnitializedInstance();
+				showUninitializedInstance();
 			}
 		});
 
@@ -369,8 +382,38 @@ public class FormMain extends JFrame {
 				startAndShowSolver(listAlgorithms.getSelectedValue(), listNeighborhoods.getSelectedValue());
 			}
 		});
-		
-		
+
+		// Enable and disable remove button for solvers according to solver selection from the list
+		listSolvers.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				if (listSolvers.getSelectedIndex() > -1) {
+					btnRemoveSolver.setEnabled(true);
+					btnShowSolution.setEnabled(true);
+				} else {
+					btnRemoveSolver.setEnabled(false);
+					btnShowSolution.setEnabled(false);
+				}
+			}
+		});
+
+		// Button to remove Solvers
+		btnRemoveSolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultListModel<Solver> listModel = (DefaultListModel<Solver>) listSolvers.getModel();
+				listModel.removeElement(listSolvers.getSelectedValue());
+			}
+		});
+
+		// Button to Show Solution
+		btnShowSolution.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Solver solver = listSolvers.getSelectedValue();
+				if (solver != null)
+				showSolution(solver.getSolution());
+
+			}
+		});
+
 		/* Add a MENU BAR */
 
 		//Create the menu bar.
@@ -431,6 +474,23 @@ public class FormMain extends JFrame {
 			System.out.println("Please create and choose an instance first.");
 		}
 	}
+
+	/**
+	 * Show a static solution - viewer will not be attached to a solver
+	 */
+	public void showSolution(FeasibleSolution solution) {
+		if (solution != null) {
+			// Create a solution viewer and pass it to the solver
+			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+			solutionViewer.setVisible(true);
+
+			// Disable display option (for Sim. Annealing and Taboo Search)
+			solutionViewer.setCheckBoxShowWorseSolutions(false);
+		} else {
+			System.out.println("ERROR Selected solution not valid.");
+		}
+	}
+
 	
 	/**
 	 * Display a dialog asking the user if they want to exit the application.
@@ -446,7 +506,7 @@ public class FormMain extends JFrame {
 	/**
 	 * Show a raw generated instance (not initialized)
 	 */
-	private void showUnitializedInstance() {
+	private void showUninitializedInstance() {
 		FormInstanceViewer instanceForm = new FormInstanceViewer(this.listCurrentInstances.getSelectedValue(), "View " + listCurrentInstances.getSelectedValue().toString(), this.dpi);
 		instanceForm.setVisible(true);
 	}

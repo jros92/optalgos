@@ -26,6 +26,7 @@ public class NeighborhoodRuleBased extends Neighborhood implements INeighborhood
 
 	@Override
 	public IObjectiveFunction getPreferredObjectiveFunction() {
+//		return new ObjectiveFunctionNegative();
 		return new ObjectiveFunction();
 	}
 

@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71254bae-9642-416b-b147-0b2203d937cb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/misc/Logger.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/core/ObjectiveFunctionNegative.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/log4j2.xml" afterPath="$PROJECT_DIR$/resources/log4j2.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/algorithms/Solver.java" afterPath="$PROJECT_DIR$/src/algorithms/Solver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" afterPath="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" afterPath="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/ObjectiveFunction.java" afterPath="$PROJECT_DIR$/src/core/ObjectiveFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo/Demo.java" afterPath="$PROJECT_DIR$/src/demo/Demo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FormMain.java" afterPath="$PROJECT_DIR$/src/gui/FormMain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" afterPath="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TestCases3x3.java" afterPath="$PROJECT_DIR$/src/test/TestCases3x3.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +31,8 @@
       <file leaf-file-name="FormMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
+            <state relative-caret-position="-6758">
+              <caret line="111" column="67" lean-forward="false" selection-start-line="111" selection-start-column="67" selection-end-line="111" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,37 +43,21 @@
       <file leaf-file-name="Solver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1622">
+              <caret line="102" column="5" lean-forward="true" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ObjectiveFunction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="9" column="57" lean-forward="true" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FeasibleSolution.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/FeasibleSolution.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="127" column="7" lean-forward="true" selection-start-line="127" selection-start-column="7" selection-end-line="127" selection-end-column="7" />
-              <folding>
-                <element signature="e#4048#4049#0" expanded="true" />
-                <element signature="e#4098#4099#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimulatedAnnealingAlgorithm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="135" column="3" lean-forward="false" selection-start-line="135" selection-start-column="3" selection-end-line="135" selection-end-column="3" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,28 +65,8 @@
       <file leaf-file-name="TabooSearchAlgorithm.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LocalSearchAlgorithm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="740">
-              <caret line="37" column="47" lean-forward="false" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="log4j2.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/log4j2.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+            <state relative-caret-position="240">
+              <caret line="48" column="36" lean-forward="true" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -103,11 +75,21 @@
       <file leaf-file-name="NeighborhoodRuleBased.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-142">
-              <caret line="50" column="54" lean-forward="false" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+            <state relative-caret-position="860">
+              <caret line="78" column="88" lean-forward="true" selection-start-line="78" selection-start-column="88" selection-end-line="78" selection-end-column="88" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log4j2.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/log4j2.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="20" column="106" lean-forward="false" selection-start-line="20" selection-start-column="106" selection-end-line="20" selection-end-column="106" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -178,8 +160,6 @@
         <option value="$PROJECT_DIR$/src/algorithms/INeighborhood.java" />
         <option value="$PROJECT_DIR$/src/algorithms/Neighbor.java" />
         <option value="$PROJECT_DIR$/src/algorithms/Feature.java" />
-        <option value="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
-        <option value="$PROJECT_DIR$/src/core/ObjectiveFunction.java" />
         <option value="$PROJECT_DIR$/src/algorithms/LocalSearchAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/gui/BoxPanel.java" />
         <option value="$PROJECT_DIR$/src/core/Instance.java" />
@@ -196,10 +176,13 @@
         <option value="$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/algorithms/ModifiedLocalSearchAlgorithm.java" />
-        <option value="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" />
         <option value="$PROJECT_DIR$/src/misc/log4j2.xml" />
-        <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
+        <option value="$PROJECT_DIR$/src/gui/FormSolutionViewer.java" />
         <option value="$PROJECT_DIR$/src/gui/FormMain.java" />
+        <option value="$PROJECT_DIR$/src/core/ObjectiveFunction2.java" />
+        <option value="$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java" />
+        <option value="$PROJECT_DIR$/src/core/ObjectiveFunction.java" />
+        <option value="$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
         <option value="$PROJECT_DIR$/resources/log4j2.xml" />
         <option value="$PROJECT_DIR$/src/algorithms/Solver.java" />
       </list>
@@ -235,40 +218,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
-              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
-              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
-              <item name="algorithms" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
-              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
-              <item name="core" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
-              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
-              <item name="gui" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
-              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
-              <item name="test" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -321,6 +270,40 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
+              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
+              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
+              <item name="algorithms" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
+              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
+              <item name="core" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
+              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
+              <item name="gui" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="optalgos" type="58d84e3e:PackageViewProjectNode" />
+              <item name="optalgos" type="616d4139:PackageViewModuleNode" />
+              <item name="test" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -338,8 +321,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="algorithms" />
       <recent name="core" />
+      <recent name="algorithms" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -546,7 +529,9 @@
       <workItem from="1522864553272" duration="6830000" />
       <workItem from="1522878253225" duration="2261000" />
       <workItem from="1522919003452" duration="10345000" />
-      <workItem from="1522937103063" duration="9145000" />
+      <workItem from="1522937103063" duration="9654000" />
+      <workItem from="1522961808672" duration="1774000" />
+      <workItem from="1523004123888" duration="10649000" />
     </task>
     <task id="LOCAL-00001" summary="Rectangle colors truly fixed">
       <created>1522334324193</created>
@@ -744,7 +729,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522941529176</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Configured log4j2 and have solver logging instead of printing.">
+      <created>1522946946706</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1522946946706</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -780,7 +772,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125016000" />
+    <option name="totallyTimeSpent" value="137948000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -803,20 +795,20 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292978" sideWeight="0.5015625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3187841" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.335152" sideWeight="0.4984375" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3187841" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289166" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21979332" sideWeight="0.49578822" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22297297" sideWeight="0.49578822" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289166" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17806041" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3990647" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5042118" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3990647" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -841,7 +833,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added test case for NBH R-B, fixed bugs, works now" />
     <MESSAGE value="LocalSearch with R-B Nbh delivers solution. Parameters need tuning" />
     <MESSAGE value="Fixed bug in Neighborhood Rule-Based. Local Search terminates with good solution.&#10;&#10;Next thing to look into: store &quot;best&quot; worse neighbor, choose that one in case no better solution is found within neighborhood." />
     <MESSAGE value="New Neighborhood instance for each solver." />
@@ -866,23 +857,16 @@
     <MESSAGE value="Simulated Annealing Algorithm first working version!" />
     <MESSAGE value="Nbh R-B own function for rule; default zoom value smaller" />
     <MESSAGE value="Added log4j2 library" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added log4j2 library" />
+    <MESSAGE value="Configured log4j2 and have solver logging instead of printing." />
+    <option name="LAST_COMMIT_MESSAGE" value="Configured log4j2 and have solver logging instead of printing." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="18" />
+      <option name="time" value="19" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/algorithms/DummyAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/Box.java" />
     <entry file="file://$PROJECT_DIR$/src/algorithms/DummyAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -940,15 +924,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/Feature.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java" />
-    <entry file="file://$PROJECT_DIR$/src/core/Instance.java" />
     <entry file="file://$PROJECT_DIR$/src/core/InstanceGenerator2.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/InstanceCanvas.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -971,7 +946,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/Rectangle.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/SolutionDisplayPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2540">
@@ -1020,32 +994,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodGeometric.java" />
     <entry file="file://$PROJECT_DIR$/src/algorithms/ModifiedLocalSearchAlgorithm.java" />
     <entry file="file://$PROJECT_DIR$/src/algorithms/SimulatedAnnealingAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
+        <state relative-caret-position="2560">
           <caret line="135" column="3" lean-forward="false" selection-start-line="135" selection-start-column="3" selection-end-line="135" selection-end-column="3" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/FormSolutionViewer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="51" column="52" lean-forward="false" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
-          <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -1055,7 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1067,65 +1021,131 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/misc/log4j2.xml">
+    <entry file="file://$PROJECT_DIR$/src/misc/log4j2.xml" />
+    <entry file="file://$PROJECT_DIR$/src/misc/Logger.java" />
+    <entry file="file://$PROJECT_DIR$/src/gui/FormSolutionViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="58" lean-forward="false" selection-start-line="4" selection-start-column="58" selection-end-line="4" selection-end-column="58" />
+        <state relative-caret-position="3580">
+          <caret line="197" column="10" lean-forward="true" selection-start-line="197" selection-start-column="10" selection-end-line="197" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodGeometric.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="33" column="63" lean-forward="true" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunctionNegative.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="25" column="90" lean-forward="false" selection-start-line="25" selection-start-column="90" selection-end-line="25" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/FormMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
+        <state relative-caret-position="-6758">
+          <caret line="111" column="67" lean-forward="false" selection-start-line="111" selection-start-column="67" selection-end-line="111" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/misc/Logger.java">
+    <entry file="file://$PROJECT_DIR$/src/core/Rectangle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="280">
+          <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
+    <entry file="file://$PROJECT_DIR$/src/algorithms/Feature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-142">
-          <caret line="50" column="54" lean-forward="false" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+        <state relative-caret-position="100">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/Point.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#151#152#0" expanded="true" />
+            <element signature="e#166#167#0" expanded="true" />
+            <element signature="e#233#234#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/FeasibleSolution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="127" column="7" lean-forward="true" selection-start-line="127" selection-start-column="7" selection-end-line="127" selection-end-column="7" />
+        <state relative-caret-position="560">
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding>
-            <element signature="e#4048#4049#0" expanded="true" />
-            <element signature="e#4098#4099#0" expanded="true" />
+            <element signature="e#1739#1740#0" expanded="true" />
+            <element signature="e#1766#1767#0" expanded="true" />
+            <element signature="e#2085#2086#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/Instance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/ObjectiveFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithms/TabooSearchAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="48" column="36" lean-forward="true" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/NeighborhoodRuleBased.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="860">
+          <caret line="78" column="88" lean-forward="true" selection-start-line="78" selection-start-column="88" selection-end-line="78" selection-end-column="88" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/log4j2.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+        <state relative-caret-position="400">
+          <caret line="20" column="106" lean-forward="false" selection-start-line="20" selection-start-column="106" selection-end-line="20" selection-end-column="106" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/algorithms/Solver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" column="57" lean-forward="true" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
+        <state relative-caret-position="1622">
+          <caret line="102" column="5" lean-forward="true" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

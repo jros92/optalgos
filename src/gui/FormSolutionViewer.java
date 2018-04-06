@@ -48,9 +48,7 @@ public class FormSolutionViewer extends JFrame {
 		this.solution = solution;
 
 //		double scaleFactorInitialValueQuotient = 0.3181 * Math.sqrt(solution.getRectangles().size()) - 1.2896;
-		double scaleFactorInitialValueQuotient = 1;
-		this.scaleFactor = (int) Math.ceil(dpi / (10 * scaleFactorInitialValueQuotient));
-
+		this.scaleFactor = (int) Math.ceil(dpi / 10);
 
 		this.multiColored = true;
 		
@@ -190,7 +188,7 @@ public class FormSolutionViewer extends JFrame {
 //		menu.addSeparator();
 //		menu.add(new JMenuItem("Zoom"));
 		JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
-		slider.setMaximumSize(new Dimension(600, (int) slider.getMaximumSize().getHeight()));
+		slider.setMaximumSize(new Dimension(600, (int) slider.getMaximumSize().getHeight() - 4));
         ChangeListener cl = e -> {
             JSlider sliderValue = (JSlider) e.getSource();
             System.out.println("Zoom value adjusted to " + sliderValue.getValue());
