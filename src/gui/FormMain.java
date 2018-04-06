@@ -187,12 +187,12 @@ public class FormMain extends JFrame {
 		
 		JLabel lblAlgorithms = new JLabel("2. Algorithms");
 		lblAlgorithms.setFont(fontLarger);
-		lblAlgorithms.setBounds(5, 194, 165, 24);
+		lblAlgorithms.setBounds(5, 198, 165, 24);
 		contentPane.add(lblAlgorithms);
 		
 		JLabel lblNeighborhood = new JLabel("3. Neighborhoods");
 		lblNeighborhood.setFont(fontLarger);
-		lblNeighborhood.setBounds(175, 194, 165, 24);
+		lblNeighborhood.setBounds((leftColWidth-10)/2 + 15, 198, 165, 24);
 		contentPane.add(lblNeighborhood);
 		
 //		JLabel lblGo = new JLabel("4. Solve");
@@ -210,7 +210,7 @@ public class FormMain extends JFrame {
 		listAlgorithms.setFont(fontStandard);
 		
 		JScrollPane scrollPaneNeighborhoods = new JScrollPane();
-		scrollPaneNeighborhoods.setBounds((leftColWidth-10)/2 + 10, 223, (leftColWidth-10)/2, leftColHeight);
+		scrollPaneNeighborhoods.setBounds((leftColWidth-10)/2 + 15, 223, (leftColWidth-10)/2, leftColHeight);
 		contentPane.add(scrollPaneNeighborhoods);
 		
 		JList<Neighborhoods> listNeighborhoods = new JList<Neighborhoods>();
@@ -233,11 +233,11 @@ public class FormMain extends JFrame {
 		/* List of open solvers */
 		JLabel lblSolvers = new JLabel("Solvers / Solutions");
 		lblSolvers.setFont(fontLarger);
-		lblSolvers.setBounds(5, 330, 165, 24);
+		lblSolvers.setBounds(5, 223+leftColHeight+5, leftColWidth, 24);
 		contentPane.add(lblSolvers);
 
 		JScrollPane scrollPaneSolvers = new JScrollPane();
-		scrollPaneSolvers.setBounds(5, 350, leftColWidth, 150);
+		scrollPaneSolvers.setBounds(5, 223+leftColHeight+30, leftColWidth, 140);
 		contentPane.add(scrollPaneSolvers);
 
 		listSolvers = new JList<>();
