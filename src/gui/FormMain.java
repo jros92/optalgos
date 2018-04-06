@@ -174,6 +174,7 @@ public class FormMain extends JFrame {
 		btnViewInstance.setEnabled(false);
 		btnViewInstance.setMargin(new Insets(0, 5, 0, 5));
 		btnViewInstance.setFont(fontStandard);
+		btnViewInstance.setToolTipText("Only enabled for Instances generated with Generator 2");
 		
 		JButton btnFillAndViewStart = new JButton("Initialize + View");
 		rightPanel.add(btnFillAndViewStart);
@@ -260,6 +261,19 @@ public class FormMain extends JFrame {
 		btnRemoveSolver.setMargin(new Insets(0, 5, 0, 5));
 		btnRemoveSolver.setFont(fontStandard);
 
+		/* Tooltips */
+		String toolTipText = "Create and select instance first";
+		String toolTipText2 = "Select instance, algorithm and neighborhood first";
+		btnRemoveInstance.setEnabled(false);
+		btnViewInstance.setEnabled(false);
+		btnFillAndViewStart.setEnabled(false);
+		btnFillAndViewStart.setToolTipText(toolTipText);
+		listAlgorithms.setEnabled(false);
+		listAlgorithms.setToolTipText(toolTipText);
+		listNeighborhoods.setEnabled(false);
+		listNeighborhoods.setToolTipText(toolTipText);
+		btnGo.setEnabled(false);
+		btnGo.setToolTipText(toolTipText2);
 
 
 		/* Initialization Done */
@@ -296,20 +310,30 @@ public class FormMain extends JFrame {
 					btnRemoveInstance.setEnabled(true);
 					btnViewInstance.setEnabled(listCurrentInstances.getSelectedValue().getGeneratorType() == 2);
 					btnFillAndViewStart.setEnabled(true);
+					btnFillAndViewStart.setToolTipText("Show initial solution");
 					listAlgorithms.setEnabled(true);
+					listAlgorithms.setToolTipText("Select algorithm to use");
 					listNeighborhoods.setEnabled(true);
+					listNeighborhoods.setToolTipText("Select neighborhood to use");
 					if (listAlgorithms.getSelectedIndex() > -1) {
 						if (listNeighborhoods.getSelectedIndex() > -1) {
 							btnGo.setEnabled(true);
+							btnGo.setToolTipText("Solve the problem");
 						}
 					}
 				} else {
+					String toolTipText = "Create and select instance first";
+					String toolTipText2 = "Select instance, algorithm and neighborhood first";
 					btnRemoveInstance.setEnabled(false);
 					btnViewInstance.setEnabled(false);
 					btnFillAndViewStart.setEnabled(false);
+					btnFillAndViewStart.setToolTipText(toolTipText);
 					listAlgorithms.setEnabled(false);
+					listAlgorithms.setToolTipText(toolTipText);
 					listNeighborhoods.setEnabled(false);
+					listNeighborhoods.setToolTipText(toolTipText);
 					btnGo.setEnabled(false);
+					btnGo.setToolTipText(toolTipText2);
 				}
 			}
 		});
@@ -443,7 +467,7 @@ public class FormMain extends JFrame {
 		
 		this.setJMenuBar(menuBar);
 	}
-	
+
 	/**
 	 * Instantiate a solver with the chosen instance, algorithm and neighborhood
 	 * @param algorithmChoice
