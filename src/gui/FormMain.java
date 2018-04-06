@@ -36,7 +36,9 @@ public class FormMain extends JFrame {
 	private JList<Instance> listCurrentInstances;
 	private FeasibleSolution feasibleSolution;
 	private int dpi;
-	
+	private Font fontStandard;
+	private Font fontLarger;
+
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
@@ -108,8 +110,8 @@ public class FormMain extends JFrame {
 		int leftColHeight = (int)Math.round(dpi*1.1);
 		
 		int fontSize = (int) Math.round(dpi / 7 + 0.5);
-		Font fontStandard = new Font("Tahoma", Font.PLAIN, fontSize-1);
-		Font fontLarger = new Font("Tahoma", Font.PLAIN, fontSize);
+		fontStandard = new Font("Tahoma", Font.PLAIN, fontSize-1);
+		fontLarger = new Font("Tahoma", Font.PLAIN, fontSize);
 
 		System.out.println("Started GUI");
 		System.out.println("Detected display dpi: " + dpi);
@@ -224,8 +226,8 @@ public class FormMain extends JFrame {
 //		btnGo.setForeground(new Color(0, 220, 130));
 		rightPanel.add(btnGo);
 		
-		dialogAddInstance = new DialogAddInstance(this);
-
+		dialogAddInstance = new DialogAddInstance(this, this.dpi, fontStandard, fontLarger);
+		dialogAddInstance.setLocation(150, 150);
 
 		/* List of open solvers */
 		JLabel lblSolvers = new JLabel("Solvers / Solutions");

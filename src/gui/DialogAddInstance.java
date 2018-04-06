@@ -2,8 +2,7 @@ package gui;
 
 import core.*;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,8 +14,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
-import java.awt.Font;
-import java.awt.Window;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +30,11 @@ public class DialogAddInstance extends JDialog {
 	private JTextField textFieldNrectangles;
 	private JTextField textFieldLMin;
 	private JTextField textFieldLMax;
-	
+	private int dpi;
+	private Font fontStandard;
+	private Font fontLarger;
+
+
 	JRadioButton rdbtnGenerator1 = new JRadioButton("Generator 1");
 	JRadioButton rdbtnGenerator2 = new JRadioButton("Generator 2");
 	
@@ -46,10 +47,17 @@ public class DialogAddInstance extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogAddInstance(Window owner) {
+	public DialogAddInstance(Window owner, int dpi, Font fontStandard, Font fontLarger) {
+		this.dpi = dpi;
+		this.fontStandard = fontStandard;
+		this.fontLarger = fontLarger;
+		this.setFont(this.fontStandard);
+
+
 		// Create all the components
 		initializeComponents();
-		
+
+
 		/* Action Listeners */
 		
 		rdbtnGenerator1.addItemListener(new ItemListener() {
@@ -99,94 +107,124 @@ public class DialogAddInstance extends JDialog {
 	private void initializeComponents() {
 		setModal(true);
 		setTitle("Generate New Instance");
-		setBounds(100, 100, 392, 236);
-		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, 376, 197);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		setBounds(100, 100, 392, 236);
+		setSize((int)Math.round(dpi*3.5), (int)Math.round(dpi*2.5));
+
+
+//		getContentPane().setLayout(null);
+//		contentPanel.setBounds(0, 0, 376, 197);
+		contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel);
-		contentPanel.setLayout(null);
+		contentPanel.setLayout(new BorderLayout());
+
+		JPanel leftPanel = new JPanel();
+		GridLayout layoutLeftPanel = new GridLayout(6,1);
+		layoutLeftPanel.setVgap((int)Math.round(dpi/30));
+		leftPanel.setLayout(layoutLeftPanel);
+		contentPanel.add(leftPanel, BorderLayout.WEST);
+
+		JPanel rightPanel = new JPanel();
+		GridLayout layoutRightPanel = new GridLayout(6,1);
+		layoutRightPanel.setVgap((int)Math.round(dpi/30));
+		rightPanel.setLayout(layoutRightPanel);
+		contentPanel.add(rightPanel, BorderLayout.EAST);
+
 		{
 			JLabel lblChooseGenerator = new JLabel("Choose Generator:");
-			lblChooseGenerator.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			//lblChooseGenerator.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblChooseGenerator.setFont(this.fontStandard);
 			lblChooseGenerator.setBounds(11, 14, 122, 14);
-			contentPanel.add(lblChooseGenerator);
+			leftPanel.add(lblChooseGenerator);
+			leftPanel.add(new JLabel(""));
 		}
 		{
 			
-			rdbtnGenerator1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			rdbtnGenerator1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			rdbtnGenerator1.setFont(this.fontStandard);
 			rdbtnGenerator1.setSelected(true);
 			rdbtnGenerator1.setBounds(139, 10, 97, 23);
 			buttonGroup.add(rdbtnGenerator1);
-			contentPanel.add(rdbtnGenerator1);
+			rightPanel.add(rdbtnGenerator1);
 		}
 		{
 			
-			rdbtnGenerator2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			rdbtnGenerator2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			rdbtnGenerator2.setFont(this.fontStandard);
 			rdbtnGenerator2.setBounds(238, 10, 106, 23);
 			buttonGroup.add(rdbtnGenerator2);
-			contentPanel.add(rdbtnGenerator2);
+			rightPanel.add(rdbtnGenerator2);
 		}
 		{
 			JLabel lblBoxLength = new JLabel("Box Length");
-			lblBoxLength.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			lblBoxLength.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblBoxLength.setFont(this.fontStandard);
 			lblBoxLength.setBounds(11, 49, 122, 14);
-			contentPanel.add(lblBoxLength);
+			leftPanel.add(lblBoxLength);
 		}
 		{
 			JLabel lblNumberOfRectangles = new JLabel("Number of Rectangles");
-			lblNumberOfRectangles.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			lblNumberOfRectangles.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblNumberOfRectangles.setFont(this.fontStandard);
 			lblNumberOfRectangles.setBounds(11, 77, 122, 14);
-			contentPanel.add(lblNumberOfRectangles);
+			leftPanel.add(lblNumberOfRectangles);
 		}
 		
 		textFieldBoxLength = new JTextField();
 		textFieldBoxLength.setBounds(170, 46, 86, 20);
-		contentPanel.add(textFieldBoxLength);
+		textFieldBoxLength.setFont(this.fontStandard);
+		rightPanel.add(textFieldBoxLength);
 		textFieldBoxLength.setColumns(10);
 		{
 			textFieldNrectangles = new JTextField();
 			textFieldNrectangles.setColumns(10);
 			textFieldNrectangles.setBounds(170, 74, 86, 20);
-			contentPanel.add(textFieldNrectangles);
+			textFieldNrectangles.setFont(this.fontStandard);
+			rightPanel.add(textFieldNrectangles);
 		}
 		{
 			JLabel lblLmin = new JLabel("Rectangle Lmin");
-			lblLmin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			lblLmin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblLmin.setFont(this.fontStandard);
 			lblLmin.setBounds(11, 106, 122, 14);
-			contentPanel.add(lblLmin);
+			leftPanel.add(lblLmin);
 		}
 		{
 			textFieldLMin = new JTextField();
 			textFieldLMin.setColumns(10);
 			textFieldLMin.setBounds(170, 103, 86, 20);
-			contentPanel.add(textFieldLMin);
+			textFieldLMin.setFont(this.fontStandard);
+			rightPanel.add(textFieldLMin);
 		}
 		{
 			JLabel lblLmax = new JLabel("Rectangle Lmax");
-			lblLmax.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//			lblLmax.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblLmax.setFont(this.fontStandard);
 			lblLmax.setBounds(11, 134, 122, 14);
-			contentPanel.add(lblLmax);
+			leftPanel.add(lblLmax);
 		}
 		{
 			textFieldLMax = new JTextField();
 			textFieldLMax.setColumns(10);
 			textFieldLMax.setBounds(170, 131, 86, 20);
-			contentPanel.add(textFieldLMax);
+			textFieldLMax.setFont(this.fontStandard);
+			rightPanel.add(textFieldLMax);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(0, 164, 376, 33);
-			contentPanel.add(buttonPane);
+			contentPanel.add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			{
 				okButton = new JButton("Generate");
 				okButton.setActionCommand("OK");
+				okButton.setFont(this.fontStandard);
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
+				cancelButton.setFont(this.fontStandard);
 				buttonPane.add(cancelButton);
 			}
 		}
