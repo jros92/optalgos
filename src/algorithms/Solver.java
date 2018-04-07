@@ -95,7 +95,14 @@ public class Solver implements Runnable {
 
 		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
 		System.setProperty("logfileTimeStamp", logfileTimeStamp);
-		String logfilePrefix = (this.algorithm + "_on_" + this.neighborhood + "_n_" + this.initialSolution.getRectangles().size()).replaceAll("\\s+","");
+		String logfilePrefix = (this.algorithm
+				+ "_on_"
+				+ this.neighborhood
+				+ "_n_"
+				+ this.initialSolution.getRectangles().size()
+				+ "_bxln_"
+				+ this.initialSolution.getBoxLength()
+		).replaceAll("\\s+","");
 		System.setProperty("logfilePrefix", logfilePrefix);
 		org.apache.logging.log4j.core.LoggerContext ctx =
 				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
