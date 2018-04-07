@@ -82,14 +82,12 @@ public class FormSolutionViewer extends JFrame {
 
 	public void updateSolution(FeasibleSolution solution, boolean betterSolution) {
 
+		// If the new solution is worse than the previous one, check if the user wants to display it or not, and do so
 		if (!betterSolution & !updateWithWorseSolution) return;
 
 		this.solution = solution;
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
-		
-//		solutionDisplayPanel = new SolutionDisplayPanel(this, this.solution, this.scaleFactor, this.multiColored);	
-//		this.scrollPane.setViewportView(solutionDisplayPanel);
-		
+
 		solutionDisplayPanel.setSolution(this.solution);
 		solutionDisplayPanel.updateBoxPanels();
 	}

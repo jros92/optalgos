@@ -296,7 +296,7 @@ public class Solver implements Runnable {
 		long currentTime = System.currentTimeMillis();
 		if (this.lastGuiUpdate + this.guiUpdateFrequency < currentTime) {
 			updateGUI(betterSolution);
-			logger.info("GUI update");
+			logger.info("Requesting GUI update");
 			this.lastGuiUpdate = currentTime;
 		}
 	}
