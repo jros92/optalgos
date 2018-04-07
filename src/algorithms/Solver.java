@@ -52,7 +52,8 @@ public class Solver implements Runnable {
 	private int cntGuiUpdates = 0;	// TODO: Remove after debugging
 
 	// Loggers
-	static final Logger logger = LogManager.getLogger(Solver.class.getName());
+//	static final Logger logger = LogManager.getLogger(Solver.class.getName());
+	static final Logger logger = LogManager.getLogger("log");
 	static final Logger loggerPerf = LogManager.getLogger("loggerPerf");
 
 	/**
@@ -94,12 +95,14 @@ public class Solver implements Runnable {
 
 		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
 		System.setProperty("logfileTimeStamp", logfileTimeStamp);
-		String logfilePrefix = (this.algorithm + "_on_" + this.neighborhood).replaceAll("\\s+","");
+		String logfilePrefix = (this.algorithm + "_on_" + this.neighborhood + "_n_" + this.initialSolution.getRectangles().size()).replaceAll("\\s+","");
 		System.setProperty("logfilePrefix", logfilePrefix);
 		org.apache.logging.log4j.core.LoggerContext ctx =
 				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
+		loggerPerf.info("time elapsed [ms]" + ";" + "iteration" + ";" + "box count" + ";" + "cost");
+		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);	// store performance data for initial solution
 	}
 	
 	@Override
@@ -132,7 +135,6 @@ public class Solver implements Runnable {
 	public void solve() throws InterruptedException {
 		       
 		logger.info("[SOLVER] Started " + this.toString() + ".");
-		loggerPerf.info("iteration" + "\t" + "box count" + "\t" + "cost");
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
@@ -212,7 +214,7 @@ public class Solver implements Runnable {
 
 						logger.info("[SOLVER] Chose new solution @ iteration " + (i+1) + " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
 //						logger.log(Level.getLevel("PERF"), (i+1) + "\t" + this.solution.getBoxCount() + "\t" + this.currentCost);
-						loggerPerf.info((i+1) + "\t" + this.solution.getBoxCount() + "\t" + this.currentCost);
+						loggerPerf.info(((System.nanoTime( ) - startTimeNano) / 1000000) + ";" + (i+1) + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
 							requestGuiUpdate(betterSolution);
@@ -271,7 +273,7 @@ public class Solver implements Runnable {
 
 		logger.info("No. of Gui Updates: " + cntGuiUpdates); // TODO: Disable after debugging
 
-		logger.info("\nReduced box count by "
+		logger.info("Reduced box count by "
 				+ (this.initialSolution.getBoxCount() - this.solution.getBoxCount())
 				+ " | the initial solution used "
 				+ this.initialSolution.getBoxCount()

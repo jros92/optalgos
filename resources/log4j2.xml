@@ -11,7 +11,7 @@
         <Property name="performancefilename">performance.csv</Property>
     </Properties>
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
+        <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <File name="logfile" fileName="${filepath}/${sys:logfileTimeStamp}_${sys:logfilePrefix}_${logfilename}" append="true">
@@ -20,7 +20,7 @@
         </File>
         <File name="performancelogfile" fileName="${filepath}/${sys:logfileTimeStamp}_${sys:logfilePrefix}_${performancefilename}" append="true">
             <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw"/>-->
-            <PatternLayout pattern="%d{HH:mm:ss.SSS}	%msg%n"/>
+            <PatternLayout pattern="%msg%n"/>
         </File>
     </Appenders>
     <Loggers>
@@ -31,9 +31,12 @@
             <AppenderRef ref="performancelogfile"/>
         </Logger>
 
-        <Root level="INFO">
-            <AppenderRef ref="console"/>
+        <Logger name="log">
+            <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="logfile"/>
+        </Logger>
+
+        <Root level="INFO">
             <!--<AppenderRef ref="performancelogfile" level="PERF"/>-->
         </Root>
     </Loggers>
