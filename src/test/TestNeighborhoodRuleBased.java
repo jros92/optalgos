@@ -30,7 +30,7 @@ public class TestNeighborhoodRuleBased {
         rectangles.add(new Rectangle(1, 3, 4));     // This rectangle should be the second in the list (index 1)
         rectangles.add(new Rectangle(1, 2, 5));
 
-        Instance instance = new Instance(6, 3, 0, rectangles);
+        Instance instance = new Instance(6, 3, 0, 1, 3, rectangles);
 
         /* Initialize a "bad" solution */
         IProblemInitializer problemInitializer = new SimpleInitializer();

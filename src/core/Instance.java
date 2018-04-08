@@ -13,6 +13,7 @@ public class Instance {
 	private int nRectangles;
 	private int boxLength;
 	private int generatorType;
+	private int minLength, maxLength;
 	private ArrayList<Rectangle> rectangles;
 	
 	/**
@@ -23,14 +24,14 @@ public class Instance {
 	 * @param generatorType Generator type used (1 or 2)
 	 * @param rectangles The set of rectangles for this instance
 	 */
-	public Instance(int nRectangles, int boxLength, int generatorType, ArrayList<Rectangle> rectangles) {
+	public Instance(int nRectangles, int boxLength, int generatorType, int minLength, int maxLength, ArrayList<Rectangle> rectangles) {
 		super();
-		generatedInstances++;
-		this.id = generatedInstances;
+		this.id = ++generatedInstances;
 		this.nRectangles = nRectangles;
 		this.boxLength = boxLength;
 		this.generatorType = generatorType;
-		
+		this.minLength = minLength;
+		this.maxLength = maxLength;
 		this.rectangles = rectangles;
 	}
 	
@@ -49,7 +50,15 @@ public class Instance {
 	public int getGeneratorType() {
 		return generatorType;
 	}
-	
+
+	public int getMinLength() {
+		return minLength;
+	}
+
+	public int getMaxLength() {
+		return maxLength;
+	}
+
 	/**
 	 * Return the rectangles contained in this instance
 	 * @return An ArrayList containing all the rectangles
@@ -67,14 +76,11 @@ public class Instance {
 	
 	@Override
 	public Instance clone() {
-		ArrayList<Rectangle> newRectangles = new ArrayList<Rectangle>();
-		
+		ArrayList<Rectangle> clonedRectangles = new ArrayList<Rectangle>();
 		for (Rectangle rectangle : this.rectangles) {
-			newRectangles.add(rectangle.clone());
+			clonedRectangles.add(rectangle.clone());
 		}
-		
-		Instance newInstance = new Instance(nRectangles, boxLength, generatorType, newRectangles);
-		return newInstance;
+		return new Instance(nRectangles, boxLength, generatorType, minLength, maxLength, clonedRectangles);
 	}
 	
 	/**
@@ -83,7 +89,11 @@ public class Instance {
 	 */
 	@Override
 	public String toString() {
-		return "Instance #" + this.id + " [N = " + this.nRectangles + ", GenType = " + this.generatorType + ", BoxLength = " + this.boxLength + "]";
+		return "Instance #" + this.id
+				+ " [N=" + this.nRectangles
+				+ ", L=" + this.minLength + ".." + this.maxLength
+				+ ", GenType=" + this.generatorType
+				+ ", BoxLength=" + this.boxLength + "]";
 	}
 	
 }

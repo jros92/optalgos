@@ -31,7 +31,7 @@ public class TestCases3x3 {
         rectangles.add(new Rectangle(1, 3, 4));     // This rectangle should be the second in the list (index 1)
         rectangles.add(new Rectangle(1, 2, 5));
 
-        Instance instance = new Instance(6, 3, 0, rectangles);
+        Instance instance = new Instance(6, 3, 0, 1, 3, rectangles);
 
         IOptimizationAlgorithm algorithm = Algorithm.generateInstance(Algorithms.LocalSearch);
 
