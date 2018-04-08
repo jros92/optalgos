@@ -1,6 +1,7 @@
 package algorithms;
 
 import core.NeighborhoodGeometric;
+import core.NeighborhoodGeometricNew;
 import core.NeighborhoodRuleBased;
 import core.Neighborhoods;
 
@@ -30,8 +31,12 @@ public abstract class Neighborhood {
 			case RuleBased:
 				result = new NeighborhoodRuleBased();
 				break;
+			case GeometricNew:
+				result = new NeighborhoodGeometricNew();
+				break;
 			default:
-				result = new NeighborhoodRuleBased();
+				System.out.println("ERROR creating selected neighborhood. add new neighborhoods to Neighborhood.generateInstance()");
+				result = null;
 				break;
 		}
 

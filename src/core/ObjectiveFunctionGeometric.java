@@ -6,30 +6,17 @@ public class ObjectiveFunctionGeometric implements IObjectiveFunction {
 
     @Override
     public double getValue(FeasibleSolution solution) {
+
         int boxCount = solution.getBoxCount();
 
-        double weightedCumulativeUnusedAreaPercentage = 0;
+        double weightedCumulativeFreeAreaPercentage = 0;
         for (Box box : solution.getBoxes()) {
-            weightedCumulativeUnusedAreaPercentage += (double)box.getRectangles().size() * (1 - box.getPackingPercentage());
-
+            weightedCumulativeFreeAreaPercentage += (double)box.getRectangles().size() * (double)box.getFreeArea();
         }
 
-//        System.out.println("[OBJFUN] weightedCumulativePackingPercentage = " + weightedCumulativeUnusedAreaPercentage);
-
-        double[] weights = new double[] {0.9f, 0.1f};
-//		double[] weights = new double[2];
-//		weights[1] = 1f / (1f + weightedCumulativePackingPercentage / (double)boxCount);
-//		weights[0] = 1f - weights[1];
-
-//        System.out.println("[OBJFUN] Weights = [" + weights[0] + ", " + weights[1] + "]");
-
-        double result;
-        result = (double)boxCount * (double)weights[0];
-        result -= weightedCumulativeUnusedAreaPercentage * weights[1];
-
-        result = weightedCumulativeUnusedAreaPercentage;
+        //double result = weightedCumulativeFreeAreaPercentage;
+        double result = weightedCumulativeFreeAreaPercentage / (solution.getBoxLength() * solution.getBoxLength());
 
         return result;
     }
-
 }
