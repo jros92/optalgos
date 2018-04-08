@@ -14,7 +14,8 @@ public class ObjectiveFunction implements IObjectiveFunction {
 			weightedCumulativeFreeAreaPercentage += (double)box.getRectangles().size() * (double)box.getFreeArea();
 		}
 
-		double result = weightedCumulativeFreeAreaPercentage;
+		//double result = weightedCumulativeFreeAreaPercentage;
+		double result = weightedCumulativeFreeAreaPercentage / (solution.getBoxLength() * solution.getBoxLength());
 
 		return result;
 	}
