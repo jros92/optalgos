@@ -293,16 +293,14 @@ public class FormMain extends JFrame {
 		
 		// Fill Algorithm List
 		algosListModel = new DefaultListModel<>();
-		algosListModel.addElement(Algorithms.LocalSearch);
-		algosListModel.addElement(Algorithms.SimulatedAnnealing);
-		algosListModel.addElement(Algorithms.TabooSearch);
+		for (Algorithms algorithmChoice : Algorithms.values())
+			algosListModel.addElement(algorithmChoice);
 		listAlgorithms.setModel(algosListModel);
 		
 		// Fill Neighborhood list
 		neighborhoodListModel = new DefaultListModel<Neighborhoods>();
-		neighborhoodListModel.addElement(Neighborhoods.Geometric);
-		neighborhoodListModel.addElement(Neighborhoods.RuleBased);
-		neighborhoodListModel.addElement(Neighborhoods.GeometricNew);
+		for (Neighborhoods neighborhoodChoice : Neighborhoods.values())
+			neighborhoodListModel.addElement(neighborhoodChoice);
 		listNeighborhoods.setModel(neighborhoodListModel);
 
 
@@ -487,12 +485,39 @@ public class FormMain extends JFrame {
 
 		menu.addSeparator();
 
+		// Button and dialog to run custom demo
+		menuItem = new JMenuItem("Run Custom Demo...");
+		menuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				// TODO: Implement Dialog
+//				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState());
+
+				// add instances to GUI list
+//				for (Instance inst : demo.getInstances()) {
+//					instanceListModel.addElement(inst);
+//				}
+
+				// Run the demo
+//				demo.runDemo();
+
+				// when done, add to list of solutions
+//				for (FeasibleSolution solution : demo.getSolutions()) {
+//					solverListModel.addElement(solution);
+//				}
+			}
+		});
+		//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setFont(fontStandard);
+		menu.add(menuItem);
+
+		menu.addSeparator();
+
 		// Button to run small demo
 		menuItem = new JMenuItem("Run Small Demo (3 Instances, 1000 Rectangles)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// TODO: Set nInstances back to 3 !!!
-				Demo demo = new Demo(1, 1000, 1, 10, 10, menuItemCb.getState());
+				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
 					instanceListModel.addElement(inst);

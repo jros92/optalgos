@@ -22,6 +22,10 @@
             <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw"/>-->
             <PatternLayout pattern="%msg%n"/>
         </File>
+        <File name="demologfile" fileName="${filepath}/${sys:demoLogfileTimeStamp}_${sys:demoLogfilePrefix}.csv" append="true">
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw"/>-->
+            <PatternLayout pattern="%msg%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <!--<Logger name="org.apache.log4j.xml" level="INFO">
@@ -34,6 +38,10 @@
         <Logger name="log">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="logfile"/>
+        </Logger>
+
+        <Logger name="DemoLogger" level="ALL">
+            <AppenderRef ref="demologfile"/>
         </Logger>
 
         <Root level="INFO">

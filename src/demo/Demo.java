@@ -1,11 +1,15 @@
 package demo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import algorithms.*;
 import core.*;
 import gui.FormMain;
 import gui.FormSolutionViewer;
+import algorithms.Timing;
+import org.apache.logging.log4j.*;
 
 public class Demo {
 
@@ -18,6 +22,7 @@ public class Demo {
 	private ArrayList<Instance> instances;
 	private ArrayList<FeasibleSolution> solutions;
 
+	private static final Logger logger = LogManager.getLogger("DemoLogger");
 
 	public Demo(int nInstances, int nRectangles, int lMin, int lMax, int lBox, boolean showSolutions) {
 		super();
@@ -37,6 +42,27 @@ public class Demo {
 			Instance instance = iGen1.generate(nRectangles, lMin, lMax, lBox);
 			instances.add(instance);
 		}
+
+		/* Set up loggers */
+		String demoLogfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+		System.setProperty("demoLogfileTimeStamp", demoLogfileTimeStamp);
+		String logfilePrefix = ("demo"
+				+ "_nI_"
+				+ this.nInstances
+				+ "_n_"
+				+ this.nRectangles
+				+ "_L_"
+				+ this.lMin
+				+ "_-_"
+				+  this.lMax
+				+ "_bxln_"
+				+ this.lBox
+		).replaceAll("\\s+","");
+		System.setProperty("demoLogfilePrefix", logfilePrefix);
+		org.apache.logging.log4j.core.LoggerContext ctx =
+				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+		System.out.println("Logging Level for Performance Logger is: " + logger.getLevel());
 	}
 	
 	public int getnInstances() {
@@ -83,12 +109,22 @@ public class Demo {
 
 	public void runDemo() {
 
+		// Header for log file
+		logger.info("Run #;Instance #;nRectangles;lMin;lMax;Box Length;Algorithm;" +
+				"Neighborhood;Wall Clock Time [ms];CPU Time [ms];User Time [ms];" +
+				"System Time [ms];Box Count;Packing %;Cost");
+
 		int instanceCount = 0;
+		int runCount = 0;
+
+		/* Start timing for entire demo run */
+		long startTimeDemoNano = System.nanoTime();
+		long startSystemTimeNano = Timing.getSystemTime();
+		long startUserTimeNano   = Timing.getUserTime();
+		long startCPUTimeNano 	 = Timing.getCpuTime();
+
 
 		for (Instance instance : instances) {
-
-			/* Start timing */
-			long startTimeNano = System.nanoTime();
 
 			++instanceCount;
 
@@ -107,13 +143,21 @@ public class Demo {
 			/* The algorithms should be called here, along with the visualization in the small demos */
 			for (Algorithms algorithmChoice : Algorithms.values()) {
 				for (Neighborhoods neighborhoodChoice : Neighborhoods.values()) {
-					// Generate instances for algo and nbh
+					++runCount;
+
+					// Generate objects for algo and nbh
 					IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 					INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
-					// Generate a new solver
+					// Generate a new solver object
 					Solver solver = new Solver(algorithm, neighborhood, instance, maxIterations, numberOfNeighbors);
 					solver.setSleepDuration(0);
+
+					// Start timing for this algorithm
+					long startSolverTimeNano 		= System.nanoTime();
+					long startSolverSystemTimeNano  = Timing.getSystemTime();
+					long startSolverUserTimeNano    = Timing.getUserTime();
+					long startSolverCPUTimeNano 	= Timing.getCpuTime();
 
 					// Do not start solver as a new thread, but one after the other
 					try {
@@ -122,9 +166,34 @@ public class Demo {
 						e.printStackTrace();
 					}
 
-					// Once the solver terminates, add the solution to the list of solutions
-					// then, open up a solution viewer and display the solution
+					// Once the solver terminates, Stop timing and log data
+					long taskSolverElapsedTimeMillis = (System.nanoTime() - startSolverTimeNano) / 1000000;
+					long taskSolverUserTimeMillis    = (Timing.getUserTime() - startSolverUserTimeNano) / 1000000;
+					long taskSolverSystemTimeMillis  = (Timing.getSystemTime() - startSolverSystemTimeNano) / 1000000;
+					long taskSolverCPUTimeMillis	 = (Timing.getCpuTime() - startSolverCPUTimeNano) / 1000000;
+
+					// Log data
+					logger.info(runCount + ";" +
+							instanceCount + ";" +
+							instance.getnRectangles() + ";" +
+							instance.getMinLength() + ";" +
+							instance.getMaxLength() + ";" +
+							instance.getBoxLength() + ";" +
+							algorithmChoice + ";" +
+							neighborhoodChoice + ";" +
+							taskSolverElapsedTimeMillis + ";" +
+							taskSolverCPUTimeMillis + ";" +
+							taskSolverUserTimeMillis + ";" +
+							taskSolverSystemTimeMillis + ";" +
+							solver.getSolution().getBoxCount() + ";" +
+							solver.getSolution().calculateCumulativePackingPercentage() + ";" +
+							neighborhood.getPreferredObjectiveFunction().getValue(solver.getSolution()));
+
+
+					// add the solution to the list of solutions
 					solutions.add(solver.getSolution());
+
+					// then, open up a solution viewer and display the solution
 					if (this.showSolutions) {
 						FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), FormMain.getDpi());
 						solutionViewer.setVisible(true);
@@ -133,11 +202,15 @@ public class Demo {
 			}
 
 
-			
-			
 		}
-		
-		
+
+		/* Stop timing for entire demo run */
+		long taskElapsedTimeNano = System.nanoTime() - startTimeDemoNano;
+		long taskUserTimeNano    = Timing.getUserTime() - startUserTimeNano;
+		long taskSystemTimeNano  = Timing.getSystemTime() - startSystemTimeNano;
+		long taskCPUTimeNano	 = Timing.getCpuTime() - startCPUTimeNano;
+
+
 	}
 
 	@Override

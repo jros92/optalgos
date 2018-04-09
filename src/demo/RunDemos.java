@@ -8,16 +8,25 @@ package demo;
 public class RunDemos {
 
 	public static void main(String[] args) {
-		System.out.println("Running demos.");
+		System.out.println("Running small demo.");
+		runSmallDemo(false);
+	}
+
+	public static void runSmallDemo(boolean showSolutions) {
+		System.out.println("Running small demo.");
 		
-		Demo demo1 = new Demo(2, 5, 1, 3, 3, true);
-		demo1.runDemo();
-		
-		Demo demo2 = new Demo(10, 10, 1, 9, 9, true);
-		demo2.runDemo();
-		
+		Demo demo = new Demo(2, 1000, 1, 10, 10, showSolutions);
+		demo.runDemo();
 		
 	}
-	
+
+	public static void runLargeDemo(boolean showSolutions) {
+		System.out.println("Running large demo.");
+
+		Demo demo = new Demo(10, 1000, 1, 9, 9, showSolutions);
+		demo.runDemo();
+
+	}
+
 
 }
