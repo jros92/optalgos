@@ -46,7 +46,7 @@ public class TestCases3x3 {
         }
 
         // Create a solution viewer and pass it to the solver
-        FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), 100, 100, (int)java.awt.Toolkit.getDefaultToolkit().getScreenResolution());
+        FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), (int)java.awt.Toolkit.getDefaultToolkit().getScreenResolution());
         solver.setViewer(solutionViewer);
         solutionViewer.setVisible(true);
 

@@ -25,6 +25,7 @@ import javax.swing.*;
 import algorithms.*;
 
 import core.*;
+import demo.Demo;
 
 public class FormMain extends JFrame {
 
@@ -85,7 +86,7 @@ public class FormMain extends JFrame {
 			public void run() {
 				try {
 					/* Read System Resolution (DPI) and create Frame */
-					int dpi = (int)java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
+					int dpi = getDpi();
 					FormMain frame = new FormMain(dpi);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -95,14 +96,19 @@ public class FormMain extends JFrame {
 		});
 	}
 
+	public static int getDpi() {
+		int dpi = (int)java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
+		if (dpi < 40) dpi = 40;
+		return dpi;
+	}
+
 
 	/**
 	 * Create the Main frame of the application.
 	 * @param dpi The resolution of the screen, should be detected by caller
 	 */
 	public FormMain(int dpi) {
-		
-		if (dpi < 40) dpi = 40;
+
 		this.dpi = dpi;
 		
 		float mainFormHeightFactor = 6f;
@@ -446,7 +452,7 @@ public class FormMain extends JFrame {
 		menuBar = new JMenuBar();
 		menuBar.setFont(fontStandard);
 		
-		//Build the first menu.
+		// File Menu
 		menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription(
@@ -464,7 +470,67 @@ public class FormMain extends JFrame {
 		menuItem.setFont(fontStandard);
 		
 		menu.add(menuItem);
-		
+
+		// Demo Menu
+		menu = new JMenu("Batch");
+		menu.setMnemonic(KeyEvent.VK_B);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"Control Batch Processes");
+		menuBar.add(menu);
+		menu.setFont(fontStandard);
+
+		JCheckBoxMenuItem menuItemCb = new JCheckBoxMenuItem("Display solutions graphically");
+		menuItemCb.setState(false);
+		menuItemCb.setFont(fontStandard);
+		menu.add(menuItemCb);
+
+		menu.addSeparator();
+
+		// Button to run small demo
+		menuItem = new JMenuItem("Run Small Demo (3 Instances, 1000 Rectangles)");
+		menuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				// TODO: Set nInstances back to 3 !!!
+				Demo demo = new Demo(1, 1000, 1, 10, 10, menuItemCb.getState());
+				// add instances to GUI list
+				for (Instance inst : demo.getInstances()) {
+					instanceListModel.addElement(inst);
+				}
+				// Run the demo
+				demo.runDemo();
+				// when done, add to list of solutions
+//				for (FeasibleSolution solution : demo.getSolutions()) {
+//					solverListModel.addElement(solution);
+//				}
+			}
+		});
+//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setFont(fontStandard);
+		menu.add(menuItem);
+
+		// Button to run large demo
+		menuItem = new JMenuItem("Run Large Demo (30 Instances, 1000 Rectangles)");
+		menuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				Demo demo = new Demo(30, 1000, 1, 10, 10, menuItemCb.getState());
+				// add instances to GUI list
+				for (Instance inst : demo.getInstances()) {
+					instanceListModel.addElement(inst);
+				}
+				// Run the demo
+				demo.runDemo();
+				// when done, add to list of solutions
+//				for (FeasibleSolution solution : demo.getSolutions()) {
+//					solverListModel.addElement(solution);
+//				}
+			}
+		});
+//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setFont(fontStandard);
+		menu.add(menuItem);
+
+
+		// Set the menuBar for the Frame
 		this.setJMenuBar(menuBar);
 	}
 
@@ -490,7 +556,8 @@ public class FormMain extends JFrame {
 			solverThread.start();
 			
 			// Create a solution viewer and pass it to the solver
-			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), (this.getX() + this.getWidth()), this.getY(), this.dpi);
+//			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), (this.getX() + this.getWidth()), this.getY(), this.dpi);
+			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), this.dpi);
 			solver.setViewer(solutionViewer);
 			solutionViewer.setVisible(true);
 			// Enable display option for Sim. Annealing and Taboo Search, disable for Local Search
@@ -507,7 +574,8 @@ public class FormMain extends JFrame {
 	public void showSolution(FeasibleSolution solution) {
 		if (solution != null) {
 			// Create a solution viewer and pass it to the solver
-			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+//			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, this.dpi);
 			solutionViewer.setVisible(true);
 
 			// Disable display option (for Sim. Annealing and Taboo Search)
@@ -548,7 +616,8 @@ public class FormMain extends JFrame {
 		IProblemInitializer problemInitializer = new SimpleInitializer();
 		feasibleSolution = problemInitializer.initialize(instance);
 		
-		FormSolutionViewer solutionViewer = new FormSolutionViewer(feasibleSolution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+//		FormSolutionViewer solutionViewer = new FormSolutionViewer(feasibleSolution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+		FormSolutionViewer solutionViewer = new FormSolutionViewer(feasibleSolution, this.dpi);
 		solutionViewer.setVisible(true);
 		feasibleSolution.printToConsole();
 	}

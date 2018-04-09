@@ -44,7 +44,7 @@ public class FormSolutionViewer extends JFrame {
 	 * @param y
 	 * @param dpi
 	 */
-	public FormSolutionViewer(FeasibleSolution solution, int x, int y, int dpi) {
+	public FormSolutionViewer(FeasibleSolution solution, int dpi) {
 		this.solution = solution;
 
 //		double scaleFactorInitialValueQuotient = 0.3181 * Math.sqrt(solution.getRectangles().size()) - 1.2896;
@@ -53,7 +53,7 @@ public class FormSolutionViewer extends JFrame {
 		this.multiColored = true;
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(x, y, 1600, 600);
+		setSize(1600, 600);
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
 		
 		this.setBackground(new Color(250, 250, 250));
