@@ -64,7 +64,8 @@ public class Solver implements Runnable {
 	 * @param maxIterations
 	 * @param numberOfNeighbors
 	 */
-	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood, Instance instance, long maxIterations, int numberOfNeighbors) {
+	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood,
+				  Instance instance, long maxIterations, int numberOfNeighbors) {
 		this.algorithm = algorithm;
 		this.neighborhood = neighborhood;
 		this.objFun = neighborhood.getPreferredObjectiveFunction();
@@ -106,14 +107,15 @@ public class Solver implements Runnable {
 				+  this.initialSolution.getInstance().getMaxLength()
 				+ "_bxln_"
 				+ this.initialSolution.getBoxLength()
-		).replaceAll("\\s+","");
+		).replaceAll("\\s+",""); //remove whitespaces for filename
 		System.setProperty("logfilePrefix", logfilePrefix);
 		org.apache.logging.log4j.core.LoggerContext ctx =
 				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 //		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
 		loggerPerf.info("time elapsed [ms]" + ";" + "iteration" + ";" + "box count" + ";" + "cost");
-		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);	// store performance data for initial solution
+		// store performance data for initial solution
+		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
 	}
 	
 	@Override
@@ -168,8 +170,6 @@ public class Solver implements Runnable {
 		Neighbor[] neighbors;
 		FeasibleSolution[] neighborsSolutions;
 		Feature[] neighborsFeatures;
-		FeasibleSolution neighbor;
-		double costNeighbor;
 		double[] neighborsCosts;
 		
 		long i = 0;
@@ -209,8 +209,9 @@ public class Solver implements Runnable {
 					}
 
 					neighborsSolutions[neighborIndex] = neighbors[neighborIndex].solution;
-					neighborsCosts[neighborIndex] = this.objFun.getValue(neighborsSolutions[neighborIndex]);	// Update costs
 					neighborsFeatures[neighborIndex] = neighbors[neighborIndex].feature;
+					// Update cost
+					neighborsCosts[neighborIndex] = this.objFun.getValue(neighborsSolutions[neighborIndex]);
 					neighborIndex++;
 				}
 
@@ -236,15 +237,17 @@ public class Solver implements Runnable {
 						this.solution = neighborsSolutions[result];	// Update solution
 						this.currentCost = neighborsCosts[result];	// Update cost
 
-						logger.info("[SOLVER] Chose new solution @ iteration " + (i+1) + " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
-//						logger.log(Level.getLevel("PERF"), (i+1) + "\t" + this.solution.getBoxCount() + "\t" + this.currentCost);
-						loggerPerf.info(((System.nanoTime( ) - startTimeNano) / 1000000) + ";" + (i+1) + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
+						logger.info("[SOLVER] Chose new solution @ iteration " + (i+1)
+								+ " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
+						loggerPerf.info(((System.nanoTime( ) - startTimeNano) / 1000000)
+								+ ";" + (i+1) + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
 							requestGuiUpdate(betterSolution);
 						}
 					} else {
-						logger.debug("[SOLVER] Algorithm rejected all the neighbors, iterating with new neighbors from neighborhood");
+						logger.debug("[SOLVER] Algorithm rejected all the neighbors," +
+								" iterating with new neighbors from neighborhood");
 
 //						if (costNeighbor <= this.currentCost + this.boundWorseNeighbor) {
 //							// Store the best neighbor that is still acceptable,
@@ -295,7 +298,7 @@ public class Solver implements Runnable {
 				+ "========================================================================\n\n"
 				+ "[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
 
-		logger.info("No. of Gui Updates: " + cntGuiUpdates); // TODO: Disable after debugging
+		logger.info("GUI updates during solving process: " + cntGuiUpdates);
 
 		logger.info("Reduced box count by "
 				+ (this.initialSolution.getBoxCount() - this.solution.getBoxCount())
@@ -314,6 +317,7 @@ public class Solver implements Runnable {
 	/**
 	 * Request and update of the GUI.
 	 * Function determines if the GUI will be updated depending on certain conditions
+	 * @param betterSolution if false, update will only take place if so desired by the user; true will always update
 	 */
 	private void requestGuiUpdate(boolean betterSolution) {
 		// TODO: More options to control
@@ -327,6 +331,7 @@ public class Solver implements Runnable {
 
 	/**
 	 * Update the GUI to display the current solution, using the Event Dispatch Thread
+	 * @param betterSolution if false, update will only take place if so desired by the user; true will always update
 	 */
 	public void updateGUI(boolean betterSolution) {
 		EventQueue.invokeLater(new Runnable() {
@@ -340,6 +345,9 @@ public class Solver implements Runnable {
 	}
 
 	public String toString() {
-		return "Solver for " + this.solution.getInstance().toString() + " using " + this.algorithm + " on " + this.neighborhood + " neighborhoods [timeLimit = " + this.timeLimit + "s]";
+		return "Solver for " + this.solution.getInstance().toString()
+				+ " using " + this.algorithm
+				+ " on " + this.neighborhood
+				+ " neighborhoods [timeLimit = " + this.timeLimit + "s]";
 	}
 }

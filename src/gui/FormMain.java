@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -59,6 +61,16 @@ public class FormMain extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws InterruptedException {
+		/* Initialize the system properties for the logfile names */
+		try {
+			System.setProperty("logfileTimeStamp", "0000");
+			System.setProperty("logfilePrefix", "uninitialized");
+			System.setProperty("demoLogfileTimeStamp", "0000");
+			System.setProperty("demoLogfilePrefix", "uninitialized");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// TODO: Remove this after debug
 		SimulatedAnnealingAlgorithm simAnnTest = (SimulatedAnnealingAlgorithm)Algorithm.generateInstance(Algorithms.SimulatedAnnealing);
 		System.out.println(simAnnTest.getCoolingScheduleTextual());
@@ -244,7 +256,11 @@ public class FormMain extends JFrame {
 		contentPane.add(lblSolvers);
 
 		JScrollPane scrollPaneSolvers = new JScrollPane();
-		scrollPaneSolvers.setBounds(5, 223+leftColHeight+30, leftColWidth, this.getHeight() - (223+leftColHeight+30+100));
+		scrollPaneSolvers.setBounds(
+				5,
+				223+leftColHeight+30,
+				leftColWidth,
+				this.getHeight() - (223+leftColHeight+30+100));
 		contentPane.add(scrollPaneSolvers);
 
 		listSolvers = new JList<>();
@@ -398,7 +414,9 @@ public class FormMain extends JFrame {
 				Instance instance = dialogAddInstance.showDialog();
 				dialogAddInstance.setVisible(false);
 //				dialogAddInstance.dispose();
-				dialogAddInstance.disposeInstance();	// Needed so old instance are not stored, otherwise they will show up again on Cancel or Close next time the dialog is opened
+				// disposeInstance() needed so old instance are not stored, otherwise they will show up again
+				// on Cancel or Close next time the dialog is opened
+				dialogAddInstance.disposeInstance();
 				
 				if (instance != null) {
 					System.out.println("Created " + instance);
@@ -556,7 +574,7 @@ public class FormMain extends JFrame {
 					}
 
 					// If successful, create demo
-					Demo demo = new Demo(ni, nr, 1, 6, 6, menuItemCb.getState(), cbLoggingDemo.getState());
+					Demo demo = new Demo(ni, nr, lMin, lMax, lBox, menuItemCb.getState(), cbLoggingDemo.getState());
 
 					// add instances to GUI list
 					for (Instance inst : demo.getInstances()) {
@@ -580,10 +598,9 @@ public class FormMain extends JFrame {
 		menu.addSeparator();
 
 		// Button to run small demo
-		menuItem = new JMenuItem("Run Small Demo (3 Instances, 1000 Rectangles)");
+		menuItem = new JMenuItem("Run Small Demo (3 Instances, 1000 Rectangles [L=1..6], boxlength=6)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO: Set nInstances back to 3 !!!
 				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState(), cbLoggingDemo.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
@@ -602,7 +619,7 @@ public class FormMain extends JFrame {
 		menu.add(menuItem);
 
 		// Button to run large demo
-		menuItem = new JMenuItem("Run Large Demo (30 Instances, 1000 Rectangles)");
+		menuItem = new JMenuItem("Run Large Demo (30 Instances, 1000 Rectangles [L=1..10], boxlength=10)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Demo demo = new Demo(30, 1000, 1, 10, 10, menuItemCb.getState(), cbLoggingDemo.getState());
@@ -634,7 +651,6 @@ public class FormMain extends JFrame {
 	 */
 	public void startAndShowSolver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
 		if (listCurrentInstances.getSelectedValue() != null) {
-
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
@@ -689,7 +705,33 @@ public class FormMain extends JFrame {
         	System.exit(0);
     	}
 	}
-	
+
+	/**
+	 * Set up filenames for log files by setting the system properties being used by the log4j2.xml configuration file
+	 * @param algorithmChoice
+	 * @param neighborhoodChoice
+	 */
+	public void setLogfileNameProperties(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
+		/* Set up filenames for log files */
+		// Have to do it here so the system properties are set when the Solver gets instantiated,
+		// otherwise it will throw an error however it would still work.
+		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+		System.setProperty("logfileTimeStamp", logfileTimeStamp);
+		String logfilePrefix = (algorithmChoice
+				+ "_on_"
+				+ neighborhoodChoice
+				+ "_n_"
+				+ listCurrentInstances.getSelectedValue().getnRectangles()
+				+ "_L_"
+				+ listCurrentInstances.getSelectedValue().getMinLength()
+				+ "_-_"
+				+ listCurrentInstances.getSelectedValue().getMaxLength()
+				+ "_bxln_"
+				+ listCurrentInstances.getSelectedValue().getBoxLength()
+		).replaceAll("\\s+","");
+		System.setProperty("logfilePrefix", logfilePrefix);
+	}
+
 	/**
 	 * Show a raw generated instance (not initialized)
 	 */
