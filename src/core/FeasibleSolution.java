@@ -116,7 +116,7 @@ public class FeasibleSolution {
 	 */
 	public Box findLeastFilledBox(LinkedList<Box> ignoredBoxes) {
 		return this.boxes
-				.parallelStream()
+				.stream()
 				.filter(box -> !ignoredBoxes.contains(box))
 				.min(Comparator.comparing(Box::getPackingPercentage))
 				.get();

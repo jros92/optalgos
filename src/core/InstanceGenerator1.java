@@ -26,7 +26,7 @@ public class InstanceGenerator1 implements IInstanceGenerator {
 			rectangles.add(rect);
 		}
 		
-		return new Instance(n, lBox, 1, rectangles);
+		return new Instance(n, lBox, 1, lMin, lMax, rectangles);
 		
 	}
 

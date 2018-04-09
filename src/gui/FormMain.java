@@ -302,6 +302,7 @@ public class FormMain extends JFrame {
 		neighborhoodListModel = new DefaultListModel<Neighborhoods>();
 		neighborhoodListModel.addElement(Neighborhoods.Geometric);
 		neighborhoodListModel.addElement(Neighborhoods.RuleBased);
+		neighborhoodListModel.addElement(Neighborhoods.GeometricNew);
 		listNeighborhoods.setModel(neighborhoodListModel);
 
 

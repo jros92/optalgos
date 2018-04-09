@@ -43,7 +43,7 @@ public class Box {
 	 * @return An integer value:
 	 * -2 if box is completely full,
 	 * -1 if  rectangle too big for this box,
-	 * 0..3 if successfully added rectangle, number denoting how many new free positions were added
+	 * 0..2 if successfully added rectangle, number denoting how many new free positions were added
 	 */
 	public int addRectangleAtFirstFreePosition(Rectangle rectangle) {
 		int result = 0;

@@ -100,6 +100,10 @@ public class Solver implements Runnable {
 				+ this.neighborhood
 				+ "_n_"
 				+ this.initialSolution.getRectangles().size()
+				+ "_L_"
+				+ this.initialSolution.getInstance().getMinLength()
+				+ "_-_"
+				+  this.initialSolution.getInstance().getMaxLength()
 				+ "_bxln_"
 				+ this.initialSolution.getBoxLength()
 		).replaceAll("\\s+","");

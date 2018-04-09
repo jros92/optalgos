@@ -13,9 +13,9 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 		rectangles = new ArrayList<Rectangle>();
 		rand = new Random();
 
-		// lMin and lMax not used for now, but might be soon
-		lMin = -1;
-		lMax = -1;
+		// lMin and lMax will be detected later, when all the rectangles have been generated
+		lMin = Integer.MAX_VALUE;
+		lMax = Integer.MIN_VALUE;
 		
 		// Create initial square and add it to list
 //		int squareFactor = rand.nextInt(8) + 2;
@@ -115,7 +115,15 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 			rectangles.remove(rect);
 		}
 		
-		
+
+		// TODO: Test this
+		for (Rectangle r : rectangles) {
+			if (r.getHeight() < lMin) lMin = r.getHeight();
+			if (r.getWidth() < lMin) lMin = r.getWidth();
+			if (r.getHeight() > lMax) lMax = r.getHeight();
+			if (r.getWidth() > lMax) lMax = r.getWidth();
+		}
+
 		// Small Unit Test on the go, to be outsourced into the test package containing all the UnitTests
 //		int areaRects = 0;
 //		for (Rectangle rect : rectangles) {
@@ -123,7 +131,7 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 //		}
 //		System.out.println("DEBUG\t A_rects = " + areaRects);
 		
-		return new Instance(n, lBox, 2, rectangles);
+		return new Instance(n, lBox, 2, lMin, lMax, rectangles);
 	}
 	
 	/*
