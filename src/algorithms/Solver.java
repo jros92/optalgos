@@ -300,11 +300,14 @@ public class Solver implements Runnable {
 
 		logger.info("GUI updates during solving process: " + cntGuiUpdates);
 
-		logger.info("Reduced box count by "
-				+ (this.initialSolution.getBoxCount() - this.solution.getBoxCount())
+		int reducedBoxCount = this.initialSolution.getBoxCount() - this.solution.getBoxCount();
+		String resultMsg = "Reduced box count by "
+				+ reducedBoxCount
 				+ " | the initial solution used "
 				+ this.initialSolution.getBoxCount()
-				+ " boxes. Nice!");
+				+ " boxes.";
+		if (reducedBoxCount > 0) resultMsg += " Nice!";
+		logger.info(resultMsg);
 
 		logger.info("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 

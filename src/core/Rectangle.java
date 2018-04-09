@@ -93,10 +93,13 @@ public class Rectangle extends Feature {
 	
 	/**
 	 * Check if rectangle intersects with this rectangle
+	 * Caller has to make sure the passed rectangle is not equal to this rectangle
 	 * @param r 
 	 * @return true if intersection exists, false if not
 	 */
 	public boolean intersects(Rectangle r) {
+
+
 		// taken from java.awt.Rectangle
 		/* 
 		 * Explanation from Stackoverflow: https://stackoverflow.com/questions/23302698/java-check-if-two-rectangles-overlap-at-any-point
