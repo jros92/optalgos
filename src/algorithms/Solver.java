@@ -91,7 +91,7 @@ public class Solver implements Runnable {
 		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
 
 		/* Set up loggers */
-		logger.info("Logging Level is: " + logger.getLevel());
+//		logger.info("Logging Level is: " + logger.getLevel());
 
 		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
 		System.setProperty("logfileTimeStamp", logfileTimeStamp);
@@ -111,7 +111,7 @@ public class Solver implements Runnable {
 		org.apache.logging.log4j.core.LoggerContext ctx =
 				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
-		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
+//		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
 		loggerPerf.info("time elapsed [ms]" + ";" + "iteration" + ";" + "box count" + ";" + "cost");
 		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);	// store performance data for initial solution
 	}
@@ -141,6 +141,19 @@ public class Solver implements Runnable {
 
 	public void setSleepDuration(int sleepDuration) {
 		this.sleepDuration = sleepDuration;
+	}
+
+	/**
+	 * Turn logging on or off
+	 * @param enabled true to enable logging, false to disable logging
+	 */
+	public void enableLogging(boolean enabled) {
+		// TODO: More granular options to control logging? (Console, Logfile, Performance file, Errors...)? NO TIME
+		if (enabled)
+			Configurator.setLevel("log", Level.INFO); //TODO: Option to control performance logging as well?
+		else
+			Configurator.setLevel("log", Level.OFF);
+
 	}
 
 	public void solve() throws InterruptedException {

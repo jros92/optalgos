@@ -19,12 +19,13 @@ public class Demo {
 	private int lMax;
 	private int lBox;
 	private boolean showSolutions;
+	private boolean solverLogging;
 	private ArrayList<Instance> instances;
 	private ArrayList<FeasibleSolution> solutions;
 
 	private static final Logger logger = LogManager.getLogger("DemoLogger");
 
-	public Demo(int nInstances, int nRectangles, int lMin, int lMax, int lBox, boolean showSolutions) {
+	public Demo(int nInstances, int nRectangles, int lMin, int lMax, int lBox, boolean showSolutions, boolean solverLogging) {
 		super();
 		this.nInstances = nInstances;
 		this.nRectangles = nRectangles;
@@ -32,7 +33,8 @@ public class Demo {
 		this.lMax = lMax;
 		this.lBox = lBox;
 		this.showSolutions = showSolutions;
-		
+		this.solverLogging = solverLogging;
+
 		instances = new ArrayList<Instance>();
 		solutions = new ArrayList<FeasibleSolution>();
 		
@@ -152,6 +154,7 @@ public class Demo {
 					// Generate a new solver object
 					Solver solver = new Solver(algorithm, neighborhood, instance, maxIterations, numberOfNeighbors);
 					solver.setSleepDuration(0);
+					solver.enableLogging(this.solverLogging);
 
 					// Start timing for this algorithm
 					long startSolverTimeNano 		= System.nanoTime();

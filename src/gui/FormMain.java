@@ -24,6 +24,7 @@ import javax.swing.*;
 
 import algorithms.*;
 
+import com.sun.deploy.panel.ExceptionListDialog;
 import core.*;
 import demo.Demo;
 
@@ -483,27 +484,93 @@ public class FormMain extends JFrame {
 		menuItemCb.setFont(fontStandard);
 		menu.add(menuItemCb);
 
+		JCheckBoxMenuItem cbLoggingDemo = new JCheckBoxMenuItem("Solver logfiles on/off");
+		cbLoggingDemo.setState(false);
+		cbLoggingDemo.setFont(fontStandard);
+		menu.add(cbLoggingDemo);
+
 		menu.addSeparator();
 
 		// Button and dialog to run custom demo
 		menuItem = new JMenuItem("Run Custom Demo...");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO: Implement Dialog
-//				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState());
+				JTextField tfNinstances = new JTextField(5);
+				JTextField tfNRectangles = new JTextField(5);
+				JTextField tfLmin = new JTextField(3);
+				JTextField tfLmax = new JTextField(3);
+				JTextField tfLbox = new JTextField(4);
 
-				// add instances to GUI list
-//				for (Instance inst : demo.getInstances()) {
-//					instanceListModel.addElement(inst);
-//				}
+				JPanel myPanel = new JPanel();
+				int space = 10;
+				myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+				myPanel.add(new JLabel("Specify parameters:"));
+				JPanel panel1 = new JPanel();
+				panel1.add(new JLabel("N Instances:"));
+				panel1.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel1.add(tfNinstances);
+				myPanel.add(panel1);
+				JPanel panel2 = new JPanel();
+				panel2.add(new JLabel("N Rectangles:"));
+				panel2.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel2.add(tfNRectangles);
+				myPanel.add(panel2);
+				JPanel panel3 = new JPanel();
+				panel3.add(new JLabel("L min:"));
+				panel3.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel3.add(tfLmin);
+				myPanel.add(panel3);
+				JPanel panel4 = new JPanel();
+				panel4.add(new JLabel("L max:"));
+				panel4.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel4.add(tfLmax);
+				myPanel.add(panel4);
+				JPanel panel5 = new JPanel();
+				panel5.add(new JLabel("L Box:"));
+				panel5.add(tfLbox);
+				panel5.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				myPanel.add(panel5);
 
-				// Run the demo
-//				demo.runDemo();
+				int result = JOptionPane.showConfirmDialog(null, myPanel,
+						"Run Demo", JOptionPane.OK_CANCEL_OPTION);
 
-				// when done, add to list of solutions
-//				for (FeasibleSolution solution : demo.getSolutions()) {
-//					solverListModel.addElement(solution);
-//				}
+				if (result == JOptionPane.OK_OPTION) {
+					System.out.println("Parameters: "
+							+ tfNinstances.getText() + ", "
+							+ tfNRectangles.getText() + ", "
+							+ tfLmin.getText() + ", "
+							+ tfLmax.getText() + ", "
+							+ tfLbox.getText()
+					);
+
+					int ni, nr, lMin, lMax, lBox;
+					try {
+						ni = Integer.parseInt(tfNinstances.getText());
+						nr = Integer.parseInt(tfNRectangles.getText());
+						lMin = Integer.parseInt(tfLmin.getText());
+						lMax = Integer.parseInt(tfLmax.getText());
+						lBox = Integer.parseInt(tfLbox.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+						return;
+					}
+
+					// If successful, create demo
+					Demo demo = new Demo(ni, nr, 1, 6, 6, menuItemCb.getState(), cbLoggingDemo.getState());
+
+					// add instances to GUI list
+					for (Instance inst : demo.getInstances()) {
+						instanceListModel.addElement(inst);
+					}
+
+					// Run the demo
+					demo.runDemo();
+
+					// when done, add to list of solutions
+//					for (FeasibleSolution solution : demo.getSolutions()) {
+//						solverListModel.addElement(solution);
+//					}
+				}
 			}
 		});
 		//		menuItem.setMnemonic(KeyEvent.VK_Q);
@@ -517,7 +584,7 @@ public class FormMain extends JFrame {
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// TODO: Set nInstances back to 3 !!!
-				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState());
+				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState(), cbLoggingDemo.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
 					instanceListModel.addElement(inst);
@@ -538,7 +605,7 @@ public class FormMain extends JFrame {
 		menuItem = new JMenuItem("Run Large Demo (30 Instances, 1000 Rectangles)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Demo demo = new Demo(30, 1000, 1, 10, 10, menuItemCb.getState());
+				Demo demo = new Demo(30, 1000, 1, 10, 10, menuItemCb.getState(), cbLoggingDemo.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
 					instanceListModel.addElement(inst);
