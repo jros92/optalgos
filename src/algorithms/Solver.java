@@ -4,8 +4,13 @@ import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import core.*;
+import core.FeasibleSolution;
+import core.IProblemInitializer;
+import core.Instance;
+import core.SimpleInitializer;
+
 import gui.FormSolutionViewer;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -49,7 +54,7 @@ public class Solver implements Runnable {
 	/* TRUE if the algorithm execution is paused (e.g. by the user) */
 	private boolean pause = false;
 
-	private int cntGuiUpdates = 0;	// TODO: Remove after debugging
+	private int cntGuiUpdates = 0;
 
 	// Loggers
 //	static final Logger logger = LogManager.getLogger(Solver.class.getName());
@@ -123,7 +128,6 @@ public class Solver implements Runnable {
 		try {
 			this.solve();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.fatal(e.getStackTrace().toString());
 		}
@@ -292,22 +296,7 @@ public class Solver implements Runnable {
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
 		long taskTimeMillis = taskTimeNano / 1000000;
 
-		logger.info("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
-						 + "========================================================================\n");
-		logger.info(this.solution.printDetailedSolution()
-				+ "========================================================================\n\n"
-				+ "[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
-
-		logger.info("GUI updates during solving process: " + cntGuiUpdates);
-
-		int reducedBoxCount = this.initialSolution.getBoxCount() - this.solution.getBoxCount();
-		String resultMsg = "Reduced box count by "
-				+ reducedBoxCount
-				+ " | the initial solution used "
-				+ this.initialSolution.getBoxCount()
-				+ " boxes.";
-		if (reducedBoxCount > 0) resultMsg += " Nice!";
-		logger.info(resultMsg);
+		printAndLogResults(i);
 
 		logger.info("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
 
@@ -318,7 +307,7 @@ public class Solver implements Runnable {
 	}
 
 	/**
-	 * Request and update of the GUI.
+	 * Request an update of the GUI.
 	 * Function determines if the GUI will be updated depending on certain conditions
 	 * @param betterSolution if false, update will only take place if so desired by the user; true will always update
 	 */
@@ -345,6 +334,25 @@ public class Solver implements Runnable {
 		});
 
 		cntGuiUpdates++;
+	}
+
+	private void printAndLogResults(long i) {
+		logger.info("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
+				+ "========================================================================\n");
+		logger.info(this.solution.printDetailedSolution()
+				+ "========================================================================\n\n"
+				+ "[SOLVER] Terminated after " + i + " iterations, delivered solution above\n");
+
+		logger.info("GUI updates during solving process: " + cntGuiUpdates);
+
+		int reducedBoxCount = this.initialSolution.getBoxCount() - this.solution.getBoxCount();
+		String resultMsg = "Reduced box count by "
+				+ reducedBoxCount
+				+ " | the initial solution used "
+				+ this.initialSolution.getBoxCount()
+				+ " boxes.";
+		if (reducedBoxCount > 0) resultMsg += " Nice!";
+		logger.info(resultMsg);
 	}
 
 	public String toString() {

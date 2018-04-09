@@ -213,7 +213,7 @@ public class Demo {
 		long taskSystemTimeNano  = Timing.getSystemTime() - startSystemTimeNano;
 		long taskCPUTimeNano	 = Timing.getCpuTime() - startCPUTimeNano;
 
-
+		System.out.println("Batch process (Demo) ended after " + " seconds");
 	}
 
 	@Override

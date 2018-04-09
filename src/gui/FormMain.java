@@ -26,7 +26,6 @@ import javax.swing.*;
 
 import algorithms.*;
 
-import com.sun.deploy.panel.ExceptionListDialog;
 import core.*;
 import demo.Demo;
 
@@ -47,8 +46,8 @@ public class FormMain extends JFrame {
 	private JMenu menu;
 	private JMenuItem menuItem;
 
-	private JList<Solver> listSolvers;
-	private DefaultListModel<Solver> solverListModel;
+	private JList<FeasibleSolution> listSolutions;
+	private DefaultListModel<FeasibleSolution> solutionListModel;
 
 	/* Parameters to be tuned */
 //	long maxIterations = 100000L;
@@ -263,13 +262,13 @@ public class FormMain extends JFrame {
 				this.getHeight() - (223+leftColHeight+30+100));
 		contentPane.add(scrollPaneSolvers);
 
-		listSolvers = new JList<>();
-		solverListModel = new DefaultListModel<>();
-		listSolvers.setModel(solverListModel);
+		listSolutions = new JList<>();
+		solutionListModel = new DefaultListModel<>();
+		listSolutions.setModel(solutionListModel);
 
-		scrollPaneSolvers.setViewportView(listSolvers);
-		listSolvers.setEnabled(true);
-		listSolvers.setFont(fontStandard);
+		scrollPaneSolvers.setViewportView(listSolutions);
+		listSolutions.setEnabled(true);
+		listSolutions.setFont(fontStandard);
 
 		/* Buttons for Solvers / Solutions */
 		JButton btnShowSolution = new JButton("Show Solution");
@@ -434,9 +433,9 @@ public class FormMain extends JFrame {
 		});
 
 		// Enable and disable remove button for solvers according to solver selection from the list
-		listSolvers.addListSelectionListener(new ListSelectionListener() {
+		listSolutions.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				if (listSolvers.getSelectedIndex() > -1) {
+				if (listSolutions.getSelectedIndex() > -1) {
 					btnRemoveSolver.setEnabled(true);
 					btnShowSolution.setEnabled(true);
 				} else {
@@ -449,17 +448,17 @@ public class FormMain extends JFrame {
 		// Button to remove Solvers
 		btnRemoveSolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DefaultListModel<Solver> listModel = (DefaultListModel<Solver>) listSolvers.getModel();
-				listModel.removeElement(listSolvers.getSelectedValue());
+				DefaultListModel<FeasibleSolution> listModel = (DefaultListModel<FeasibleSolution>) listSolutions.getModel();
+				listModel.removeElement(listSolutions.getSelectedValue());
 			}
 		});
 
 		// Button to Show Solution
 		btnShowSolution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Solver solver = listSolvers.getSelectedValue();
-				if (solver != null)
-				showSolution(solver.getSolution());
+				FeasibleSolution solution = listSolutions.getSelectedValue();
+				if (solution != null)
+					showSolution(solution);
 
 			}
 		});
@@ -586,7 +585,7 @@ public class FormMain extends JFrame {
 
 					// when done, add to list of solutions
 //					for (FeasibleSolution solution : demo.getSolutions()) {
-//						solverListModel.addElement(solution);
+//						solutionListModel.addElement(solution);
 //					}
 				}
 			}
@@ -610,7 +609,7 @@ public class FormMain extends JFrame {
 				demo.runDemo();
 				// when done, add to list of solutions
 //				for (FeasibleSolution solution : demo.getSolutions()) {
-//					solverListModel.addElement(solution);
+//					solutionListModel.addElement(solution);
 //				}
 			}
 		});
@@ -631,7 +630,7 @@ public class FormMain extends JFrame {
 				demo.runDemo();
 				// when done, add to list of solutions
 //				for (FeasibleSolution solution : demo.getSolutions()) {
-//					solverListModel.addElement(solution);
+//					solutionListModel.addElement(solution);
 //				}
 			}
 		});
@@ -658,7 +657,7 @@ public class FormMain extends JFrame {
 			solver.setSleepDuration(sleepDuration);
 
 			// add solver to list of solvers
-			solverListModel.addElement(solver);
+			solutionListModel.addElement(solver.getSolution());
 
 			// Start the solver thread
 			Thread solverThread = new Thread(solver);
@@ -669,6 +668,7 @@ public class FormMain extends JFrame {
 			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), this.dpi);
 			solver.setViewer(solutionViewer);
 			solutionViewer.setVisible(true);
+
 			// Enable display option for Sim. Annealing and Taboo Search, disable for Local Search
 			if (algorithmChoice == Algorithms.LocalSearch) solutionViewer.setCheckBoxShowWorseSolutions(false);
 			else solutionViewer.setCheckBoxShowWorseSolutions(true);
@@ -682,8 +682,6 @@ public class FormMain extends JFrame {
 	 */
 	public void showSolution(FeasibleSolution solution) {
 		if (solution != null) {
-			// Create a solution viewer and pass it to the solver
-//			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
 			FormSolutionViewer solutionViewer = new FormSolutionViewer(solution, this.dpi);
 			solutionViewer.setVisible(true);
 

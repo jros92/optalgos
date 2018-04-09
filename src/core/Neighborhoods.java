@@ -3,7 +3,8 @@ package core;
 public enum Neighborhoods {
     Geometric,
     RuleBased,
-    GeometricNew;
+    GeometricNew,
+    RuleBasedImproved;
 
     @Override
     public String toString() {
@@ -11,6 +12,7 @@ public enum Neighborhoods {
             case Geometric: return "Geometric";
             case RuleBased: return "Rule-Based";
             case GeometricNew: return "Geometric New";
+            case RuleBasedImproved: return "Rule-Based Improved";
             default: throw new IllegalArgumentException();
         }
     }

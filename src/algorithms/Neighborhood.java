@@ -1,9 +1,6 @@
 package algorithms;
 
-import core.NeighborhoodGeometric;
-import core.NeighborhoodGeometricNew;
-import core.NeighborhoodRuleBased;
-import core.Neighborhoods;
+import core.*;
 
 public abstract class Neighborhood {
 
@@ -33,6 +30,9 @@ public abstract class Neighborhood {
 				break;
 			case GeometricNew:
 				result = new NeighborhoodGeometricNew();
+				break;
+			case RuleBasedImproved:
+				result = new NeighborhoodRuleBasedImproved();
 				break;
 			default:
 				System.out.println("ERROR creating selected neighborhood. add new neighborhoods to Neighborhood.generateInstance()");

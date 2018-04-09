@@ -137,7 +137,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 class CoolingSchedule {
 	int coolingScheduleLength = 100;
 
-	double desiredStartingTemperature = 20f / (100);        // TODO: Choose well, dependent on problem
+	double desiredStartingTemperature = 20f;        // TODO: Choose well, dependent on problem
 	double c = desiredStartingTemperature / 1.4427f;
 	
 	double[] temperatures = new double[coolingScheduleLength];
