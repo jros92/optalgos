@@ -40,10 +40,10 @@ public class NeighborhoodGeometricRandom extends Neighborhood implements INeighb
 		int boxIndex = (int)Math.floor(Math.random() * neighbor.getBoxCount());
 		Box boxToEmpty = neighbor.getBoxes().get(boxIndex);
 
-		// Always take the first rectangle
+		// Always take the first rectangle out of that box
 		Rectangle rectangle = boxToEmpty.getRectangles().get(0);
 
-		/* Check boxes to add rectangle to */
+		/* Find the first box we can add the rectangle to */
 		ArrayList<Box> boxes = neighbor.getBoxes();
 		for (int i = 0; i < boxes.size(); ++i) {
 			Box b = boxes.get(i);
@@ -51,8 +51,9 @@ public class NeighborhoodGeometricRandom extends Neighborhood implements INeighb
 			if (b.getFreeArea() < rectangle.getArea()) continue;	// Box too full for rectangle, continue
 			if (b == boxToEmpty) continue;	// do not check box that the rectangle came out of
 
-			// try to add rectangle to box
+			// try to add rectangle to this box
 			if (b.addRectangleAtFirstFreePosition(rectangle) >= 0) {
+				// Remove rectangles from box and delete box if this was the last rectangle, then break and return
 				if (boxToEmpty.removeRectangle(rectangle)) neighbor.removeBox(boxToEmpty);
 				break;
 			}

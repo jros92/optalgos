@@ -41,7 +41,7 @@ public class InstanceGenerator2 implements IInstanceGenerator {
 			if (i == 0) {
 				rect = rectangles.get(0);
 			} else {
-				int rectIndex = rand.nextInt(rectangles.size() - 1);
+				int rectIndex = rand.nextInt(rectangles.size());
 				rect = rectangles.get(rectIndex);
 			}
 			
