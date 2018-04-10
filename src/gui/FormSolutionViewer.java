@@ -294,8 +294,17 @@ public class FormSolutionViewer extends JFrame {
 		});
 
 
+		/* Auto Termination Checkbox */
 		JCheckBox cbAutoTerminate = new JCheckBox("Auto-terminate");
 		solverControlPanel.add(cbAutoTerminate);
+		cbAutoTerminate.setSelected(solver.isAutoTerminate());
+
+		cbAutoTerminate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				solver.setAutoTerminate(cbAutoTerminate.isSelected());
+			}
+		});
 
 		/* Pause/Resume Button */
 

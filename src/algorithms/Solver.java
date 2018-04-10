@@ -34,8 +34,6 @@ public class Solver implements Runnable {
 	private FeasibleSolution initialSolution;
 	private FormSolutionViewer viewer;
 
-	private double boundWorseNeighbor;
-	private int numberOfNeighbors;
 	private double currentCost;
 	private long lastGuiUpdate = 0;
 	private int cntGuiUpdates = 0;
@@ -48,6 +46,8 @@ public class Solver implements Runnable {
 	private int timeLimit = 10;		/* time limit in seconds; set <= 0 for no termination time criterion */
 	private boolean autoTerminate;	/* Terminate as soon as nothing significant has changed for a while */
 	private int guiUpdateFrequency = 100; /* Maximum update frequency for GUI, in milliseconds */
+    private double boundWorseNeighbor;
+    private int numberOfNeighbors;
 
 
 	/* Loggers */
@@ -141,12 +141,24 @@ public class Solver implements Runnable {
      */
 	public void setTimeLimit(int timeLimit) {
 		this.timeLimit = timeLimit;
-		logger.warn("Time Limit readjusted to " + timeLimit + " seconds");
+		logger.warn("[SOLVER] Time Limit readjusted to " + timeLimit + " seconds");
 	}
 
 	public int getTimeLimit() {
 		return this.timeLimit;
 	}
+
+	public void setAutoTerminate(boolean choice) {
+	    this.autoTerminate = choice;
+	    if (choice)
+	        logger.warn("[SOLVER] Auto Termination is now ON");
+	    else
+            logger.warn("[SOLVER] Auto Termination is now OFF");
+    }
+
+    public boolean isAutoTerminate() {
+	    return this.autoTerminate;
+    }
 
     /**
      * Pause the solver and update the GUI
