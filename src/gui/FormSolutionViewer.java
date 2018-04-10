@@ -128,7 +128,7 @@ public class FormSolutionViewer extends JFrame {
 		// Button to print solution to console
 		menuItem = new JMenuItem("Print solution to console");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt)	{
 				FormSolutionViewer.this.solution.printToConsole();
 			}
 		});
@@ -162,7 +162,8 @@ public class FormSolutionViewer extends JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				FormSolutionViewer.this.updateWithWorseSolution =
 						FormSolutionViewer.this.cbMenuItemShowWorseSolutions.isSelected();
-				System.out.println("updateWithWorseSolution = " + FormSolutionViewer.this.cbMenuItemShowWorseSolutions.isSelected());
+				System.out.println("updateWithWorseSolution = "
+						+ FormSolutionViewer.this.cbMenuItemShowWorseSolutions.isSelected());
 			}
 		});
 		cbMenuItemShowWorseSolutions.setMnemonic(KeyEvent.VK_B);

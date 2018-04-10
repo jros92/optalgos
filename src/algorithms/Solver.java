@@ -30,33 +30,26 @@ public class Solver implements Runnable {
 	private IOptimizationAlgorithm algorithm;
 	private INeighborhood neighborhood;
 	private IObjectiveFunction objFun;
-	
 	private FeasibleSolution solution;
 	private FeasibleSolution initialSolution;
-
 	private FormSolutionViewer viewer;
-	
-	private int maxIterations;
-	private int timeLimit = 10; 	// in seconds; set <= 0 if no time criterion for termination is desired
-
 
 	private double boundWorseNeighbor;
 	private int numberOfNeighbors;
-
 	private double currentCost;
-
-	private int guiUpdateFrequency = 100; // in milliseconds
 	private long lastGuiUpdate = 0;
-
-	/* Sleep duration between iterations in milliseconds */
-	private int sleepDuration;
-	
-	/* TRUE if the algorithm execution is paused (e.g. by the user) */
-	private boolean pause = false;
-
 	private int cntGuiUpdates = 0;
 
-	// Loggers
+	/* User parameters */
+	private int sleepDuration;		/* Sleep duration between iterations in milliseconds */
+	private boolean pause = false;	/* TRUE if the algorithm execution is paused (e.g. by the user) */
+	private int maxIterations;		/* maximum number of iterations */
+	private int timeLimit = 10;		/* time limit in seconds; set <= 0 for no termination time criterion */
+	private boolean autoTerminate;	/* Terminate as soon as nothing significant has changed for a while */
+	private int guiUpdateFrequency = 100; /* Maximum update frequency for GUI, in milliseconds */
+
+
+	/* Loggers */
 //	static final Logger logger = LogManager.getLogger(Solver.class.getName());
 	static final Logger logger = LogManager.getLogger("log");
 	static final Logger loggerPerf = LogManager.getLogger("loggerPerf");
@@ -141,6 +134,11 @@ public class Solver implements Runnable {
 		this.viewer = viewer;
 	}
 
+	public void setTimeLimit(int timeLimit) {
+		this.timeLimit = timeLimit;
+		logger.warn("Time Limit readjusted to " + timeLimit + " seconds");
+	}
+
 	public void setGuiUpdateFrequency(int guiUpdateFrequency) {
 		this.guiUpdateFrequency = guiUpdateFrequency;
 	}
@@ -187,7 +185,7 @@ public class Solver implements Runnable {
 		int result = -1;
 
 		/* Iteration */
-		while ((i < this.maxIterations) && (result >= -1)) {
+		while (i < this.maxIterations) {
 			if (this.pause) {
 				logger.info("[SOLVER] Execution paused");
 				Thread.sleep(100);
