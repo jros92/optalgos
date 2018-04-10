@@ -94,15 +94,14 @@ public class Rectangle extends Feature {
 	/**
 	 * Check if rectangle intersects with this rectangle
 	 * Caller has to make sure the passed rectangle is not equal to this rectangle
-	 * @param r 
+	 * @param r the other rectangle
 	 * @return true if intersection exists, false if not
 	 */
 	public boolean intersects(Rectangle r) {
-
-
 		// taken from java.awt.Rectangle
 		/* 
-		 * Explanation from Stackoverflow: https://stackoverflow.com/questions/23302698/java-check-if-two-rectangles-overlap-at-any-point
+		 * Explanation from Stackoverflow:
+		 * https://stackoverflow.com/questions/23302698/java-check-if-two-rectangles-overlap-at-any-point
 		 * We can determine a rectangle with only one of its diagonal.
 		 * Let's say left rectangle's diagonal is (x1, y1) to (x2, y2) (bottom left to top right)
 		 * And right rectangle's diagonal is (x3, y3) to (x4, y4) (bottom left to top right)
@@ -114,10 +113,56 @@ public class Rectangle extends Feature {
     	 * y1 > y4 
 		 */
 		return r.getWidth() > 0 && r.getHeight() > 0 && this.width > 0 && this.height > 0
-				&& r.getPos().getX() < this.pos.getX() + this.width && r.getPos().getX() + r.getWidth() > this.pos.getX()
-				&& r.getPos().getY() < this.pos.getY() + this.height && r.getPos().getY() + r.getHeight() > this.pos.getY();
+				&& r.getPos().getX() < this.pos.getX() + this.width
+				&& r.getPos().getX() + r.getWidth() > this.pos.getX()
+				&& r.getPos().getY() < this.pos.getY() + this.height
+				&& r.getPos().getY() + r.getHeight() > this.pos.getY();
 	}
-	
+
+	/**
+	 * Calculate intersecting area of two rectangles
+	 * @param r the other rectangle
+	 * @return Total overlapping area of the two rectangles
+	 */
+	public int intersection(Rectangle r) {
+		/* Explanation from Stackoverflow:
+		 * https://math.stackexchange.com/questions/99565/simplest-way-to-calculate-the-intersect-area-of-two-rectangles
+		 *
+		 * First compute the bounding rectangles rect1 and rect2 with the following properties:
+		 * rect = {
+		 *   left: x1,
+  		 * right: x1 + x2,
+  		 * top: y1,
+  		 * bottom: y1 + y2,
+		 * }
+		 *
+		 * The overlap area can be computed as follows:
+		 * x_overlap = Math.max(0, Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left));
+		 * y_overlap = Math.max(0, Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top));
+		 * overlapArea = x_overlap * y_overlap;
+		 *
+		 */
+
+		if (!this.intersects(r)) return 0;
+
+		int iw = Math.max(0, (Math.min(this.pos.getX() + this.width, r.getPos().getX() + r.getWidth())
+				- Math.max(this.pos.getX(), r.getPos().getX())));
+		int ih = Math.max(0, (Math.min(this.pos.getY() + this.height, r.getPos().getY() + r.getHeight())
+				- Math.max(this.pos.getY(), r.getPos().getY())));
+
+		return iw * ih;
+	}
+
+	/**
+	 * Return the overlap ratio between this rectangle and r
+	 * Computed by the overlapping area divided by the larger of the two rectangle areas
+	 * @param r the other rectangle
+	 * @return overlap ratio between 0 and 1
+	 */
+	public double overlapsBy(Rectangle r) {
+		return this.intersection(r) / (double)Math.max(this.getArea(), r.getArea());
+	}
+
 	/**
 	 * Move rectangle to the right by one height unit.
 	 */

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class NeighborhoodGeometricRandom extends Neighborhood implements INeighborhood {
 
 	public NeighborhoodGeometricRandom() {
-		super("Geometric New");
+		super("Geometric Random");
 	}
 
 	@Override
