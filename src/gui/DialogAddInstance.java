@@ -4,16 +4,9 @@ import core.*;
 
 import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JRadioButton;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.JTextField;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +17,7 @@ import java.awt.event.ItemEvent;
 
 public class DialogAddInstance extends JDialog {
 
+	private Container parent;
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField textFieldBoxLength;
@@ -48,6 +42,7 @@ public class DialogAddInstance extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogAddInstance(Window owner, int dpi, Font fontStandard, Font fontLarger) {
+		this.parent = owner;
 		this.dpi = dpi;
 		this.fontStandard = fontStandard;
 		this.fontLarger = fontLarger;
@@ -78,10 +73,11 @@ public class DialogAddInstance extends JDialog {
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				instance = generateInstance();
-//				System.out.println(instance);
-//				instance.printRectangles();
-				setVisible(false);
+				if (generateInstance())
+					setVisible(false);
+				else
+					new JOptionPane().showMessageDialog(DialogAddInstance.this,
+							"Please enter valid values","Error creating Instance",  JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -95,7 +91,7 @@ public class DialogAddInstance extends JDialog {
 		
 		/* Pre-fill instance gen parameters for tests */
 		this.textFieldBoxLength.setText("6");
-		this.textFieldNrectangles.setText("120");
+		this.textFieldNrectangles.setText("1000");
 		this.textFieldLMin.setText("1");
 		this.textFieldLMax.setText("6");
 
@@ -107,12 +103,9 @@ public class DialogAddInstance extends JDialog {
 	private void initializeComponents() {
 		setModal(true);
 		setTitle("Generate New Instance");
-//		setBounds(100, 100, 392, 236);
+
 		setSize((int)Math.round(dpi*3.5), (int)Math.round(dpi*2.5));
 
-
-//		getContentPane().setLayout(null);
-//		contentPanel.setBounds(0, 0, 376, 197);
 		contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(new BorderLayout());
@@ -138,8 +131,6 @@ public class DialogAddInstance extends JDialog {
 			leftPanel.add(new JLabel(""));
 		}
 		{
-			
-//			rdbtnGenerator1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			rdbtnGenerator1.setFont(this.fontStandard);
 			rdbtnGenerator1.setSelected(true);
 			rdbtnGenerator1.setBounds(139, 10, 97, 23);
@@ -147,8 +138,6 @@ public class DialogAddInstance extends JDialog {
 			rightPanel.add(rdbtnGenerator1);
 		}
 		{
-			
-//			rdbtnGenerator2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			rdbtnGenerator2.setFont(this.fontStandard);
 			rdbtnGenerator2.setBounds(238, 10, 106, 23);
 			buttonGroup.add(rdbtnGenerator2);
@@ -156,14 +145,12 @@ public class DialogAddInstance extends JDialog {
 		}
 		{
 			JLabel lblBoxLength = new JLabel("Box Length");
-//			lblBoxLength.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblBoxLength.setFont(this.fontStandard);
 			lblBoxLength.setBounds(11, 49, 122, 14);
 			leftPanel.add(lblBoxLength);
 		}
 		{
 			JLabel lblNumberOfRectangles = new JLabel("Number of Rectangles");
-//			lblNumberOfRectangles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNumberOfRectangles.setFont(this.fontStandard);
 			lblNumberOfRectangles.setBounds(11, 77, 122, 14);
 			leftPanel.add(lblNumberOfRectangles);
@@ -183,7 +170,6 @@ public class DialogAddInstance extends JDialog {
 		}
 		{
 			JLabel lblLmin = new JLabel("Rectangle Lmin");
-//			lblLmin.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblLmin.setFont(this.fontStandard);
 			lblLmin.setBounds(11, 106, 122, 14);
 			leftPanel.add(lblLmin);
@@ -197,7 +183,6 @@ public class DialogAddInstance extends JDialog {
 		}
 		{
 			JLabel lblLmax = new JLabel("Rectangle Lmax");
-//			lblLmax.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblLmax.setFont(this.fontStandard);
 			lblLmax.setBounds(11, 134, 122, 14);
 			leftPanel.add(lblLmax);
@@ -247,16 +232,16 @@ public class DialogAddInstance extends JDialog {
 		setVisible(true);
 		return instance;
 	}
-	
+
 	public void disposeInstance() {
 		instance = null;
 	}
 	
 	/**
 	 * Generate the instance
-	 * @return the generated instance
+	 * @return true if generation was successful, false otherwise
 	 */
-	private Instance generateInstance() {
+	private boolean generateInstance() {
 		Instance instance = null;
 		
 		int boxLength = -1;
@@ -269,9 +254,11 @@ public class DialogAddInstance extends JDialog {
 				if (boxLength < 1) {
 					System.out.println("Box length has to be greater than 0.");
 					boxLength = -1;
+					return false;
 				}
 			} catch (Exception e) {
 				System.out.println("Box length has to be an integer between 1 and x");
+				return false;
 			}
 		}
 		
@@ -281,35 +268,57 @@ public class DialogAddInstance extends JDialog {
 				if (nRectangles < 1) {
 					System.out.println("Number of rectangles has to be greater than 0.");
 					nRectangles = -1;
+					return false;
 				}
 			} catch (Exception e) {
 				System.out.println("Number of rectangles has to be an integer between 1 and x");
+				return false;
 			}
 		}
 	
 			
 		// Check inputs for:
-		
 		// 0. All ints > 0
 		// 1. LMax >= LMin
 		// 2. LMax <= LBox
 		
 		if (GeneratorType == 1) {
 			IInstanceGenerator iGen1 = new InstanceGenerator1();
-			
-			int lMin = Integer.parseInt(textFieldLMin.getText());
-			int lMax = Integer.parseInt(textFieldLMax.getText());
+			int lMin = -1;
+			int lMax = -1;
+
+			try {
+				lMin = Integer.parseInt(textFieldLMin.getText());
+				lMax = Integer.parseInt(textFieldLMax.getText());
+				if (lMin < 1) {
+					System.out.println("lMin has to be greater than 0.");
+					return false;
+				}
+				if (lMax < 1) {
+					System.out.println("lMax has to be greater than 0.");
+					return false;
+				}
+				if (lMin > lMax) {
+					System.out.println("lMax has to be greater than or equal to lMin.");
+					return false;
+				}
+				if (lMax > boxLength) {
+					System.out.println("lMax cannot be greater than box length.");
+					return false;
+				}
+			} catch (Exception e) {
+				System.out.println("Please enter valid integer values for lMin and lMax!");
+				return false;
+			}
 			
 			instance = iGen1.generate(nRectangles, lMin, lMax, boxLength);
 		} else {
-			instance = null;
-			
 			IInstanceGenerator iGen2 = new InstanceGenerator2();
 			instance = iGen2.generate(nRectangles, -1, -1, boxLength);
 		}
 		
 		
-		return instance;
-		
+		this.instance = instance;
+		return true;
 	}
 }

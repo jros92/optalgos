@@ -120,27 +120,16 @@ public class Demo {
 		int runCount = 0;
 
 		/* Start timing for entire demo run */
-		long startTimeDemoNano = System.nanoTime();
-		long startSystemTimeNano = Timing.getSystemTime();
-		long startUserTimeNano   = Timing.getUserTime();
-		long startCPUTimeNano 	 = Timing.getCpuTime();
-
+		long startTimeDemoNano   = System.nanoTime();
 
 		for (Instance instance : instances) {
 
 			++instanceCount;
 
 			System.out.println("Demo starting to process instance " + instanceCount + " of " + this.nInstances + ": " + instance.toString());
-			
-			// Placeholder output
-//			for (int i = 0; i < instance.getnRectangles(); i++) {
-//				System.out.println(instance.getRectangles().get(i).toString());
-//			}
-			
 
-			long maxIterations = 1000000L;
+			int maxIterations = Integer.MAX_VALUE;
 			int numberOfNeighbors = 500;
-			
 			
 			/* The algorithms should be called here, along with the visualization in the small demos */
 			for (Algorithms algorithmChoice : Algorithms.values()) {
@@ -209,11 +198,8 @@ public class Demo {
 
 		/* Stop timing for entire demo run */
 		long taskElapsedTimeNano = System.nanoTime() - startTimeDemoNano;
-		long taskUserTimeNano    = Timing.getUserTime() - startUserTimeNano;
-		long taskSystemTimeNano  = Timing.getSystemTime() - startSystemTimeNano;
-		long taskCPUTimeNano	 = Timing.getCpuTime() - startCPUTimeNano;
 
-		System.out.println("Batch process (Demo) ended after " + " seconds");
+		System.out.println("Batch process (Demo) ended after " + (double)taskElapsedTimeNano/1000000000.0 + " seconds");
 	}
 
 	@Override

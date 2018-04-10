@@ -36,7 +36,7 @@ public class Solver implements Runnable {
 
 	private FormSolutionViewer viewer;
 	
-	private long maxIterations;
+	private int maxIterations;
 	private int timeLimit = 10; 	// in seconds; set <= 0 if no time criterion for termination is desired
 
 
@@ -70,7 +70,7 @@ public class Solver implements Runnable {
 	 * @param numberOfNeighbors
 	 */
 	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood,
-				  Instance instance, long maxIterations, int numberOfNeighbors) {
+				  Instance instance, int maxIterations, int numberOfNeighbors) {
 		this.algorithm = algorithm;
 		this.neighborhood = neighborhood;
 		this.objFun = neighborhood.getPreferredObjectiveFunction();
@@ -162,6 +162,13 @@ public class Solver implements Runnable {
 
 	}
 
+	/**
+	 * Run the solver.
+	 * Can be called directly (blocking) or as its own thread, example:
+	 * Thread solverThread = new Thread(solver); solverThread.start();
+	 * The latter is preferred for GUI applications.
+	 * @throws InterruptedException
+	 */
 	public void solve() throws InterruptedException {
 		       
 		logger.info("[SOLVER] Started " + this.toString() + ".");
@@ -288,7 +295,8 @@ public class Solver implements Runnable {
 					break;
 				}
 
-                logger.debug("[SOLVER] Iteration took " + (System.nanoTime() - iterationStartTimeNano) + "ns.");
+                logger.debug("[SOLVER] Iteration took "
+						+ ((double)(System.nanoTime() - iterationStartTimeNano) / 1000000.0) + "ms.");
 			}
 		}
 
@@ -296,6 +304,7 @@ public class Solver implements Runnable {
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
 		long taskTimeMillis = taskTimeNano / 1000000;
 
+		// Print and log statements
 		printAndLogResults(i);
 
 		logger.info("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
@@ -336,6 +345,10 @@ public class Solver implements Runnable {
 		cntGuiUpdates++;
 	}
 
+	/**
+	 * print and log information after termination of solver
+	 * @param i last iteration index, will be displayed
+	 */
 	private void printAndLogResults(long i) {
 		logger.info("[SOLVER] Terminated after " + i + " iterations, delivered solution below\n\n"
 				+ "========================================================================\n");
