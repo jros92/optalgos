@@ -28,6 +28,7 @@ public class DialogAddInstance extends JDialog {
 	private Font fontStandard;
 	private Font fontLarger;
 
+	private String errorMessage = "";
 
 	JRadioButton rdbtnGenerator1 = new JRadioButton("Random ");
 	JRadioButton rdbtnGenerator2 = new JRadioButton("Iterative Split");
@@ -77,7 +78,7 @@ public class DialogAddInstance extends JDialog {
 					setVisible(false);
 				else
 					new JOptionPane().showMessageDialog(DialogAddInstance.this,
-							"Please enter valid values","Error creating Instance",  JOptionPane.ERROR_MESSAGE);
+							errorMessage,"Error creating Instance",  JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -124,7 +125,6 @@ public class DialogAddInstance extends JDialog {
 
 		{
 			JLabel lblChooseGenerator = new JLabel("Choose Generator:");
-			//lblChooseGenerator.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblChooseGenerator.setFont(this.fontStandard);
 			lblChooseGenerator.setBounds(11, 14, 122, 14);
 			leftPanel.add(lblChooseGenerator);
@@ -252,12 +252,12 @@ public class DialogAddInstance extends JDialog {
 			try {
 				boxLength = Integer.parseInt(textFieldBoxLength.getText());
 				if (boxLength < 1) {
-					System.out.println("Box length has to be greater than 0.");
+					errorMessage = "Box length has to be greater than 0.";
 					boxLength = -1;
 					return false;
 				}
 			} catch (Exception e) {
-				System.out.println("Box length has to be an integer between 1 and x");
+				errorMessage = "Box length has to be an integer between 1 and x";
 				return false;
 			}
 		}
@@ -266,12 +266,12 @@ public class DialogAddInstance extends JDialog {
 			try {
 				nRectangles = Integer.parseInt(textFieldNrectangles.getText());
 				if (nRectangles < 1) {
-					System.out.println("Number of rectangles has to be greater than 0.");
+					errorMessage = "Number of rectangles has to be greater than 0.";
 					nRectangles = -1;
 					return false;
 				}
 			} catch (Exception e) {
-				System.out.println("Number of rectangles has to be an integer between 1 and x");
+				errorMessage = "Number of rectangles has to be an integer between 1 and x";
 				return false;
 			}
 		}
@@ -291,23 +291,23 @@ public class DialogAddInstance extends JDialog {
 				lMin = Integer.parseInt(textFieldLMin.getText());
 				lMax = Integer.parseInt(textFieldLMax.getText());
 				if (lMin < 1) {
-					System.out.println("lMin has to be greater than 0.");
+					errorMessage = "Lmin has to be greater than 0.";
 					return false;
 				}
 				if (lMax < 1) {
-					System.out.println("lMax has to be greater than 0.");
+					errorMessage = "Lmax has to be greater than 0.";
 					return false;
 				}
 				if (lMin > lMax) {
-					System.out.println("lMax has to be greater than or equal to lMin.");
+					errorMessage = "Lmax has to be greater than or equal to Lmin.";
 					return false;
 				}
 				if (lMax > boxLength) {
-					System.out.println("lMax cannot be greater than box length.");
+					errorMessage = "Lmax cannot be greater than box length.";
 					return false;
 				}
 			} catch (Exception e) {
-				System.out.println("Please enter valid integer values for lMin and lMax!");
+				errorMessage = "Please enter valid integer values for Lmin and Lmax!";
 				return false;
 			}
 			
