@@ -29,7 +29,7 @@ public abstract class Neighborhood {
 				result = new NeighborhoodRuleBased();
 				break;
 			case GeometricNew:
-				result = new NeighborhoodGeometricNew();
+				result = new NeighborhoodGeometricRandom();
 				break;
 			case RuleBasedImproved:
 				result = new NeighborhoodRuleBasedImproved();
