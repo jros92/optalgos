@@ -3,17 +3,10 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import javax.swing.event.ChangeListener;
+
+import algorithms.Solver;
 
 import core.FeasibleSolution;
 
@@ -21,6 +14,7 @@ public class FormSolutionViewer extends JFrame {
 
 	public SolutionDisplayPanel solutionDisplayPanel;
 	private FeasibleSolution solution;
+	private Solver solver;
 
 	private boolean updateWithWorseSolution;
 	private boolean autoScaling;
@@ -39,14 +33,13 @@ public class FormSolutionViewer extends JFrame {
 	JSlider zoomSlider;
 	
 	/**
-	 * Create a new window to display a solution
+	 * Create a new window to display a solution, no attachment to solver
 	 * @param solution
 	 * @param dpi
 	 */
 	public FormSolutionViewer(FeasibleSolution solution, int dpi) {
 		this.solution = solution;
 
-//		double scaleFactorInitialValueQuotient = 0.3181 * Math.sqrt(solution.getRectangles().size()) - 1.2896;
 		this.scaleFactor = (int) Math.ceil(dpi / 10);
 
 		this.multiColored = true;
@@ -57,20 +50,16 @@ public class FormSolutionViewer extends JFrame {
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
 		
 		this.setBackground(new Color(250, 250, 250));
-		
 
-		solutionDisplayPanel = new SolutionDisplayPanel(this.solution, this.scaleFactor, this.multiColored);		
+		solutionDisplayPanel = new SolutionDisplayPanel(this.solution, this.scaleFactor, this.multiColored);
 		solutionDisplayPanel.updateBoxPanels();
 		
 		/* Add ScrollPane */
 		scrollPane = new JScrollPane(solutionDisplayPanel,
 	            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
-
 		this.setContentPane(scrollPane);
-		
-//		solutionDisplayPanel.setParentScrollPane(scrollPane);
+
 		
 		/* MENU BAR */
 		createMenuBar();
@@ -78,7 +67,7 @@ public class FormSolutionViewer extends JFrame {
 		this.cbMenuItemShowWorseSolutions.setSelected(false);
 		this.updateWithWorseSolution = false;
 
-
+		/* Auto Scale on Window resizing */
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				if (autoScaling) autoScale();
@@ -86,14 +75,19 @@ public class FormSolutionViewer extends JFrame {
 		});
 	}
 
+	public FormSolutionViewer(Solver solver, FeasibleSolution solution, int dpi) {
+		this(solution, dpi);
+		this.solver = solver;
+		updateTitle();
+		createSolverSpecificControls();
+	}
 
 	public void updateSolution(FeasibleSolution solution, boolean betterSolution) {
-
 		// If the new solution is worse than the previous one, check if the user wants to display it or not, and do so
 		if (!betterSolution & !updateWithWorseSolution) return;
 
 		this.solution = solution;
-		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
+		updateTitle();
 
 		solutionDisplayPanel.setSolution(this.solution);
 		solutionDisplayPanel.updateBoxPanels();
@@ -210,6 +204,8 @@ public class FormSolutionViewer extends JFrame {
 		menu.add(submenuColors);
 		
 		// Zoom slider
+		JPanel zoomPanel = new JPanel();
+		zoomPanel.add(new JLabel("Zoom:"));
 		zoomSlider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
 		zoomSlider.setMaximumSize(new Dimension(600, (int) zoomSlider.getMaximumSize().getHeight() - 4));
         ChangeListener cl = e -> {
@@ -220,12 +216,41 @@ public class FormSolutionViewer extends JFrame {
         	FormSolutionViewer.this.validate();
         };
         zoomSlider.addChangeListener(cl);
-		menuBar.add(new JMenuItem("Zoom: "));
-        menuBar.add(zoomSlider);
+		zoomPanel.add(zoomSlider);
+		menuBar.add(zoomPanel);
 
         menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		this.setJMenuBar(menuBar);
+	}
+
+	private void createSolverSpecificControls() {
+		JPanel solverControlPanel = new JPanel();
+		solverControlPanel.add(new JLabel("Solver:"));
+
+		JCheckBox cbAutoTerminate = new JCheckBox("Auto-terminate");
+		solverControlPanel.add(cbAutoTerminate);
+
+		JTextField tfTimelimit = new JTextField("Time Limit");
+		solverControlPanel.add(tfTimelimit);
+
+		JButton pauseResumeButton = new JButton("Pause");
+		solverControlPanel.add(pauseResumeButton);
+
+		pauseResumeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (solver.isPaused()) {
+					solver.resume();
+					pauseResumeButton.setText("Pause");
+				} else {
+					solver.pause();
+					pauseResumeButton.setText("Resume");
+				}
+			}
+		});
+
+		menuBar.add(solverControlPanel);
 	}
 
 	/**
@@ -254,6 +279,16 @@ public class FormSolutionViewer extends JFrame {
 		this.cbMenuItemShowWorseSolutions.setEnabled(value);
 		this.cbMenuItemShowWorseSolutions.setSelected(value);
 		this.updateWithWorseSolution = value;
+	}
+
+	/**
+	 * Update the Form's title with the current data
+	 */
+	private void updateTitle() {
+		if (solver != null)
+			setTitle(solver.toString() + " | Solution using " + solution.getBoxCount() + " Boxes");
+		else
+			setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
 	}
 
 	class MenuZoomSlider extends JSlider {

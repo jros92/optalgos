@@ -19,7 +19,6 @@ import core.FeasibleSolution;
  */
 public class SolutionDisplayPanel extends JPanel {
 
-	private JScrollPane parentScrollPane;
 	private FeasibleSolution solution;
 	private int scaleFactor, spacing;
 	private int neededHeight;
@@ -41,10 +40,10 @@ public class SolutionDisplayPanel extends JPanel {
 		return this.spacing;
 	}
 
-	public void setParentScrollPane(JScrollPane parent) {
-		this.parentScrollPane = parent;
+	public void setSolution (FeasibleSolution solution) {
+		this.solution = solution;
 	}
-	
+
 	private void setLayoutAndBorder(int spacing) {
 		setPreferredSize(new Dimension(500, 400));
 		
@@ -54,10 +53,6 @@ public class SolutionDisplayPanel extends JPanel {
 		
 		FlowLayout layout = new FlowLayout(FlowLayout.LEADING, this.spacing, this.spacing);
 		this.setLayout(layout);
-	}
-	
-	public void setSolution (FeasibleSolution solution) {
-		this.solution = solution;
 	}
 
 	/**
@@ -79,32 +74,9 @@ public class SolutionDisplayPanel extends JPanel {
 		this.updateBoxPanels();
 	}
 	
-//	public void validate() {
-//		solutionViewerFrame.validate();
-//	}
-	
-	
-//	@Override
-//	public void revalidate() {
-//		this.updateBoxPanels();
-//		super.revalidate();
-//	}
-
-	
 	@Override
 	public Dimension getPreferredSize() {
 
-		
-//		Dimension dim;
-//		JScrollPane parentScrollP = (JScrollPane) this.getParent();
-//		Dimension parentSPsize = parentScrollP.getViewport().getSize();
-//		if (parentSPsize.width <= 0) { // TODO: Kinda dirty solution
-//			// Get Frame size
-//			dim = this.getParent().getParent().getSize();
-//		} else {
-//			
-//		}
-		
 		// Find needed width (depending on Frame width)
 		Dimension dim = this.getParent().getParent().getSize();
 		dim.width -= 30; // TODO: Quick and dirty solution
@@ -120,7 +92,8 @@ public class SolutionDisplayPanel extends JPanel {
 		
 		this.neededHeight = neededRows * (boxPanelSize + this.spacing) + 2*this.spacing;
 		
-//		System.out.println("boxpanelsize = " + boxPanelSize + ", widthAvailable = " + widthAvailable + ", BoxesPerRow: " + boxesPerRow + ", needed Rows = " + neededRows);
+//		System.out.println("boxpanelsize = " + boxPanelSize + ", widthAvailable = "
+// 					+ widthAvailable + ", BoxesPerRow: " + boxesPerRow + ", needed Rows = " + neededRows);
 		
 		Dimension result = new Dimension(widthAvailable, this.neededHeight);
 		
@@ -129,26 +102,22 @@ public class SolutionDisplayPanel extends JPanel {
 	}
 	
 	/**
-	 * Paint one boxPanel for each box contained in the solution.
+	 * Update the painted boxes
 	 */
 	public void updateBoxPanels() {
 		this.removeAll();
 		FlowLayout layout = new FlowLayout(FlowLayout.LEADING, this.spacing, this.spacing);
 		this.setLayout(layout);
 		
-		/* Place the boxes */
+		/* Paint one boxPanel for each box contained in the solution */
 		for (Box box : solution.getBoxes()) {
 			BoxPanel boxPanel = new BoxPanel(box, scaleFactor, this.multiColored);
+
 			// Display no. of rectangles contained in tooltip
-			boxPanel.setToolTipText(String.format("Box " + box.getId() + " contains " + box.getRectangles().size() + " rectangles and uses %.2f%% of space.", box.getPackingPercentage()*100));
+			boxPanel.setToolTipText(String.format("Box " + box.getId() + " contains " + box.getRectangles().size()
+					+ " rectangles and uses %.2f%% of space.", box.getPackingPercentage()*100));
 			this.add(boxPanel);
-	//		solutionDisplayPanel.setSize(this.getWidth(), 500); 
 			boxPanel.setVisible(true);
 		}
-		
-//		this.revalidate();
-//		this.paint(getGraphics());
 	}
-
-
 }

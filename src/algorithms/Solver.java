@@ -39,10 +39,11 @@ public class Solver implements Runnable {
 	private double currentCost;
 	private long lastGuiUpdate = 0;
 	private int cntGuiUpdates = 0;
+    private long pausedTime = 0, lastPausedTime = 0;
 
 	/* User parameters */
 	private int sleepDuration;		/* Sleep duration between iterations in milliseconds */
-	private boolean pause = false;	/* TRUE if the algorithm execution is paused (e.g. by the user) */
+	private boolean paused = false;	/* TRUE if the algorithm execution is paused (e.g. by the user) */
 	private int maxIterations;		/* maximum number of iterations */
 	private int timeLimit = 10;		/* time limit in seconds; set <= 0 for no termination time criterion */
 	private boolean autoTerminate;	/* Terminate as soon as nothing significant has changed for a while */
@@ -134,10 +135,41 @@ public class Solver implements Runnable {
 		this.viewer = viewer;
 	}
 
+    /**
+     * Set the time limit (wall clock time) for the termination of the solver
+     * @param timeLimit the desired time limit in seconds
+     */
 	public void setTimeLimit(int timeLimit) {
 		this.timeLimit = timeLimit;
 		logger.warn("Time Limit readjusted to " + timeLimit + " seconds");
 	}
+
+    /**
+     * Pause the solver and update the GUI
+     */
+	public void pause() {
+	    this.paused = true;
+        this.lastPausedTime = System.nanoTime();
+        logger.warn("[SOLVER] Execution paused by user");
+	    updateGUI(false);
+    }
+
+    /**
+     * Resume the solver
+     */
+    public void resume() {
+        logger.warn("[SOLVER] Execution resumed by user");
+        this.pausedTime += (System.nanoTime() - this.lastPausedTime)/1000000;
+	    this.paused = false;
+    }
+
+    /**
+     * Check if the solver is currently paused
+     * @return true if the solver is currently paused, false otherwise
+     */
+    public boolean isPaused() {
+	    return this.paused;
+    }
 
 	public void setGuiUpdateFrequency(int guiUpdateFrequency) {
 		this.guiUpdateFrequency = guiUpdateFrequency;
@@ -186,8 +218,7 @@ public class Solver implements Runnable {
 
 		/* Iteration */
 		while (i < this.maxIterations) {
-			if (this.pause) {
-				logger.info("[SOLVER] Execution paused");
+			if (this.paused) {
 				Thread.sleep(100);
 			} else {
 				logger.debug("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
@@ -288,7 +319,8 @@ public class Solver implements Runnable {
 				}
 
 				/* Check the time limit */
-				if ( (this.timeLimit > 0) && ( (System.nanoTime( ) - startTimeNano) / 1000000000 >= this.timeLimit) ) {
+				if ( (this.timeLimit > 0)
+                        && ( (System.nanoTime()-startTimeNano)/1000000000 >= this.timeLimit + this.pausedTime/1000) ) {
 					logger.info("[SOLVER] Time limit reached. Terminating...");
 					break;
 				}
@@ -305,7 +337,11 @@ public class Solver implements Runnable {
 		// Print and log statements
 		printAndLogResults(i);
 
-		logger.info("Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds.");
+		String elapsedTimeString = "Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds";
+		if (pausedTime > 0)
+		    elapsedTimeString += " (" + pausedTime + "ms of which were paused)";
+		elapsedTimeString += ".";
+		logger.info(elapsedTimeString);
 
 		/* Force GUI update to display final solution */
 		if (viewer != null) {
@@ -370,6 +406,7 @@ public class Solver implements Runnable {
 		return "Solver for " + this.solution.getInstance().toString()
 				+ " using " + this.algorithm
 				+ " on " + this.neighborhood
-				+ " neighborhoods [timeLimit = " + this.timeLimit + "s]";
+				+ " neighborhoods";
+//                + "[timeLimit = " + this.timeLimit + "s]";
 	}
 }

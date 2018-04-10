@@ -29,32 +29,32 @@ import algorithms.*;
 import core.*;
 import demo.Demo;
 
+/**
+ * Main menu of the application.
+ * User can add and remove instances, and launch algorithms
+ * @author Jörg R. Schmidt
+ */
 public class FormMain extends JFrame {
 
 	private JPanel contentPane;
 	private DialogAddInstance dialogAddInstance;
+	private JList<Instance> listCurrentInstances;
 	private DefaultListModel<Instance> instanceListModel;
 	private DefaultListModel<Algorithms> algosListModel;
 	private DefaultListModel<Neighborhoods> neighborhoodListModel;
-	private JList<Instance> listCurrentInstances;
-	private FeasibleSolution feasibleSolution;
-	private int dpi;
-	private Font fontStandard;
-	private Font fontLarger;
-
+	private JList<Solver> listSolutions;
+	private DefaultListModel<Solver> solutionListModel;
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
 
-	private JList<FeasibleSolution> listSolutions;
-	private DefaultListModel<FeasibleSolution> solutionListModel;
+	private int dpi;
+	private Font fontStandard;
+	private Font fontLarger;
 
 	/* Parameters to be tuned */
-//	long maxIterations = 100000L;
     int maxIterations = Integer.MAX_VALUE;
-	//			long maxIterations = 30;
 	int numberOfNeighbors = 500;
-	int sleepDuration = 0;	// in ms
 
 	/**
 	 * Launch the application.
@@ -71,7 +71,8 @@ public class FormMain extends JFrame {
 		}
 
 		// TODO: Remove this after debug
-		SimulatedAnnealingAlgorithm simAnnTest = (SimulatedAnnealingAlgorithm)Algorithm.generateInstance(Algorithms.SimulatedAnnealing);
+		SimulatedAnnealingAlgorithm simAnnTest =
+				(SimulatedAnnealingAlgorithm)Algorithm.generateInstance(Algorithms.SimulatedAnnealing);
 		System.out.println(simAnnTest.getCoolingScheduleTextual());
 
 		try {
@@ -144,14 +145,16 @@ public class FormMain extends JFrame {
 
 		/* Right and Left Panels */
 		JPanel rightPanel = new JPanel();
-		rightPanel.setBounds(leftColWidth + 20, 30, (int)Math.round(dpi*1.3), (int)Math.round(dpi*(mainFormHeightFactor*0.9)));
+		rightPanel.setBounds(leftColWidth + 20, 30, (int)Math.round(dpi*1.3),
+											(int)Math.round(dpi*(mainFormHeightFactor*0.9)));
 		GridLayout buttonPanelLayout = new GridLayout(8, 1);
 		buttonPanelLayout.setVgap((int)Math.round(dpi/20));
 		rightPanel.setLayout(buttonPanelLayout);
 		contentPane.add(rightPanel);
 		
 //		JPanel leftPanel = new JPanel();
-//		leftPanel.setBounds((int)Math.round(dpi*3) + 20, 30, (int)Math.round(dpi*1.3), (int)Math.round(dpi*(mainFormHeightFactor*0.95)));
+//		leftPanel.setBounds((int)Math.round(dpi*3) + 20, 30, (int)Math.round(dpi*1.3),
+// 							(int)Math.round(dpi*(mainFormHeightFactor*0.95)));
 //		GridLayout leftPanelLayout = new GridLayout(7, 1);
 //		leftPanelLayout.setVgap(2);
 //		leftPanel.setLayout(leftPanelLayout);
@@ -228,7 +231,7 @@ public class FormMain extends JFrame {
 		listAlgorithms.setFont(fontStandard);
 		
 		JScrollPane scrollPaneNeighborhoods = new JScrollPane();
-		scrollPaneNeighborhoods.setBounds((leftColWidth-10)/2 + 15, 223, (leftColWidth-10)/2, leftColHeight);
+		scrollPaneNeighborhoods.setBounds((leftColWidth-10)/2 + 15,223,(leftColWidth-10)/2, leftColHeight);
 		contentPane.add(scrollPaneNeighborhoods);
 		
 		JList<Neighborhoods> listNeighborhoods = new JList<Neighborhoods>();
@@ -448,7 +451,8 @@ public class FormMain extends JFrame {
 		// Button to remove Solvers
 		btnRemoveSolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DefaultListModel<FeasibleSolution> listModel = (DefaultListModel<FeasibleSolution>) listSolutions.getModel();
+				DefaultListModel<Solver> listModel =
+						(DefaultListModel<Solver>) listSolutions.getModel();
 				listModel.removeElement(listSolutions.getSelectedValue());
 			}
 		});
@@ -456,7 +460,7 @@ public class FormMain extends JFrame {
 		// Button to Show Solution
 		btnShowSolution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FeasibleSolution solution = listSolutions.getSelectedValue();
+				FeasibleSolution solution = listSolutions.getSelectedValue().getSolution();
 				if (solution != null)
 					showSolution(solution);
 
@@ -600,7 +604,8 @@ public class FormMain extends JFrame {
 		menuItem = new JMenuItem("Run Small Demo (3 Instances, 1000 Rectangles [L=1..6], boxlength=6)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Demo demo = new Demo(3, 1000, 1, 6, 6, menuItemCb.getState(), cbLoggingDemo.getState());
+				Demo demo = new Demo(3, 1000, 1, 6, 6,
+						menuItemCb.getState(), cbLoggingDemo.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
 					instanceListModel.addElement(inst);
@@ -621,7 +626,8 @@ public class FormMain extends JFrame {
 		menuItem = new JMenuItem("Run Large Demo (30 Instances, 1000 Rectangles [L=1..10], boxlength=10)");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Demo demo = new Demo(30, 1000, 1, 10, 10, menuItemCb.getState(), cbLoggingDemo.getState());
+				Demo demo = new Demo(30, 1000, 1, 10, 10,
+						menuItemCb.getState(), cbLoggingDemo.getState());
 				// add instances to GUI list
 				for (Instance inst : demo.getInstances()) {
 					instanceListModel.addElement(inst);
@@ -653,23 +659,24 @@ public class FormMain extends JFrame {
 			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
 			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 
-			Solver solver = new Solver(algorithm, neighborhood, listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
-			solver.setSleepDuration(sleepDuration);
+			Solver solver = new Solver(algorithm, neighborhood,
+					listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
+//			solver.setSleepDuration(0);
 
 			// add solver to list of solvers
-			solutionListModel.addElement(solver.getSolution());
+			solutionListModel.addElement(solver);
 
 			// Start the solver thread
 			Thread solverThread = new Thread(solver);
 			solverThread.start();
 			
 			// Create a solution viewer and pass it to the solver
-//			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), (this.getX() + this.getWidth()), this.getY(), this.dpi);
-			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver.getSolution(), this.dpi);
+			FormSolutionViewer solutionViewer = new FormSolutionViewer(solver, solver.getSolution(), this.dpi);
 			solver.setViewer(solutionViewer);
 			solutionViewer.setVisible(true);
 
 			// Enable display option for Sim. Annealing and Taboo Search, disable for Local Search
+			// TODO: Move to FormSolutionViewer since that is now possible
 			if (algorithmChoice == Algorithms.LocalSearch) solutionViewer.setCheckBoxShowWorseSolutions(false);
 			else solutionViewer.setCheckBoxShowWorseSolutions(true);
 		} else {
@@ -734,7 +741,8 @@ public class FormMain extends JFrame {
 	 * Show a raw generated instance (not initialized)
 	 */
 	private void showUninitializedInstance() {
-		FormInstanceViewer instanceForm = new FormInstanceViewer(this.listCurrentInstances.getSelectedValue(), "View " + listCurrentInstances.getSelectedValue().toString(), this.dpi);
+		FormInstanceViewer instanceForm = new FormInstanceViewer(this.listCurrentInstances.getSelectedValue(),
+				"View " + listCurrentInstances.getSelectedValue().toString(), this.dpi);
 		instanceForm.setVisible(true);
 	}
 
@@ -743,13 +751,12 @@ public class FormMain extends JFrame {
 	 * @param instance
 	 */
 	private void showInitializedInstance(Instance instance) {
-		// Clone the instance
+
 //		IProblemInitializer problemInitializer = new SimplestInitializer();
 //		IProblemInitializer problemInitializer = new SimplerInitializer();
 		IProblemInitializer problemInitializer = new SimpleInitializer();
-		feasibleSolution = problemInitializer.initialize(instance);
-		
-//		FormSolutionViewer solutionViewer = new FormSolutionViewer(feasibleSolution, (this.getX() + this.getWidth()), this.getY(), this.dpi);
+		FeasibleSolution feasibleSolution = problemInitializer.initialize(instance);
+
 		FormSolutionViewer solutionViewer = new FormSolutionViewer(feasibleSolution, this.dpi);
 		solutionViewer.setVisible(true);
 		feasibleSolution.printToConsole();
