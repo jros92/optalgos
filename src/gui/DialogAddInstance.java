@@ -29,8 +29,8 @@ public class DialogAddInstance extends JDialog {
 	private Font fontLarger;
 
 
-	JRadioButton rdbtnGenerator1 = new JRadioButton("Generator 1");
-	JRadioButton rdbtnGenerator2 = new JRadioButton("Generator 2");
+	JRadioButton rdbtnGenerator1 = new JRadioButton("Random ");
+	JRadioButton rdbtnGenerator2 = new JRadioButton("Iterative Split");
 	
 	JButton okButton;
 	JButton cancelButton;
