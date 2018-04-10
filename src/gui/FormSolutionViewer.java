@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import algorithms.Solver;
 
@@ -224,15 +226,78 @@ public class FormSolutionViewer extends JFrame {
 		this.setJMenuBar(menuBar);
 	}
 
+	/**
+	 * Build controls for Solver
+	 */
 	private void createSolverSpecificControls() {
 		JPanel solverControlPanel = new JPanel();
 		solverControlPanel.add(new JLabel("Solver:"));
 
+		solverControlPanel.add(new JLabel("Time Limit [s]:"));
+		JTextField tfTimeLimit = new JTextField(""+solver.getTimeLimit());
+		solverControlPanel.add(tfTimeLimit);
+		tfTimeLimit.setColumns(5);
+
+		JButton acceptTimeLimitButton = new JButton("Set");
+		solverControlPanel.add(acceptTimeLimitButton);
+		acceptTimeLimitButton.setEnabled(false);
+
+		tfTimeLimit.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				try {
+					int newTimeLimit = Integer.parseInt(tfTimeLimit.getText());
+					if (newTimeLimit != solver.getTimeLimit()) {
+						acceptTimeLimitButton.setEnabled(true);
+					} else
+						acceptTimeLimitButton.setEnabled(false);
+				} catch (Exception ex) {
+//					ex.printStackTrace();
+				}
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				try {
+					int newTimeLimit = Integer.parseInt(tfTimeLimit.getText());
+					if (newTimeLimit != solver.getTimeLimit()) {
+						acceptTimeLimitButton.setEnabled(true);
+					} else
+						acceptTimeLimitButton.setEnabled(false);
+				} catch (Exception ex) {
+//					ex.printStackTrace();
+				}
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				try {
+					int newTimeLimit = Integer.parseInt(tfTimeLimit.getText());
+					if (newTimeLimit != solver.getTimeLimit()) {
+						acceptTimeLimitButton.setEnabled(true);
+					} else
+						acceptTimeLimitButton.setEnabled(false);
+				} catch (Exception ex) {
+//					ex.printStackTrace();
+				}
+			}
+		});
+
+		acceptTimeLimitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int newTimeLimit = Integer.parseInt(tfTimeLimit.getText());
+					solver.setTimeLimit(newTimeLimit);
+					acceptTimeLimitButton.setEnabled(false);
+				} catch (Exception ex) {
+//					ex.printStackTrace();
+				}
+			}
+		});
+
+
 		JCheckBox cbAutoTerminate = new JCheckBox("Auto-terminate");
 		solverControlPanel.add(cbAutoTerminate);
 
-		JTextField tfTimelimit = new JTextField("Time Limit");
-		solverControlPanel.add(tfTimelimit);
+		/* Pause/Resume Button */
 
 		JButton pauseResumeButton = new JButton("Pause");
 		solverControlPanel.add(pauseResumeButton);

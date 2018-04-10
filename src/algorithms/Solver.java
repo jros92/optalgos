@@ -144,6 +144,10 @@ public class Solver implements Runnable {
 		logger.warn("Time Limit readjusted to " + timeLimit + " seconds");
 	}
 
+	public int getTimeLimit() {
+		return this.timeLimit;
+	}
+
     /**
      * Pause the solver and update the GUI
      */
