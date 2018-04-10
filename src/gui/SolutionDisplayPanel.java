@@ -36,7 +36,11 @@ public class SolutionDisplayPanel extends JPanel {
 		this.setSolution(solution);
 		this.multiColored = multiColored;
 	}
-	
+
+	public int getSpacing() {
+		return this.spacing;
+	}
+
 	public void setParentScrollPane(JScrollPane parent) {
 		this.parentScrollPane = parent;
 	}

@@ -1,8 +1,7 @@
 package gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
@@ -24,7 +23,7 @@ public class FormSolutionViewer extends JFrame {
 	private FeasibleSolution solution;
 
 	private boolean updateWithWorseSolution;
-
+	private boolean autoScaling;
 	private boolean multiColored;
 	
 	int scaleFactor = 40;
@@ -35,13 +34,13 @@ public class FormSolutionViewer extends JFrame {
 	JRadioButtonMenuItem rbMenuItem;
 	JCheckBoxMenuItem cbMenuItem;
 	JCheckBoxMenuItem cbMenuItemShowWorseSolutions;
+	JCheckBoxMenuItem cbAutoScaling;
 	JScrollPane scrollPane;
+	JSlider zoomSlider;
 	
 	/**
 	 * Create a new window to display a solution
 	 * @param solution
-	 * @param x position of 
-	 * @param y
 	 * @param dpi
 	 */
 	public FormSolutionViewer(FeasibleSolution solution, int dpi) {
@@ -51,7 +50,8 @@ public class FormSolutionViewer extends JFrame {
 		this.scaleFactor = (int) Math.ceil(dpi / 10);
 
 		this.multiColored = true;
-		
+		this.autoScaling = true;
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(1600, 600);
 		setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
@@ -77,6 +77,13 @@ public class FormSolutionViewer extends JFrame {
 		this.cbMenuItemShowWorseSolutions.setEnabled(false);
 		this.cbMenuItemShowWorseSolutions.setSelected(false);
 		this.updateWithWorseSolution = false;
+
+
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent e) {
+				if (autoScaling) autoScale();
+			}
+		});
 	}
 
 
@@ -90,6 +97,8 @@ public class FormSolutionViewer extends JFrame {
 
 		solutionDisplayPanel.setSolution(this.solution);
 		solutionDisplayPanel.updateBoxPanels();
+
+		if (autoScaling) autoScale();
 	}
 	
 	/**
@@ -128,9 +137,26 @@ public class FormSolutionViewer extends JFrame {
 //		menuItem.setFont(fontStandard);
 		menu.add(menuItem);
 
+		menu.addSeparator();
+
+		// Option to toggle auto scaling on / off
+		cbAutoScaling = new JCheckBoxMenuItem("Auto Scaling");
+		cbAutoScaling.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				FormSolutionViewer.this.autoScaling =
+						FormSolutionViewer.this.cbAutoScaling.isSelected();
+				System.out.println("Auto Scaling enabled: " + FormSolutionViewer.this.cbAutoScaling.isSelected());
+				if (FormSolutionViewer.this.autoScaling) autoScale();	// first computation
+			}
+		});
+		cbAutoScaling.setMnemonic(KeyEvent.VK_A);
+		cbAutoScaling.setToolTipText("Automatically set the zoom value");
+		cbAutoScaling.setSelected(true);
+//		menuItem.setFont(fontStandard);
+		menu.add(cbAutoScaling);
+
 		// Option to select if solutions that are worse will be shown
 		// for Simulated Annealing and Taboo Search
-		menu.addSeparator();
 		cbMenuItemShowWorseSolutions = new JCheckBoxMenuItem("Show only better solutions");
 		cbMenuItemShowWorseSolutions.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,11 +208,9 @@ public class FormSolutionViewer extends JFrame {
 		submenuColors.add(rbMenuItem);
 		menu.add(submenuColors);
 		
-		// Zoom slider 
-//		menu.addSeparator();
-//		menu.add(new JMenuItem("Zoom"));
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
-		slider.setMaximumSize(new Dimension(600, (int) slider.getMaximumSize().getHeight() - 4));
+		// Zoom slider
+		zoomSlider = new JSlider(JSlider.HORIZONTAL, 1, (int) Math.round(this.scaleFactor * 3), this.scaleFactor);
+		zoomSlider.setMaximumSize(new Dimension(600, (int) zoomSlider.getMaximumSize().getHeight() - 4));
         ChangeListener cl = e -> {
             JSlider sliderValue = (JSlider) e.getSource();
             System.out.println("Zoom value adjusted to " + sliderValue.getValue());
@@ -194,14 +218,34 @@ public class FormSolutionViewer extends JFrame {
         	FormSolutionViewer.this.solutionDisplayPanel.setScaleFactor(FormSolutionViewer.this.scaleFactor);
         	FormSolutionViewer.this.validate();
         };
-        slider.addChangeListener(cl);
-//		menu.add(slider);
+        zoomSlider.addChangeListener(cl);
 		menuBar.add(new JMenuItem("Zoom: "));
-        menuBar.add(slider);
+        menuBar.add(zoomSlider);
 
         menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		this.setJMenuBar(menuBar);
+	}
+
+	/**
+	 * Compute the current maximum scale factor that will fit all the boxes inside the window as it is currently sized
+	 */
+	public void autoScale() {
+		// Compute zoom value
+		// ScaleFactor = (sqrt(W*L / nBoxes)-spacing) / boxlength
+		this.scaleFactor = (int)Math.floor(
+				(Math.sqrt((double)scrollPane.getViewport().getHeight() * (double)scrollPane.getViewport().getWidth()
+				  / (double)solution.getBoxCount()) - (double)solutionDisplayPanel.getSpacing())
+						/ (double)solution.getBoxLength());
+
+//		System.out.println("SDP Height: " + solutionDisplayPanel.getHeight()
+//				+ ", ScrollPane Viewport Height: " + scrollPane.getViewport().getHeight()
+//				+ ", ScrollPane Viewport Width: " + scrollPane.getViewport().getWidth());
+
+		/* update graphics*/
+		zoomSlider.setValue(this.scaleFactor);
+		this.solutionDisplayPanel.setScaleFactor(this.scaleFactor);
+		this.validate();
 	}
 
 
