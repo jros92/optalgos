@@ -78,8 +78,6 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 				}
 			}
 
-			System.out.println();
-
 		}
 		
 		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
@@ -137,7 +135,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 class CoolingSchedule {
 	int coolingScheduleLength = 100;
 
-	double desiredStartingTemperature = 20f;        // TODO: Choose well, dependent on problem
+	double desiredStartingTemperature = 0.05;        // TODO: Choose well, dependent on problem
 	double c = desiredStartingTemperature / 1.4427f;
 	
 	double[] temperatures = new double[coolingScheduleLength];

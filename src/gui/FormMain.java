@@ -62,9 +62,9 @@ public class FormMain extends JFrame {
 	public static void main(String[] args) throws InterruptedException {
 		/* Initialize the system properties for the logfile names */
 		try {
-			System.setProperty("logfileTimeStamp", "0000");
+			System.setProperty("logfileTimeStamp", "uninitialized/0000");
 			System.setProperty("logfilePrefix", "uninitialized");
-			System.setProperty("demoLogfileTimeStamp", "0000");
+			System.setProperty("demoLogfileTimeStamp", "uninitialized/0000");
 			System.setProperty("demoLogfilePrefix", "uninitialized");
 		} catch (Exception e) {
 			e.printStackTrace();

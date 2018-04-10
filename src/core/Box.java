@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * The box class resembles the box of the fixed length <code>length</code>. It also consists all the logic 
@@ -10,18 +11,18 @@ import java.util.ArrayList;
  * @author Jörg R. Schmidt <jroschmidt@gmail.com>
  *
  */
-public class Box {
+public class Box implements Comparable {
 	
 	private int length;
 	private int id;
 	private ArrayList<Rectangle> rectangles;
-	private ArrayList<Point> freePositions;
+	private LinkedList<Point> freePositions;
 	
 	public Box(int length, int id) {
 		this.length = length;
 		this.id = id;
 		this.rectangles = new ArrayList<Rectangle>();
-		this.freePositions = new ArrayList<Point>();
+		this.freePositions = new LinkedList<>();
 		this.freePositions.add(new Point(0, 0));
 	}
 	
@@ -75,18 +76,7 @@ public class Box {
 					if (getFreeLength(pos) < rectangle.getHeight()) {
 						// Rectangle too big for available space at this position
 						continue;
-					} 
-//					else {				
-//						if (getFreeLength(pos) < rectangle.getWidth()) {
-//							if (getFreeWidth(pos) < rectangle.getHeight()) {
-//								// Rectangle too big for available space at this position
-//								continue;
-//							} else {
-//								// Rectangle can be rotated in order to fit into space
-//								rectangle.rotate();
-//							}
-//						}
-//					}
+					}
 				}
 				
 				/* Check if rectangle would intersect with any other rectangles */
@@ -177,7 +167,7 @@ public class Box {
 		return (this.getRectangles().size() == 0);
 	}
 	
-	public ArrayList<Point> getFreePositions() {
+	public LinkedList<Point> getFreePositions() {
 		return this.freePositions;
 	}
 	
@@ -284,6 +274,47 @@ public class Box {
 	}
 
 	/**
+	 * Calculate the non-normalized (absolute) center of mass of this box
+	 * @return a CoM object with the non-normalized x and y coordinates of the center of mass of this box
+	 */
+	public CoM getCenterOfMass() {
+		double com_x = 0, com_y = 0;
+		int totalMass = 0;
+
+		if (this.rectangles.size() < 1) return new CoM(0,0);
+
+		for (Rectangle r : this.rectangles) {
+			int m = r.getArea();
+			com_x += (double)m * ((double)r.getPos().getX() + (double)r.getWidth()/2.0);
+			com_y += (double)m * ((double)r.getPos().getY() + (double)r.getHeight()/2.0);
+			totalMass += m;
+		}
+		com_x /= (double)totalMass;
+		com_y /= (double)totalMass;
+
+		return new CoM(com_x, com_y);
+	}
+
+
+	/**
+	 * Calculate the normalized (relative) center of mass of this box
+	 * @return a CoM object with the normalized x and y coordinates of the center of mass of this box
+	 */
+	public CoM getCenterOfMassNormalized() {
+		if (this.rectangles.size() < 1) return new CoM(0,0);
+
+		CoM comAbsolute = getCenterOfMass();
+
+		double com_x = comAbsolute.getX();
+		double com_y = comAbsolute.getY();
+
+		com_x /= (double)this.length;
+		com_y /= (double)this.length;
+
+		return new CoM(com_x, com_y);
+	}
+
+	/**
 	 * Add a rectangle to the box at the lower right corner. Only works if rectangle does not overlap.
 	 * Need to remove rectangle from old box if returns true.
 	 * @param rectangle
@@ -375,6 +406,53 @@ public class Box {
 		return result;
 	}
 
+	/**
+	 * Compares this object with the specified object for order.  Returns a
+	 * negative integer, zero, or a positive integer as this object is less
+	 * than, equal to, or greater than the specified object.
+	 * <p>
+	 * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+	 * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+	 * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+	 * <tt>y.compareTo(x)</tt> throws an exception.)
+	 * <p>
+	 * <p>The implementor must also ensure that the relation is transitive:
+	 * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+	 * <tt>x.compareTo(z)&gt;0</tt>.
+	 * <p>
+	 * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+	 * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
+	 * all <tt>z</tt>.
+	 * <p>
+	 * <p>It is strongly recommended, but <i>not</i> strictly required that
+	 * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
+	 * class that implements the <tt>Comparable</tt> interface and violates
+	 * this condition should clearly indicate this fact.  The recommended
+	 * language is "Note: this class has a natural ordering that is
+	 * inconsistent with equals."
+	 * <p>
+	 * <p>In the foregoing description, the notation
+	 * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
+	 * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
+	 * <tt>0</tt>, or <tt>1</tt> according to whether the value of
+	 * <i>expression</i> is negative, zero or positive.
+	 *
+	 * @param o the object to be compared.
+	 * @return a negative integer, zero, or a positive integer as this object
+	 * is less than, equal to, or greater than the specified object.
+	 * @throws NullPointerException if the specified object is null
+	 * @throws ClassCastException   if the specified object's type prevents it
+	 *                              from being compared to this object.
+	 */
+	@Override
+	public int compareTo(Object o) {
+		if (o == null) throw new NullPointerException();
 
-
+		try {
+			Box otherBox = (Box) o;
+			return (int)(this.getPackingPercentage() - otherBox.getPackingPercentage());
+		} catch (ClassCastException e) {
+			throw e;
+		}
+	}
 }

@@ -8,9 +8,7 @@ import algorithms.IObjectiveFunction;
 import algorithms.Neighbor;
 import algorithms.Neighborhood;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +45,8 @@ public class NeighborhoodGeometricNew extends Neighborhood implements INeighborh
 
 		// Create neighbor as new solution
 		FeasibleSolution neighbor = oldSolution.clone();
+
+		Collections.sort(neighbor.getBoxes());
 
 
 		// Get the box to empty

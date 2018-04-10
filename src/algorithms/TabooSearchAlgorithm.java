@@ -66,17 +66,16 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 				.getAsInt();  // or throw
 
 
-		/* Update List of Tabus */
-		tabuList.addLast(features[result]);
-		if (tabuList.size() > tabuListSizeLimit) tabuList.removeFirst();
-
-
 		/* Check Aspiration Condition and drop all Taboos if true */
 		if (neighborsCosts[result] <= bestCostSoFar) {
 			System.out.println("[ALGORITHM] Dropping all Tabus.");
 			bestCostSoFar = neighborsCosts[result];
 			tabuList = new LinkedList<Feature>();
 		}
+
+		/* Update List of Tabus */
+		tabuList.addLast(features[result]);
+		if (tabuList.size() > tabuListSizeLimit) tabuList.removeFirst();
 
 
 		return result;
