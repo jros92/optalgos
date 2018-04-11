@@ -46,10 +46,10 @@ public class LocalSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 //		}
 		
 		/* Count unsuccessful attempts so algorithm can keep trying to find a better neighbor within neighborhood */
-		if (result == -1) this.unsuccessfulAttempts += 1;
-		else this.unsuccessfulAttempts = 0;
+//		if (result == -1) this.unsuccessfulAttempts += 1;
+//		else this.unsuccessfulAttempts = 0;
 		
-		System.out.println("[ALGORITHM] # of unsuccessful iterations is now " + this.unsuccessfulAttempts);
+//		System.out.println("[ALGORITHM] # of unsuccessful iterations is now " + this.unsuccessfulAttempts);
 		
 		return result;
 	}

@@ -28,12 +28,12 @@ public abstract class Neighborhood {
 			case RuleBased:
 				result = new NeighborhoodRuleBased();
 				break;
-			case GeometricNew:
+			case GeometricRandom:
 				result = new NeighborhoodGeometricRandom();
 				break;
-			case RuleBasedImproved:
-				result = new NeighborhoodRuleBasedImproved();
-				break;
+//			case RuleBasedImproved:
+//				result = new NeighborhoodRuleBasedImproved();
+//				break;
 			default:
 				System.out.println("ERROR creating selected neighborhood. add new neighborhoods to Neighborhood.generateInstance()");
 				result = null;

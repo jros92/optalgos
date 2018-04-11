@@ -495,7 +495,6 @@ public class FormMain extends JFrame {
 		menu.add(menuItem);
 
 		/* Settings */
-		menu.addSeparator();
 
 		// Button to show settings dialog
 		menu = new JMenu("Settings");
@@ -554,6 +553,7 @@ public class FormMain extends JFrame {
 		menu.addSeparator();
 
 		JMenu submenuDemoSettings = new JMenu("Demo");
+		submenuDemoSettings.setFont(fontStandard);
 
 		JCheckBoxMenuItem menuItemCb = new JCheckBoxMenuItem("Display solutions graphically");
 		menuItemCb.setState(false);

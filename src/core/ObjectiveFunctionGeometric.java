@@ -29,7 +29,7 @@ public class ObjectiveFunctionGeometric implements IObjectiveFunction {
 
         result += comPenalty;
 
-        System.out.println("[OBJFUN] comPenalty=" + comPenalty + ", result=" + result);
+//        System.out.println("[OBJFUN] comPenalty=" + comPenalty + ", result=" + result);
 
         return result;
     }

@@ -68,7 +68,7 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 
 		/* Check Aspiration Condition and drop all Taboos if true */
 		if (neighborsCosts[result] <= bestCostSoFar) {
-			System.out.println("[ALGORITHM] Dropping all Tabus.");
+//			System.out.println("[ALGORITHM] Dropping all Tabus.");
 			bestCostSoFar = neighborsCosts[result];
 			tabuList = new LinkedList<Feature>();
 		}
