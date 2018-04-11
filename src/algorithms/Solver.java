@@ -62,7 +62,8 @@ public class Solver implements Runnable {
 	 * @param numberOfNeighbors
 	 */
 	public Solver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice,
-				  Instance instance, int maxIterations, int numberOfNeighbors) {
+				  Instance instance, int maxIterations, int numberOfNeighbors,
+				  int timeLimit, boolean autoTerminate) {
 
 		this.algorithm = Algorithm.generateInstance(algorithmChoice);
 		this.neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
@@ -75,6 +76,8 @@ public class Solver implements Runnable {
 		this.currentCost = this.objFun.getValue(this.solution);
 
 		this.maxIterations = maxIterations;
+		this.timeLimit = timeLimit;
+		this.autoTerminate = autoTerminate;
 
 		if (algorithm.needMultipleNeighbors())
 			this.numberOfNeighbors = numberOfNeighbors;

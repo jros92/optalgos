@@ -52,9 +52,11 @@ public class FormMain extends JFrame {
 	private Font fontStandard;
 	private Font fontLarger;
 
-	/* Parameters to be tuned */
+	/* Solver Parameters */
     int maxIterations = Integer.MAX_VALUE;
 	int numberOfNeighbors = 500;
+	int solverTimeLimit = 10;
+	boolean solverAutoTerminate = false;
 
 	/**
 	 * Launch the application.
@@ -492,6 +494,63 @@ public class FormMain extends JFrame {
 		
 		menu.add(menuItem);
 
+		/* Settings */
+		menu.addSeparator();
+
+		// Button to show settings dialog
+		menu = new JMenu("Settings");
+		menu.setMnemonic(KeyEvent.VK_S);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"Set parameters");
+
+		menuItem = new JMenuItem("Solver parameters...");
+		menuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				JTextField tfTimeLimit = new JTextField(5);
+				tfTimeLimit.setText(""+FormMain.this.solverTimeLimit);
+				JCheckBox cbxAutoTerminate = new JCheckBox("Auto-terminate");
+				cbxAutoTerminate.setSelected(FormMain.this.solverAutoTerminate);
+
+				JPanel myPanel = new JPanel();
+				int space = 10;
+				myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+				myPanel.add(new JLabel("Specify parameters:"));
+				JPanel panel1 = new JPanel();
+				panel1.add(new JLabel("Time Limit [s]:"));
+				panel1.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel1.add(tfTimeLimit);
+				myPanel.add(panel1);
+				JPanel panel2 = new JPanel();
+				panel2.add(new JLabel("Auto-terminate:"));
+				panel2.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
+				panel2.add(cbxAutoTerminate);
+				myPanel.add(panel2);
+
+				int result = JOptionPane.showConfirmDialog(FormMain.this, myPanel,
+						"Solver Parameters", JOptionPane.OK_CANCEL_OPTION);
+
+				if (result == JOptionPane.OK_OPTION) {
+					System.out.println("Parameters: "
+							+ tfTimeLimit.getText() + ", "
+							+ cbxAutoTerminate.isSelected()
+					);
+
+
+					FormMain.this.solverAutoTerminate = cbxAutoTerminate.isSelected();
+					try {
+						FormMain.this.solverTimeLimit = Integer.parseInt(tfTimeLimit.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+						return;
+					}
+
+				}
+			}
+		});
+
+		menu.add(menuItem);
+		menuBar.add(menu);
+
 		// Demo Menu
 		menu = new JMenu("Batch");
 		menu.setMnemonic(KeyEvent.VK_B);
@@ -552,7 +611,7 @@ public class FormMain extends JFrame {
 				panel5.add(javax.swing.Box.createHorizontalStrut(space)); // a spacer
 				myPanel.add(panel5);
 
-				int result = JOptionPane.showConfirmDialog(null, myPanel,
+				int result = JOptionPane.showConfirmDialog(FormMain.this, myPanel,
 						"Run Demo", JOptionPane.OK_CANCEL_OPTION);
 
 				if (result == JOptionPane.OK_OPTION) {
@@ -657,7 +716,8 @@ public class FormMain extends JFrame {
 	public void startAndShowSolver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
 		if (listCurrentInstances.getSelectedValue() != null) {
 			Solver solver = new Solver(algorithmChoice, neighborhoodChoice,
-					listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
+					listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors,
+					this.solverTimeLimit, this.solverAutoTerminate);
 //			solver.setSleepDuration(0);
 
 			// add solver to list of solvers

@@ -113,7 +113,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm implements IOptimizat
 			return true;
 		}
 
-		//	TODO: termination as soon as “nothing significant has changed” for a while
+		//	TODO: termination as soon as "nothing significant has changed" for a while
 
 		return false;
 	}

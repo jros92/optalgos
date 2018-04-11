@@ -30,7 +30,7 @@ public class TestCases3x3 {
 
         Instance instance = new Instance(6, 3, 0, 1, 3, rectangles);
 
-        Solver solver = new Solver(Algorithms.LocalSearch, Neighborhoods.RuleBased, instance, 30, 50);
+        Solver solver = new Solver(Algorithms.LocalSearch, Neighborhoods.RuleBased, instance, 30, 50, 10, true);
 //        solver.setSleepDuration(0);
 
         // Start the solver thread

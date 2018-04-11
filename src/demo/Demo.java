@@ -156,7 +156,7 @@ public class Demo {
 							+ ", Algorithm: " + algorithmChoice + ", Neighborhood: " + neighborhoodChoice);
 
 					// Generate a new solver object
-					Solver solver = new Solver(algorithmChoice, neighborhoodChoice, instance, maxIterations, numberOfNeighbors);
+					Solver solver = new Solver(algorithmChoice, neighborhoodChoice, instance, maxIterations, numberOfNeighbors, 10, true);
 //					solver.setSleepDuration(0);
 					solver.enableLogging(this.solverLogging);
 
