@@ -224,6 +224,7 @@ public class Solver implements Runnable {
 
 		/* Start timing */
 		long startTimeNano = System.nanoTime();
+		long startSolverCPUTimeNano = Timing.getCpuTime();
         long iterationStartTimeNano;
 
 		/* Initializations */
@@ -354,14 +355,15 @@ public class Solver implements Runnable {
 		/* Stop timing */
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
 		long taskTimeMillis = taskTimeNano / 1000000;
+        long taskSolverCPUTimeMillis = (Timing.getCpuTime() - startSolverCPUTimeNano) / 1000000;
 
 		/* Print and log results and additional information */
 		printAndLogResults(i);
 
-		String elapsedTimeString = "Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds";
+		String elapsedTimeString = "Elapsed wall clock time: " + (float)taskTimeMillis/1000.0 + " seconds";
 		if (pausedTime > 0)
 		    elapsedTimeString += " (" + pausedTime + "ms of which were paused)";
-		elapsedTimeString += ".";
+		elapsedTimeString += ". CPU Time was " + (float)taskSolverCPUTimeMillis/1000.0 + "s.";
 		logger.info(elapsedTimeString);
 
 		/* Force GUI update to display final solution */
