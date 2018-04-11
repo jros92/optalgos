@@ -155,12 +155,8 @@ public class Demo {
 							+ runCount + " of " + totalRuns + ": Instance #" + instanceCount
 							+ ", Algorithm: " + algorithmChoice + ", Neighborhood: " + neighborhoodChoice);
 
-					// Generate objects for algo and nbh
-					IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
-					INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
-
 					// Generate a new solver object
-					Solver solver = new Solver(algorithm, neighborhood, instance, maxIterations, numberOfNeighbors);
+					Solver solver = new Solver(algorithmChoice, neighborhoodChoice, instance, maxIterations, numberOfNeighbors);
 					solver.setSleepDuration(0);
 					solver.enableLogging(this.solverLogging);
 
@@ -198,7 +194,8 @@ public class Demo {
 							taskSolverSystemTimeMillis + ";" +
 							solver.getSolution().getBoxCount() + ";" +
 							solver.getSolution().calculateCumulativePackingPercentage() + ";" +
-							neighborhood.getPreferredObjectiveFunction().getValue(solver.getSolution()));
+							(Neighborhood.generateInstance(neighborhoodChoice).
+									getPreferredObjectiveFunction().getValue(solver.getSolution())));
 
 
 					// add the solution to the list of solutions

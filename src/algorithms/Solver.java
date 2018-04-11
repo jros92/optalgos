@@ -4,10 +4,7 @@ import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import core.FeasibleSolution;
-import core.IProblemInitializer;
-import core.Instance;
-import core.SimpleInitializer;
+import core.*;
 
 import gui.FormSolutionViewer;
 
@@ -38,6 +35,7 @@ public class Solver implements Runnable {
 	private long lastGuiUpdate = 0;
 	private int cntGuiUpdates = 0;
     private long pausedTime = 0, lastPausedTime = 0;
+    private boolean terminated = false;
 
 	/* User parameters */
 	private int sleepDuration;		/* Sleep duration between iterations in milliseconds */
@@ -57,16 +55,17 @@ public class Solver implements Runnable {
 
 	/**
 	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
-	 * @param algorithm
-	 * @param neighborhood
+	 * @param algorithmChoice
+	 * @param neighborhoodChoice
 	 * @param instance
 	 * @param maxIterations
 	 * @param numberOfNeighbors
 	 */
-	public Solver(IOptimizationAlgorithm algorithm, INeighborhood neighborhood,
+	public Solver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice,
 				  Instance instance, int maxIterations, int numberOfNeighbors) {
-		this.algorithm = algorithm;
-		this.neighborhood = neighborhood;
+
+		this.algorithm = Algorithm.generateInstance(algorithmChoice);
+		this.neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
 		this.objFun = neighborhood.getPreferredObjectiveFunction();
 		
 		/* Initialize a "bad" solution */
@@ -130,7 +129,9 @@ public class Solver implements Runnable {
 	public FeasibleSolution getSolution() {
 		return this.solution;
 	}
-	
+
+	public boolean isTerminated() { return this.terminated; }
+
 	public void setViewer(FormSolutionViewer viewer) {
 		this.viewer = viewer;
 	}
@@ -345,6 +346,8 @@ public class Solver implements Runnable {
 						+ ((double)(System.nanoTime() - iterationStartTimeNano) / 1000000.0) + "ms.");
 			}
 		}
+
+		this.terminated = true;
 
 		/* Stop timing */
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;

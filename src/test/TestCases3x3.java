@@ -4,10 +4,7 @@ import algorithms.Algorithm;
 import algorithms.Algorithms;
 import algorithms.IOptimizationAlgorithm;
 import algorithms.Solver;
-import core.Instance;
-import core.NeighborhoodRuleBased;
-import core.Rectangle;
-import core.Box;
+import core.*;
 import gui.FormSolutionViewer;
 
 import org.junit.Test;
@@ -33,9 +30,7 @@ public class TestCases3x3 {
 
         Instance instance = new Instance(6, 3, 0, 1, 3, rectangles);
 
-        IOptimizationAlgorithm algorithm = Algorithm.generateInstance(Algorithms.LocalSearch);
-
-        Solver solver = new Solver(algorithm, new NeighborhoodRuleBased(), instance, 30, 50);
+        Solver solver = new Solver(Algorithms.LocalSearch, Neighborhoods.RuleBased, instance, 30, 50);
         solver.setSleepDuration(0);
 
         // Start the solver thread

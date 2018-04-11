@@ -656,10 +656,7 @@ public class FormMain extends JFrame {
 	 */
 	public void startAndShowSolver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice) {
 		if (listCurrentInstances.getSelectedValue() != null) {
-			IOptimizationAlgorithm algorithm = Algorithm.generateInstance(algorithmChoice);
-			INeighborhood neighborhood = Neighborhood.generateInstance(neighborhoodChoice);
-
-			Solver solver = new Solver(algorithm, neighborhood,
+			Solver solver = new Solver(algorithmChoice, neighborhoodChoice,
 					listCurrentInstances.getSelectedValue(), maxIterations, numberOfNeighbors);
 //			solver.setSleepDuration(0);
 

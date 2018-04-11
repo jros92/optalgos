@@ -33,6 +33,10 @@ public class FormSolutionViewer extends JFrame {
 	JCheckBoxMenuItem cbAutoScaling;
 	JScrollPane scrollPane;
 	JSlider zoomSlider;
+
+	JButton acceptTimeLimitButton, pauseResumeButton;
+	JTextField tfTimeLimit;
+	JCheckBox cbAutoTerminate;
 	
 	/**
 	 * Create a new window to display a solution, no attachment to solver
@@ -95,6 +99,16 @@ public class FormSolutionViewer extends JFrame {
 		solutionDisplayPanel.updateBoxPanels();
 
 		if (autoScaling) autoScale();
+
+		/* If solver terminated */
+		if (solver != null && (solver.isTerminated())) {
+			/* Disable controls if solver is terminated */
+			pauseResumeButton.setEnabled(false);
+			acceptTimeLimitButton.setEnabled(false);
+			cbAutoTerminate.setEnabled(false);
+
+
+		}
 	}
 	
 	/**
@@ -234,11 +248,11 @@ public class FormSolutionViewer extends JFrame {
 		solverControlPanel.add(new JLabel("Solver:"));
 
 		solverControlPanel.add(new JLabel("Time Limit [s]:"));
-		JTextField tfTimeLimit = new JTextField(""+solver.getTimeLimit());
+		tfTimeLimit = new JTextField(""+solver.getTimeLimit());
 		solverControlPanel.add(tfTimeLimit);
 		tfTimeLimit.setColumns(5);
 
-		JButton acceptTimeLimitButton = new JButton("Set");
+		acceptTimeLimitButton = new JButton("Set");
 		solverControlPanel.add(acceptTimeLimitButton);
 		acceptTimeLimitButton.setEnabled(false);
 
@@ -295,7 +309,7 @@ public class FormSolutionViewer extends JFrame {
 
 
 		/* Auto Termination Checkbox */
-		JCheckBox cbAutoTerminate = new JCheckBox("Auto-terminate");
+		cbAutoTerminate = new JCheckBox("Auto-terminate");
 		solverControlPanel.add(cbAutoTerminate);
 		cbAutoTerminate.setSelected(solver.isAutoTerminate());
 
@@ -308,7 +322,7 @@ public class FormSolutionViewer extends JFrame {
 
 		/* Pause/Resume Button */
 
-		JButton pauseResumeButton = new JButton("Pause");
+		pauseResumeButton = new JButton("Pause");
 		solverControlPanel.add(pauseResumeButton);
 
 		pauseResumeButton.addActionListener(new ActionListener() {
@@ -321,6 +335,7 @@ public class FormSolutionViewer extends JFrame {
 					solver.pause();
 					pauseResumeButton.setText("Resume");
 				}
+				updateTitle();
 			}
 		});
 
@@ -359,10 +374,24 @@ public class FormSolutionViewer extends JFrame {
 	 * Update the Form's title with the current data
 	 */
 	private void updateTitle() {
-		if (solver != null)
-			setTitle(solver.toString() + " | Solution using " + solution.getBoxCount() + " Boxes");
-		else
-			setTitle("Solution of " + solution.getInstance().toString() + " | Using " + solution.getBoxCount() + " Boxes");
+		if (solver != null) {
+			/* If solver terminated */
+			if (solver.isTerminated()) {
+				setTitle("[TERMINATED] | " + solver.toString()
+						+ " | Final Solution using " + solution.getBoxCount() + " Boxes");
+			} else {
+				if (solver.isPaused()) {
+					setTitle("[PAUSED] | " + solver.toString()
+							+ " | Solution using " + solution.getBoxCount() + " Boxes");
+				} else {
+					setTitle("[RUNNING] | " + solver.toString()
+							+ " | Solution using " + solution.getBoxCount() + " Boxes");
+				}
+			}
+		} else {
+			setTitle("Solution of " + solution.getInstance().toString()
+					+ " | Using " + solution.getBoxCount() + " Boxes");
+		}
 	}
 
 	class MenuZoomSlider extends JSlider {
