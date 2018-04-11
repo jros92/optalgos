@@ -157,7 +157,7 @@ public class Demo {
 
 					// Generate a new solver object
 					Solver solver = new Solver(algorithmChoice, neighborhoodChoice, instance, maxIterations, numberOfNeighbors);
-					solver.setSleepDuration(0);
+//					solver.setSleepDuration(0);
 					solver.enableLogging(this.solverLogging);
 
 					// Start timing for this algorithm

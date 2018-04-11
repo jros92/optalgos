@@ -85,37 +85,11 @@ public class Solver implements Runnable {
 
 		this.boundWorseNeighbor = 100; // TODO: Adjust with obj. function
 
-		// Configure Logging Level
-		/* Levels to choose from: OFF, ERROR, WARN, INFO, DEBUG */
-		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
-
 		/* Set up loggers */
-//		logger.info("Logging Level is: " + logger.getLevel());
+		loggerSetUp();
 
-		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-		System.setProperty("logfileTimeStamp", logfileTimeStamp);
-		String logfilePrefix = (this.algorithm
-				+ "_on_"
-				+ this.neighborhood
-				+ "_n_"
-				+ this.initialSolution.getRectangles().size()
-				+ "_L_"
-				+ this.initialSolution.getInstance().getMinLength()
-				+ "_-_"
-				+  this.initialSolution.getInstance().getMaxLength()
-				+ "_bxln_"
-				+ this.initialSolution.getBoxLength()
-		).replaceAll("\\s+",""); //remove whitespaces for filename
-		System.setProperty("logfilePrefix", logfilePrefix);
-		org.apache.logging.log4j.core.LoggerContext ctx =
-				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
-		ctx.reconfigure();
-//		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
-		loggerPerf.info("time elapsed [ms]" + ";" + "iteration" + ";" + "box count" + ";" + "cost");
-		// store performance data for initial solution
-		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
 	}
-	
+
 	@Override
 	public void run() {
 		try {
@@ -125,13 +99,25 @@ public class Solver implements Runnable {
 			logger.fatal(e.getStackTrace().toString());
 		}
 	}
-	
+
+	/**
+	 * Get the current solution
+	 * @return the current solution
+	 */
 	public FeasibleSolution getSolution() {
 		return this.solution;
 	}
 
+	/**
+	 * Check if the solver terminated
+	 * @return true if the solver terminated, false otherwise
+	 */
 	public boolean isTerminated() { return this.terminated; }
 
+	/**
+	 * Attach a viewer (GUI) to the solver for it to display the current solution
+	 * @param viewer
+	 */
 	public void setViewer(FormSolutionViewer viewer) {
 		this.viewer = viewer;
 	}
@@ -145,10 +131,18 @@ public class Solver implements Runnable {
 		logger.warn("[SOLVER] Time Limit readjusted to " + timeLimit + " seconds");
 	}
 
+	/**
+	 * Get the current time limit set for the solver to terminate
+	 * @return the time limit in seconds
+	 */
 	public int getTimeLimit() {
 		return this.timeLimit;
 	}
 
+	/**
+	 * Turn auto termination on or off
+	 * @param choice true to turn on, false to turn off
+	 */
 	public void setAutoTerminate(boolean choice) {
 	    this.autoTerminate = choice;
 	    if (choice)
@@ -157,7 +151,11 @@ public class Solver implements Runnable {
             logger.warn("[SOLVER] Auto Termination is now OFF");
     }
 
-    public boolean isAutoTerminate() {
+	/**
+	 * Check if auto termination is turned on
+	 * @return true if auto-termination is turned on, false otherwise
+	 */
+	public boolean isAutoTerminate() {
 	    return this.autoTerminate;
     }
 
@@ -165,19 +163,23 @@ public class Solver implements Runnable {
      * Pause the solver and update the GUI
      */
 	public void pause() {
-	    this.paused = true;
-        this.lastPausedTime = System.nanoTime();
-        logger.warn("[SOLVER] Execution paused by user");
-	    updateGUI(false);
+	    if (!this.paused) {
+			this.paused = true;
+			this.lastPausedTime = System.nanoTime();
+			logger.warn("[SOLVER] Execution paused by user");
+			updateGUI(false);
+		}
     }
 
     /**
      * Resume the solver
      */
     public void resume() {
-        logger.warn("[SOLVER] Execution resumed by user");
-        this.pausedTime += (System.nanoTime() - this.lastPausedTime)/1000000;
-	    this.paused = false;
+		if (this.paused) {
+			logger.warn("[SOLVER] Execution resumed by user");
+			this.pausedTime += (System.nanoTime() - this.lastPausedTime) / 1000000;
+			this.paused = false;
+		}
     }
 
     /**
@@ -353,7 +355,7 @@ public class Solver implements Runnable {
 		long taskTimeNano  = System.nanoTime( ) - startTimeNano;
 		long taskTimeMillis = taskTimeNano / 1000000;
 
-		// Print and log statements
+		/* Print and log results and additional information */
 		printAndLogResults(i);
 
 		String elapsedTimeString = "Elapsed wall clock time: " + (float)taskTimeMillis/1000 + " seconds";
@@ -419,6 +421,42 @@ public class Solver implements Runnable {
 				+ " boxes.";
 		if (reducedBoxCount > 0) resultMsg += " Nice!";
 		logger.info(resultMsg);
+	}
+
+	/**
+	 * Set up loggers
+	 */
+	private void loggerSetUp() {
+		// Configure Logging Level
+		/* Levels to choose from: OFF, ERROR, WARN, INFO, DEBUG */
+		Configurator.setLevel(LogManager.getLogger(Solver.class).getName(), Level.INFO);
+
+//		logger.info("Logging Level is: " + logger.getLevel());
+		String logfileTimeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+		System.setProperty("logfileTimeStamp", logfileTimeStamp);
+
+		String logfilePrefix = (this.algorithm
+				+ "_on_"
+				+ this.neighborhood
+				+ "_n_"
+				+ this.initialSolution.getRectangles().size()
+				+ "_L_"
+				+ this.initialSolution.getInstance().getMinLength()
+				+ "_-_"
+				+  this.initialSolution.getInstance().getMaxLength()
+				+ "_bxln_"
+				+ this.initialSolution.getBoxLength()
+		).replaceAll("\\s+",""); //remove whitespaces for filename
+		System.setProperty("logfilePrefix", logfilePrefix);
+
+		org.apache.logging.log4j.core.LoggerContext ctx =
+				(org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+//		logger.info("Logging Level for Performance Logger is: " + loggerPerf.getLevel());
+		loggerPerf.info("time elapsed [ms]" + ";" + "iteration" + ";" + "box count" + ";" + "cost");
+		// store performance data for initial solution
+		loggerPerf.info("0" + ";" + "0" + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
 	}
 
 	public String toString() {
