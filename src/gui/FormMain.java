@@ -137,7 +137,7 @@ public class FormMain extends JFrame {
 		System.out.println("Started GUI");
 		System.out.println("Detected display dpi: " + dpi);
 		
-		setTitle("Optimization Algorithms WS2017/18");
+		setTitle("2D Bin Packing Using Optimization Algorithms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, (int)Math.round(dpi*5.5), (int)Math.round(dpi*mainFormHeightFactor));
 		contentPane = new JPanel();
@@ -502,6 +502,7 @@ public class FormMain extends JFrame {
 		menu.setMnemonic(KeyEvent.VK_S);
 		menu.getAccessibleContext().setAccessibleDescription(
 				"Set parameters");
+		menu.setFont(fontStandard);
 
 		menuItem = new JMenuItem("Solver parameters...");
 		menuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -547,29 +548,34 @@ public class FormMain extends JFrame {
 				}
 			}
 		});
-
+		menuItem.setFont(fontStandard);
 		menu.add(menuItem);
+
+		menu.addSeparator();
+
+		JMenu submenuDemoSettings = new JMenu("Demo");
+
+		JCheckBoxMenuItem menuItemCb = new JCheckBoxMenuItem("Display solutions graphically");
+		menuItemCb.setState(false);
+		menuItemCb.setFont(fontStandard);
+		submenuDemoSettings.add(menuItemCb);
+
+		JCheckBoxMenuItem cbLoggingDemo = new JCheckBoxMenuItem("Solver logfiles on/off");
+		cbLoggingDemo.setState(false);
+		cbLoggingDemo.setFont(fontStandard);
+		submenuDemoSettings.add(cbLoggingDemo);
+
+		menu.add(submenuDemoSettings);
+
 		menuBar.add(menu);
 
 		// Demo Menu
 		menu = new JMenu("Batch");
 		menu.setMnemonic(KeyEvent.VK_B);
 		menu.getAccessibleContext().setAccessibleDescription(
-				"Control Batch Processes");
+				"Start Batch Processes");
 		menuBar.add(menu);
 		menu.setFont(fontStandard);
-
-		JCheckBoxMenuItem menuItemCb = new JCheckBoxMenuItem("Display solutions graphically");
-		menuItemCb.setState(false);
-		menuItemCb.setFont(fontStandard);
-		menu.add(menuItemCb);
-
-		JCheckBoxMenuItem cbLoggingDemo = new JCheckBoxMenuItem("Solver logfiles on/off");
-		cbLoggingDemo.setState(false);
-		cbLoggingDemo.setFont(fontStandard);
-		menu.add(cbLoggingDemo);
-
-		menu.addSeparator();
 
 		// Button and dialog to run custom demo
 		menuItem = new JMenuItem("Run Custom Demo...");
@@ -653,7 +659,7 @@ public class FormMain extends JFrame {
 				}
 			}
 		});
-		//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setMnemonic(KeyEvent.VK_R);
 		menuItem.setFont(fontStandard);
 		menu.add(menuItem);
 
@@ -677,7 +683,7 @@ public class FormMain extends JFrame {
 //				}
 			}
 		});
-//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setMnemonic(KeyEvent.VK_S);
 		menuItem.setFont(fontStandard);
 		menu.add(menuItem);
 
@@ -699,10 +705,34 @@ public class FormMain extends JFrame {
 //				}
 			}
 		});
-//		menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setMnemonic(KeyEvent.VK_L);
 		menuItem.setFont(fontStandard);
 		menu.add(menuItem);
 
+		menu = new JMenu("Help");
+		menu.setFont(fontStandard);
+		menu.setMnemonic(KeyEvent.VK_H);
+
+		menuItem = new JMenuItem("About");
+		menuItem.setMnemonic(KeyEvent.VK_A);
+		menuItem.setFont(fontStandard);
+		menu.add(menuItem);
+
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(FormMain.this,
+						"2D Bin Packing using Neighborhood-based Optimization Algorithms \n" +
+								"for class Optimization Algorithms at University of Technology Darmstadt, WS2017/18\n\n" +
+								"Developed by Jörg R. Schmidt, Computational Engineering Graduate student\n\n" +
+								"Copyright 2018 Jörg R. Schmidt\n\n" +
+								"Used Technologies:\n" +
+								"JUnit\n" +
+								"log4j2");
+			}
+		});
+
+		menuBar.add(menu);
 
 		// Set the menuBar for the Frame
 		this.setJMenuBar(menuBar);
