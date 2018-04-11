@@ -43,8 +43,9 @@ public class Solver implements Runnable {
 	private int maxIterations;		/* maximum number of iterations */
 	private int timeLimit = 10;		/* time limit in seconds; set <= 0 for no termination time criterion */
 	private boolean autoTerminate;	/* Terminate as soon as nothing significant has changed for a while */
+	private int timeLimitAutoTermination = 5;	// TODO: Not sure if this will stay
 	private int guiUpdateFrequency = 100; /* Maximum update frequency for GUI, in milliseconds */
-    private double boundWorseNeighbor;
+    private double boundWorseNeighbor;			// TODO: Not sure if this will stay
     private int numberOfNeighbors;
 
 
@@ -54,12 +55,15 @@ public class Solver implements Runnable {
 	static final Logger loggerPerf = LogManager.getLogger("loggerPerf");
 
 	/**
-	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood
+	 * Instantiate a new solver for a given instance, using a specified algorithm and neighborhood,
+	 * with the specified parameters
 	 * @param algorithmChoice
 	 * @param neighborhoodChoice
 	 * @param instance
 	 * @param maxIterations
 	 * @param numberOfNeighbors
+	 * @param timeLimit
+	 * @param autoTerminate
 	 */
 	public Solver(Algorithms algorithmChoice, Neighborhoods neighborhoodChoice,
 				  Instance instance, int maxIterations, int numberOfNeighbors,
@@ -229,6 +233,7 @@ public class Solver implements Runnable {
 		long startTimeNano = System.nanoTime();
 		long startSolverCPUTimeNano = Timing.getCpuTime();
         long iterationStartTimeNano;
+        long lastCostImprovementTimeNano = startTimeNano;
 
 		/* Initializations */
 		Neighbor[] neighbors;
@@ -296,6 +301,7 @@ public class Solver implements Runnable {
 					// Select new solution
 					if (result >= 0) {
 						boolean betterSolution = this.currentCost > neighborsCosts[result];
+						if (betterSolution) lastCostImprovementTimeNano = System.nanoTime();
 
 						this.solution = neighborsSolutions[result];	// Update solution
 						this.currentCost = neighborsCosts[result];	// Update cost
@@ -304,6 +310,7 @@ public class Solver implements Runnable {
 								+ " with " + this.solution.getBoxCount() + " Boxes and Cost: " + this.currentCost);
 						loggerPerf.info(((System.nanoTime( ) - startTimeNano) / 1000000)
 								+ ";" + (i+1) + ";" + this.solution.getBoxCount() + ";" + this.currentCost);
+
 						/* If GUI is active, request to refresh image */
 						if (viewer != null) {
 							requestGuiUpdate(betterSolution);
@@ -343,8 +350,17 @@ public class Solver implements Runnable {
 
 				/* Check the time limit */
 				if ( (this.timeLimit > 0)
-                        && ( (System.nanoTime()-startTimeNano)/1000000000 >= this.timeLimit + this.pausedTime/1000) ) {
+                        && ( (double)(System.nanoTime()-startTimeNano)/1000000000.0
+						>= (double)this.timeLimit + (double)this.pausedTime/1000.0) ) {
 					logger.info("[SOLVER] Time limit reached. Terminating...");
+					break;
+				}
+
+				/* Check if auto termination is on and if we should terminate */
+				boolean autoTermination = ((double)(System.nanoTime()-lastCostImprovementTimeNano)/1000000000.0 >
+						(double)this.timeLimitAutoTermination);
+				if ((this.autoTerminate) && (autoTermination)) {
+					logger.info("[SOLVER] Auto-termination triggered. Terminating...");
 					break;
 				}
 
