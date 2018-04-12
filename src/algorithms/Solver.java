@@ -41,7 +41,7 @@ public class Solver implements Runnable {
 	private int sleepDuration;		/* Sleep duration between iterations in milliseconds */
 	private boolean paused = false;	/* TRUE if the algorithm execution is paused (e.g. by the user) */
 	private int maxIterations;		/* maximum number of iterations */
-	private int timeLimit = 10;		/* time limit in seconds; set <= 0 for no termination time criterion */
+	private int timeLimit = 0;		/* time limit in seconds; set <= 0 for no termination time criterion */
 	private boolean autoTerminate;	/* Terminate as soon as nothing significant has changed for a while */
 	private int timeLimitAutoTermination = 5;	// TODO: Not sure if this will stay
 	private int guiUpdateFrequency = 100; /* Maximum update frequency for GUI, in milliseconds */
@@ -252,13 +252,6 @@ public class Solver implements Runnable {
 				logger.debug("[SOLVER] Iteration " + (i+1) +  " of " + algorithm + " Algorithm.");
 
                 iterationStartTimeNano = System.nanoTime();
-
-				// Sleep between iterations if desired
-//				if (this.sleepDuration > 0) {
-//					logger.info("[SOLVER] Waiting " + this.sleepDuration + "ms ...");
-//					Thread.sleep(sleepDuration);
-//				}
-
 				boolean neighborhoodDepleted = false;
 
 				// Retrieve new neighbors
@@ -288,9 +281,6 @@ public class Solver implements Runnable {
 					logger.info("[SOLVER] Neighborhood depleted. Terminating...");
 					break;
 				}
-
-//				// Get neighbors
-//				neighbor = this.neighborhood.getNeighbor(this.solution);
 
 				/* If there are still new neighbors within neighborhood */
 				if (neighborIndex > 0) {

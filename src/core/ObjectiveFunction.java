@@ -2,6 +2,9 @@ package core;
 
 import algorithms.IObjectiveFunction;
 
+/**
+ * Objective Function for Rule-Based neighborhood
+ */
 public class ObjectiveFunction implements IObjectiveFunction {
 
 	@Override
@@ -11,9 +14,9 @@ public class ObjectiveFunction implements IObjectiveFunction {
 		for (Box box : solution.getBoxes()) {
 			weightedCumulativeFreeAreaPercentage += (double)box.getRectangles().size() * (double)box.getFreeArea();
 		}
-
-		double result = weightedCumulativeFreeAreaPercentage / (solution.getBoxLength() * solution.getBoxLength());
-		result /= solution.getBoxCount();
+		double result;
+		result = weightedCumulativeFreeAreaPercentage / (double)(solution.getBoxLength() * solution.getBoxLength());
+		result /= (double)solution.getBoxCount();
 
 		return result;
 	}

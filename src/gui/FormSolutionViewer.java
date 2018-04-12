@@ -104,10 +104,9 @@ public class FormSolutionViewer extends JFrame {
 		if (solver != null && (solver.isTerminated())) {
 			/* Disable controls if solver is terminated */
 			pauseResumeButton.setEnabled(false);
+			tfTimeLimit.setEnabled(false);
 			acceptTimeLimitButton.setEnabled(false);
 			cbAutoTerminate.setEnabled(false);
-
-
 		}
 	}
 	

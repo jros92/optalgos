@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgorithm {
 
 	private LinkedList<Feature> tabuList;
-	private int tabuListSizeLimit = 50; // Tabus expire after a fixed number of iterations
+	private int tabuListSizeLimit = 100; // Tabus expire after a fixed number of iterations
 	private double bestCostSoFar;
 
 	public TabooSearchAlgorithm() {
@@ -39,6 +39,7 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 	public int doIteration(double currentCost, double[] neighborsCosts, Feature[] features) {
 
 		int result = -1;
+		double[] costsCopy = neighborsCosts.clone();
 
 		/* Find index of best neighbor to return to solver */
 //		double max = Arrays.stream(neighborsCosts).max().getAsDouble();
@@ -49,7 +50,7 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 		for (Feature f : features) {
 			for (Feature tabu : tabuList) {
 				if (tabu.equals(f)) {
-					neighborsCosts[fIndex] = Double.MAX_VALUE;
+					costsCopy[fIndex] = Double.MAX_VALUE;
 					break;
 				}
 			}
@@ -58,7 +59,7 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 		}
 
 		// Convert array to List for Streaming
-		List<Double> list = DoubleStream.of(neighborsCosts).boxed().collect(Collectors.toList());
+		List<Double> list = DoubleStream.of(costsCopy).boxed().collect(Collectors.toList());
 
 		// Find index of best neighbor that does not use a prohibited feature (a feature on the tabu list)
 		result = IntStream.range(0,list.size())
@@ -67,9 +68,9 @@ public class TabooSearchAlgorithm extends Algorithm implements IOptimizationAlgo
 
 
 		/* Check Aspiration Condition and drop all Taboos if true */
-		if (neighborsCosts[result] <= bestCostSoFar) {
+		if (costsCopy[result] <= bestCostSoFar) {
 //			System.out.println("[ALGORITHM] Dropping all Tabus.");
-			bestCostSoFar = neighborsCosts[result];
+			bestCostSoFar = costsCopy[result];
 			tabuList = new LinkedList<Feature>();
 		}
 
