@@ -17,6 +17,7 @@ public class Box implements Comparable {
 	private int id;
 	private ArrayList<Rectangle> rectangles;
 	private LinkedList<Point> freePositions;
+	private double packingPercentage = 0;
 	
 	public Box(int length, int id) {
 		this.length = length;
@@ -118,7 +119,8 @@ public class Box implements Comparable {
 					this.freePositions.add(new Point(posSWx, posSWy));
 					result++;
 				}
-				
+
+				updatePackingPercentage();
 				// TODO: Sort free positions from top left to bottom right (maybe keep as is for initialization?)
 				
 				return result;
@@ -157,13 +159,14 @@ public class Box implements Comparable {
 	}
 
 	/**
-	 * Remove rectangle from this box. Caller needs remove the box if return value is true.
-	 * @param rectangle
+	 * Remove rectangle from this box. Caller needs to remove the box if return value is true.
+	 * @param rectangle the rectangle to remove
 	 * @return true if empty after removal, false otherwise
 	 */
 	public boolean removeRectangle(Rectangle rectangle) {
 //		rectangle.setPos(-1, -1); // CANNOT DO THIS!!!
 		this.rectangles.remove(rectangle);
+		updatePackingPercentage();
 		return (this.getRectangles().size() == 0);
 	}
 	
@@ -247,14 +250,20 @@ public class Box implements Comparable {
 		return ((this.length * this.length) - occupiedArea);
 		
 	}
-	
-	
+
+	/**
+	 * Recalculate the packing percentage for this box
+	 */
+	private void updatePackingPercentage() {
+		this.packingPercentage = (double)this.getOccupiedArea() / ((double)this.length * (double)this.length) ;
+	}
+
 	/**
 	 * Return percentage of the box area that is filled already
 	 * @return Relative filled area
 	 */
 	public double getPackingPercentage() {	
-		return ((double)this.getOccupiedArea() / ((double)this.length * (double)this.length)) ;
+		return this.packingPercentage ;
 	}
 
 	/**
@@ -267,6 +276,7 @@ public class Box implements Comparable {
 			rectangle.setPos(0, 0);
 			this.freePositions.remove(0);
 			this.rectangles.add(rectangle);
+			updatePackingPercentage();
 			return true;
 		} else {
 			return false;
@@ -337,6 +347,8 @@ public class Box implements Comparable {
 
 			/* Update Free Positions */
 			this.freePositions.remove(pos);
+
+			updatePackingPercentage();
 
 			return true;
 		}

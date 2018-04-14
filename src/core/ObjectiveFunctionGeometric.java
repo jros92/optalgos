@@ -2,6 +2,9 @@ package core;
 
 import algorithms.IObjectiveFunction;
 
+/**
+ * Objective Function for Geometric Neighborhood
+ */
 public class ObjectiveFunctionGeometric implements IObjectiveFunction {
 
     @Override

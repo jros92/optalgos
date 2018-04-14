@@ -50,11 +50,11 @@ public class NeighborhoodGeometric extends Neighborhood implements INeighborhood
 
 
 		// Get the box to empty
-//		Box boxToEmpty = neighbor.findLeastFilledBox(ignoredBoxes);
-		Box boxToEmpty = null;
-		List<Box> filteredBoxes = neighbor.getBoxes().stream().filter(box -> !ignoredBoxes.contains(box))
-				.collect(Collectors.toList());
-		boxToEmpty = filteredBoxes.get((int)(Math.random() * filteredBoxes.size()));
+		Box boxToEmpty = neighbor.findLeastFilledBox(ignoredBoxes);
+//		Box boxToEmpty = null;
+//		List<Box> filteredBoxes = neighbor.getBoxes().stream().filter(box -> !ignoredBoxes.contains(box))
+//				.collect(Collectors.toList());
+//		boxToEmpty = filteredBoxes.get((int)(Math.random() * filteredBoxes.size()));
 //				.findAny().get();
 
 //		System.out.println("Box to empty: " + boxToEmpty.getId());
